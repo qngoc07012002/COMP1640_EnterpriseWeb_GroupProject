@@ -1,0 +1,62 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background: url('logo_greenwich.png') top left/cover no-repeat; 
+    background-size: 20%;
+    background-position-x: 40%;
+    background-position-y: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.login-container {
+    width: 300px;
+    background-color: rgba(255, 255, 255, 0.8); 
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+    .login-container label {
+        display: block;
+        margin-bottom: 8px;
+        color: #333333;
+        font-weight: bold;
+        text-align: left;
+    }
+
+    .login-container input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 16px;
+        border: 1px solid #cccccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-size: 14px;
+    }
+
+    .login-container button {
+        width: 100%;
+        padding: 12px;
+        background-color: #01013e;
+        color: #ffffff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+    }
+
+        .login-container button:hover {
+            background-color: #001a6e;
+        }
+
+    .login-container p {
+        margin-top: 16px;
+        font-size: 14px;
+        color: #666666;
+    }
