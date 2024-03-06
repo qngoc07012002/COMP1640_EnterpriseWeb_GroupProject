@@ -9,5 +9,10 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
         {
             return View("~/Areas/Student/Views/Home/Index.cshtml");
         }
+
+        public IActionResult About()
+        {
+            return View();
+        }
     }
 }
