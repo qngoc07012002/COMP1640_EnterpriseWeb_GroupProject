@@ -2,7 +2,7 @@
 
 namespace GreenwichUniversityMagazine.Models
 {
-    public class Faculties
+    public class Faculty
     {
         [Key]
         public int Id { get; set; }
