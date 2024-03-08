@@ -4,5 +4,7 @@ namespace GreenwichUniversityMagazine.Repository.IRepository
 {
     public interface IFacultyRepository : IRepository<Faculty>
     {
+        void Update(Faculty faculty);
+
     }
 }
