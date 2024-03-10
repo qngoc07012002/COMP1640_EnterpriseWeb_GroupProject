@@ -1,8 +1,9 @@
 ﻿@model User
 <link rel="stylesheet" href="~/css/Student/Login.css" />
-<partial name="_Notification" />
+
 <div class="body-login">
     <div class="login-container">
+        <partial name="_Notification" />
         <form class="login-form" method="post">
             <div class="form-group">
                 <label for="email">Email:</label>
@@ -19,23 +20,6 @@
         <p>Don't have an account? <a asp-area="student" asp-controller="Home" asp-action="Register">Sign up here</a>.
     </div>
 </div>
-@section Scripts {
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        // Kiểm tra xem có thông báo từ TempData không và hiển thị SweetAlert2
-        @if (TempData["success"] != null || TempData["error"] != null)
-        {
-            <text>
-                Swal.fire({
-                    icon: '@(TempData["success"] != null ? "success" : "error")', // Thay đổi icon dựa trên loại thông báo
-                    title: '@(TempData["success"] != null ? "Success" : "Error")', // Thay đổi tiêu đề dựa trên loại thông báo
-                    text: '@(TempData["success"] != null ? TempData["success"] : TempData["error"])' // Thay đổi nội dung dựa trên loại thông báo
-                });
-            </text>
-        }
-    </script>
-}
-
 
 @{
     Layout = null;
