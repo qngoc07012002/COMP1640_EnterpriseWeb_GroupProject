@@ -18,6 +18,7 @@
     <Folder Include="Areas\Guest\Data\" />
     <Folder Include="Areas\Guest\Models\" />
     <Folder Include="wwwroot\img\avtImg\" />
+    <Folder Include="wwwroot\img\avtImg\" />
   </ItemGroup>
 
   <ItemGroup>

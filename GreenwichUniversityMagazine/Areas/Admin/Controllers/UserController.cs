@@ -38,35 +38,42 @@ namespace GreenwichUniversityMagazine.Areas.Admin.Controllers
             }; return View(userVM);
         }
         [HttpPost]
-        public IActionResult Create(UserVM userVM, IFormFile file)
+        public IActionResult Create(UserVM userVM, IFormFile? file)
         {
             if (ModelState.IsValid)
             {
                 string wwwRootPath = _webhost.WebRootPath;
                 string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                string bookPath = Path.Combine(wwwRootPath, "img/avtImg");
+                string bookPath = Path.Combine(wwwRootPath, "img", "avtImg");
+
                 using (var fileStream = new FileStream(Path.Combine(bookPath, fileName), FileMode.Create))
                 {
                     file.CopyTo(fileStream);
                 }
-                userVM.User.avtUrl = @"/img/avtImg/" + fileName;
+
+                userVM.User.avtUrl = Url.Content("~/img/avtImg/" + fileName);
                 userVM.User.Role = "Student";
                 userVM.User.Status = false;
+
                 _unitOfWork.UserRepository.Add(userVM.User);
                 _unitOfWork.Save();
+
                 TempData["success"] = "User created successfully";
                 return RedirectToAction("Index");
-        }
+            }
             else
             {
-                userVM.MyFaculties = _unitOfWork.FacultyRepository.GetAll().
-                           Select(u => new SelectListItem
-                           {
-                               Text = u.Name,
-                               Value = u.Id.ToString()
-    }); return View(userVM);
-}
+                userVM.MyFaculties = _unitOfWork.FacultyRepository.GetAll()
+                    .Select(u => new SelectListItem
+                    {
+                        Text = u.Name,
+                        Value = u.Id.ToString()
+                    });
+
+                return View(userVM);
+            }
         }
+
         public IActionResult Edit(int? id)
         {
             UserVM userVM = new UserVM()

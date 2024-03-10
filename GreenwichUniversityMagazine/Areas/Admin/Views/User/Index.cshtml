@@ -1,80 +1,77 @@
 ﻿@model List<User>
+<link rel="stylesheet" href="~/css/User/Index.css" />
+
 <div class="card shadow border-0 my-4">
     <div class="card-header bg-secondary bg-gradient ml-0 py-3">
         <div class="row">
             <div class="col-12 text-center">
-                <h2 class="py-2">User Account Manager</h2>
+                <h2 class="py-2">User Management</h2>
             </div>
         </div>
     </div>
-    <div class="card-body p-4">
+    <div class="card-body p-5">
         <div class="row pb-3">
-            <div class="col-6">
-            </div>
+            <div class="col-6"></div>
             <div class="col-6 text-end">
                 <a asp-action="Create" asp-controller="User" class="btn btn-primary">
-                    <i class="bi bi-plus-circle"></i>  Create New User
+                    <i class="bi bi-plus-circle"></i> Create New User
                 </a>
             </div>
         </div>
-        <tbody>
-            @foreach (var obj in Model)
-            {
-                <tr>
-                    <td>@obj.Id</td>
-                    <td>
-                        @obj.Name
-                    </td>
-                    <td>
-                        @obj.Email
-                    </td>
-                    <td>
-                        @obj.Password
-                    </td>
-                    <td>
-                        @obj.Code
-                    </td>
-                    <td>
-                        @obj.DateOfBirth
-                    </td>
-                    <td>
-                        @obj.FacultyId
-                    </td>
-                    <td>
-                        @obj.Role
-                    </td>
-                    <td>
-                        @if (@obj.Status.HasValue)
+        <div class="card-body p-4">
+            <div class="row pb-3">
+                <div class="col-6"></div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Password</th>
+                            <th>Code</th>
+                            <th>Date of Birth</th>
+                            <th>Faculty ID</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                            <th>Avatar</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var obj in Model)
                         {
-                            <p>Status: @(@obj.Status.Value ? "verify" : "unverify")</p>
+                            <tr>
+                                <td>@obj.Id</td>
+                                <td>@obj.Name</td>
+                                <td>@obj.Email</td>
+                                <td>@obj.Password</td>
+                                <td>@obj.Code</td>
+                                <td>@obj.DateOfBirth</td>
+                                <td>@obj.FacultyId</td>
+                                <td>@obj.Role</td>
+                                <td>
+                                    @if (obj.Status.HasValue)
+                                    {
+                                        <p>Status: @(obj.Status.Value ? "verify" : "unverify")</p>
+                                    }
+                                </td>
+                                <td><img src="@obj.avtUrl" alt="Avatar" width="100" /></td>
+                                <td class="w-75 btn-group" role="group">
+                                    <a asp-controller="User" asp-action="Edit" asp-route-Id="@obj.Id" class="btn btn-primary mx-2">
+                                        <i class="bi bi-pencil-square"></i> Edit
+                                    </a>
+                                    <a asp-controller="User" asp-action="Delete" asp-route-Id="@obj.Id" class="btn btn-danger mx-2">
+                                        <i class="bi bi-trash"></i> Delete
+                                    </a>
+                                </td>
+                            </tr>
                         }
-                    </td>
-                    <td>
-                        <img src="@obj.avtUrl" alt="Avatar" width="100" />
-                    </td>
-                    <td>
-                        <div class="w-75 btn-group" role="group">
-                            <a asp-controller="User" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-primary mx-2">
-                                <i class="bi bi-pencil-square"></i> Edit
-                            </a>
-                            <a asp-controller="User" asp-action="Delete" asp-route-id="@obj.Id" class="btn btn-danger mx-2">
-                                <i class="bi bi-trash-fill"></i> Delete
-                            </a>
-                        </div>
-                    </td>
-                </tr>
-            }
-        </tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
-@functions {
-    // Hàm này sẽ lấy tên của khoa dựa trên FacultyId
-    public string GetFacultyName(int facultyId)
-    {
-        // Thay thế dòng dưới đây bằng logic của bạn để lấy tên từ nguồn dữ liệu
-        // Ví dụ: var facultyName = YourFacultyRepository.GetFacultyNameById(facultyId);
-        var facultyName = "Faculty " + facultyId; // Đây là ví dụ tạm thời
-
-        return facultyName;
-    }
-}
