@@ -17,7 +17,7 @@
     <Folder Include="Areas\Manager\Models\" />
     <Folder Include="Areas\Guest\Data\" />
     <Folder Include="Areas\Guest\Models\" />
-    <Folder Include="Migrations\" />
+    <Folder Include="wwwroot\img\avtImg\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -36,6 +36,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="System.Net.Mail" Version="1.0.0-rtm-00002" />
   </ItemGroup>
 
   <ItemGroup>

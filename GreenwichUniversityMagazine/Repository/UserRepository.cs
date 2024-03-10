@@ -10,5 +10,10 @@ namespace GreenwichUniversityMagazine.Repository
         public UserRepository(dbContext dbContext): base(dbContext) {
             _dbContext = dbContext;
         }
+        public void Register(User user)
+        {
+            _dbContext.Add(user);
+            _dbContext.SaveChanges();
+        }
     }
 }

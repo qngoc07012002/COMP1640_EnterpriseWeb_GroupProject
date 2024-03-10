@@ -311,6 +311,7 @@ namespace GreenwichUniversityMagazine.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+
                     b.Navigation("Faculty");
                 });
 #pragma warning restore 612, 618
