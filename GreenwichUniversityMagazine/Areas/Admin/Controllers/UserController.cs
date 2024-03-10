@@ -6,7 +6,7 @@ using GreenwichUniversityMagazine.Models.ViewModels;
 
 namespace GreenwichUniversityMagazine.Areas.Admin.Controllers
 {
-    [Area("admin")]
+    [Area("Admin")]
     public class UserController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -38,35 +38,39 @@ namespace GreenwichUniversityMagazine.Areas.Admin.Controllers
             }; return View(userVM);
         }
         [HttpPost]
-        public IActionResult Create(UserVM userVM, IFormFile file)
+        public IActionResult Create(UserVM userVM, IFormFile? file)
         {
             if (ModelState.IsValid)
             {
                 string wwwRootPath = _webhost.WebRootPath;
                 string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                string bookPath = Path.Combine(wwwRootPath, "img/avtImg");
+                string bookPath = Path.Combine(wwwRootPath, "img", "avtImg");
                 using (var fileStream = new FileStream(Path.Combine(bookPath, fileName), FileMode.Create))
                 {
                     file.CopyTo(fileStream);
                 }
-                userVM.User.avtUrl = @"/img/avtImg/" + fileName;
-                userVM.User.Role = "Student";
-                userVM.User.Status = false;
+
+                userVM.User.avtUrl = Url.Content("~/img/avtImg/" + fileName);
+
                 _unitOfWork.UserRepository.Add(userVM.User);
                 _unitOfWork.Save();
+
                 TempData["success"] = "User created successfully";
                 return RedirectToAction("Index");
-        }
+            }
             else
             {
-                userVM.MyFaculties = _unitOfWork.FacultyRepository.GetAll().
-                           Select(u => new SelectListItem
-                           {
-                               Text = u.Name,
-                               Value = u.Id.ToString()
-    }); return View(userVM);
-}
+                userVM.MyFaculties = _unitOfWork.FacultyRepository.GetAll()
+                    .Select(u => new SelectListItem
+                    {
+                        Text = u.Name,
+                        Value = u.Id.ToString()
+                    });
+
+                return View(userVM);
+            }
         }
+
         public IActionResult Edit(int? id)
         {
             UserVM userVM = new UserVM()
@@ -101,7 +105,8 @@ namespace GreenwichUniversityMagazine.Areas.Admin.Controllers
                 if (file != null)
                 {
                     string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                    string userPath = Path.Combine(wwwRootPath, "img/avtImg");
+                    string userPath = Path.Combine(wwwRootPath, "img", "avtImg");
+
                     if (!string.IsNullOrEmpty(userVM.User.avtUrl))
                     {
                         var oldImagePath = Path.Combine(wwwRootPath, userVM.User.avtUrl.TrimStart('/'));
@@ -110,12 +115,15 @@ namespace GreenwichUniversityMagazine.Areas.Admin.Controllers
                             System.IO.File.Delete(oldImagePath);
                         }
                     }
+
                     using (var fileStream = new FileStream(Path.Combine(userPath, fileName), FileMode.Create))
                     {
                         file.CopyTo(fileStream);
                     }
-                    userVM.User.avtUrl = @"/img/avtImg/" + fileName;
+
+                    userVM.User.avtUrl = Url.Content("~/img/avtImg/" + fileName);
                 }
+
                 _unitOfWork.UserRepository.Update(userVM.User);
                 TempData["success"] = "User updated successfully";
                 _unitOfWork.Save();
@@ -166,10 +174,21 @@ namespace GreenwichUniversityMagazine.Areas.Admin.Controllers
                 return NotFound();
             }
 
+            string imagePathRelative = userToDelete.avtUrl;
+
+            string wwwRootPath = _webhost.WebRootPath;
+            string imagePath = Path.Combine(wwwRootPath, imagePathRelative.TrimStart('/'));
+
+            if (System.IO.File.Exists(imagePath))
+            {
+                System.IO.File.Delete(imagePath);
+            }
+
             _unitOfWork.UserRepository.Remove(userToDelete);
             _unitOfWork.Save();
             return RedirectToAction("Index");
         }
+
 
     }
 }

@@ -1,51 +1,115 @@
 ﻿@model UserVM
-
-<form method="POST" enctype="multipart/form-data">
-    <input asp-for="@Model.User.Id" hidden />
-    <div class="boder p-3 mt-4" style="padding-bottom:100px">
-        <div class="mb-3 row p-1">
-            <label asp-for="User.Email" class="p-0"></label>
-            <input asp-for="User.Email" class="form-control" />
-            <span asp-validation-for="User.Email" class="text-danger"></span>
-        </div>
-        <div class="mb-3 row p-1">
-            <label asp-for="User.Password" class="p-0"></label>
-            <input asp-for="User.Password" class="form-control" />
-            <span asp-validation-for="User.Password" class="text-danger"></span>
-        </div>
-        <div class="mb-3 row p-1">
-            <label asp-for="User.Name" class="p-0"></label>
-            <input asp-for="User.Name" class="form-control" />
-            <span asp-validation-for="User.Name" class="text-danger"></span>
-        </div>
-        <div class="mb-3 row p-1">
-            <label asp-for="User.Code" class="p-0"></label>
-            <input asp-for="User.Code" class="form-control" />
-            <span asp-validation-for="User.Code" class="text-danger"></span>
-        </div>
-        <div class="mb-3 row p-1">
-            <label asp-for="User.DateOfBirth" class="p-0"></label>
-            <input asp-for="User.DateOfBirth" class="form-control" />
-            <span asp-validation-for="User.DateOfBirth" class="text-danger"></span>
-        </div>
-        <div class="row mb-3">
-            <label asp-for="User.FacultyId"></label>
-            <select asp-for="@Model.User.FacultyId" asp-items="@Model.MyFaculties" class="form-select form-control "></select>
-        </div>
-        <div class="row mb-3">
-            <label asp-for="User.avtUrl"></label>
-            <input type="file" name="file" class="form-control">
-        </div>
+<link rel="stylesheet" href="~/css/User/Delete.css" />
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
         <div class="row">
-            <button type="submit" class="btn btn-outline-primary form-control" style="width:150px">Delete</button>
-            <div class="col-6 col-md-3">
-                <a asp-controller="User" asp-action="Index" type="submit" class="btn btn-outline-secondary form-control" style="width:150px">Go Back</a>
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2">Edit User</h2>
             </div>
         </div>
     </div>
-</form>
-@section Scripts {
-    @{
-        <partial name="_ValidationScriptsPartial" />
-    }
-}
+    <div class="card-body p-4">
+        <form method="post">
+            <input asp-for="@Model.User.Id" hidden />
+            <input asp-for="@Model.User.avtUrl" hidden />
+            <div class="border p-3 mt-4">
+                <div class="form-group row">
+                    <label asp-for="User.Email" class="col-sm-2 col-form-label p-0"></label>
+                    <div class="col-sm-10">
+                        <div class="form-floating py-2">
+                            <input disabled asp-for="User.Email" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label asp-for="User.Name" class="col-sm-2 col-form-label p-0"></label>
+                    <div class="col-sm-10">
+                        <div class="form-floating py-2">
+                            <input disabled asp-for="User.Name" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label asp-for="User.Password" class="col-sm-2 col-form-label p-0"></label>
+                    <div class="col-sm-10">
+                        <div class="form-floating py-2">
+                            <input disabled asp-for="User.Password" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label asp-for="User.Code" class="col-sm-2 col-form-label p-0"></label>
+                    <div class="col-sm-10">
+                        <div class="form-floating py-2">
+                            <input disabled asp-for="User.Code" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label asp-for="User.DateOfBirth" class="col-sm-2 col-form-label p-0"></label>
+                    <div class="col-sm-10">
+                        <div class="form-floating py-2">
+                            <input disabled asp-for="User.DateOfBirth" type="date"class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label asp-for="User.Status" class="col-sm-2 col-form-label p-0"></label>
+                    <div class="col-sm-10">
+                        <div class="form-floating py-2">
+                            <select asp-for="User.Status" class="form-select form-control" disabled>
+                                <option value="true">Verify</option>
+                                <option value="false">Unverify</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label asp-for="User.Role" class="col-sm-2 col-form-label p-0"></label>
+                    <div class="col-sm-10">
+                        <div class="form-floating py-2">
+                            <select asp-for="User.Role" class="form-select form-control" disabled>
+                                <option value="Student">Student</option>
+                                <option value="Cordinate">Cordinate</option>
+                                <option value="Manager">Manager</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label asp-for="User.FacultyId" class="col-sm-2 col-form-label p-0"></label>
+                    <div class="col-sm-10">
+                        <div class="form-floating py-2">
+                            <select asp-for="@Model.User.FacultyId" asp-items="@Model.MyFaculties" class="form-select form-control" disabled></select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label p-0"></label>
+                    <div class="col-sm-10">
+                        <div class="form-floating py-2">
+                            <img src="@Model.User.avtUrl" width="100%" style="border-radius: 5px; border: 1px solid #bbb9b9" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-6 col-md-3">
+                        <button type="submit" class="btn btn-danger form-control">Delete</button>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <a asp-controller="User" asp-action="Index" class="btn btn-secondary border form-control">
+                            Back to List
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
