@@ -10,10 +10,27 @@ namespace GreenwichUniversityMagazine.Repository
         public FacultyRepository(dbContext dbContext): base(dbContext) {
             _dbContext = dbContext;
         }
+        public int GetNumbersOfItems(int userId)
+        {
+            int count = _dbContext.Faculties.Count(c => c.Id == userId);
+            return count;
+        }
+        public List<Faculty> GetFacultyByUser(int userId)
+        {
+            var query = _dbContext.Faculties.Where(c => c.Id == userId);
+            string includeProperties = "Book";
+            foreach (var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProp);
+            }
+            return query.ToList();
+        }
+
         public void Update(Faculty faculty)
         {
             _dbContext.Update(faculty);
         }
+
 
     }
 }
