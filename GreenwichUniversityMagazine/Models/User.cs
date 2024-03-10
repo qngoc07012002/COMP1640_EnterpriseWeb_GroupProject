@@ -22,7 +22,9 @@ namespace GreenwichUniversityMagazine.Models
         public int? FacultyId {  get; set; }
         [ForeignKey("FacultyId")]
         [ValidateNever]
-        public Faculty? Faculty { get; set; }
+
+        public Faculty Faculty { get; set; }
+
 
 
         public string? avtUrl { get; set; }
