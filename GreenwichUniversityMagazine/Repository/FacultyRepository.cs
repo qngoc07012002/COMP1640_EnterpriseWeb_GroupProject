@@ -6,9 +6,14 @@ namespace GreenwichUniversityMagazine.Repository
 {
     public class FacultyRepository : Repository<Faculty>, IFacultyRepository
     {
-        private dbContext _dbContext;
+        private readonly dbContext _dbContext;
         public FacultyRepository(dbContext dbContext): base(dbContext) {
             _dbContext = dbContext;
         }
+        public void Update(Faculty faculty)
+        {
+            _dbContext.Update(faculty);
+        }
+
     }
 }
