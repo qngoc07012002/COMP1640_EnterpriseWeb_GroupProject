@@ -45,7 +45,6 @@ namespace GreenwichUniversityMagazine.Areas.Admin.Controllers
                 string wwwRootPath = _webhost.WebRootPath;
                 string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
                 string bookPath = Path.Combine(wwwRootPath, "img", "avtImg");
-
                 using (var fileStream = new FileStream(Path.Combine(bookPath, fileName), FileMode.Create))
                 {
                     file.CopyTo(fileStream);
@@ -108,7 +107,8 @@ namespace GreenwichUniversityMagazine.Areas.Admin.Controllers
                 if (file != null)
                 {
                     string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                    string userPath = Path.Combine(wwwRootPath, "img/avtImg");
+                    string userPath = Path.Combine(wwwRootPath, "img", "avtImg");
+
                     if (!string.IsNullOrEmpty(userVM.User.avtUrl))
                     {
                         var oldImagePath = Path.Combine(wwwRootPath, userVM.User.avtUrl.TrimStart('/'));
@@ -117,12 +117,15 @@ namespace GreenwichUniversityMagazine.Areas.Admin.Controllers
                             System.IO.File.Delete(oldImagePath);
                         }
                     }
+
                     using (var fileStream = new FileStream(Path.Combine(userPath, fileName), FileMode.Create))
                     {
                         file.CopyTo(fileStream);
                     }
-                    userVM.User.avtUrl = @"/img/avtImg/" + fileName;
+
+                    userVM.User.avtUrl = Url.Content("~/img/avtImg/" + fileName);
                 }
+
                 _unitOfWork.UserRepository.Update(userVM.User);
                 TempData["success"] = "User updated successfully";
                 _unitOfWork.Save();
@@ -173,10 +176,21 @@ namespace GreenwichUniversityMagazine.Areas.Admin.Controllers
                 return NotFound();
             }
 
+            string imagePathRelative = userToDelete.avtUrl;
+
+            string wwwRootPath = _webhost.WebRootPath;
+            string imagePath = Path.Combine(wwwRootPath, imagePathRelative.TrimStart('/'));
+
+            if (System.IO.File.Exists(imagePath))
+            {
+                System.IO.File.Delete(imagePath);
+            }
+
             _unitOfWork.UserRepository.Remove(userToDelete);
             _unitOfWork.Save();
             return RedirectToAction("Index");
         }
+
 
     }
 }
