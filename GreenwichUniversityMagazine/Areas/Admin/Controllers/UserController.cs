@@ -6,7 +6,7 @@ using GreenwichUniversityMagazine.Models.ViewModels;
 
 namespace GreenwichUniversityMagazine.Areas.Admin.Controllers
 {
-    [Area("admin")]
+    [Area("Admin")]
     public class UserController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -51,8 +51,6 @@ namespace GreenwichUniversityMagazine.Areas.Admin.Controllers
                 }
 
                 userVM.User.avtUrl = Url.Content("~/img/avtImg/" + fileName);
-                userVM.User.Role = "Student";
-                userVM.User.Status = false;
 
                 _unitOfWork.UserRepository.Add(userVM.User);
                 _unitOfWork.Save();

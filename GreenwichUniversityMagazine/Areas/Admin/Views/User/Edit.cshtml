@@ -57,7 +57,7 @@
                     <label asp-for="User.DateOfBirth" class="col-sm-2 col-form-label p-0"></label>
                     <div class="col-sm-10">
                         <div class="form-floating py-2">
-                            <input asp-for="User.DateOfBirth" class="form-control" />
+                            <input asp-for="User.DateOfBirth" type="date" class="form-control" />
                             <span asp-validation-for="User.DateOfBirth" class="text-danger"></span>
                         </div>
                     </div>
@@ -68,8 +68,8 @@
                     <div class="col-sm-10">
                         <div class="form-floating py-2">
                             <select asp-for="User.Status" class="form-select form-control">
-                                <option value="true">verify</option>
-                                <option value="false">unverify</option>
+                                <option value="true">Verify</option>
+                                <option value="false">Unverify</option>
                             </select>
                         </div>
                     </div>
@@ -79,9 +79,9 @@
                     <div class="col-sm-10">
                         <div class="form-floating py-2">
                             <select asp-for="User.Role" class="form-select form-control">
-                                <option value="student">Student</option>
-                                <option value="cordinate">Cordinate</option>
-                                <option value="manager">Manager</option>
+                                <option value="Student">Student</option>
+                                <option value="Cordinate">Cordinate</option>
+                                <option value="Manager">Manager</option>
                             </select>
                         </div>
                     </div>
@@ -104,12 +104,6 @@
                         </div>
                     </div>
                 </div>
-                @* <div class="row mb-3">
-                    <label asp-for="User.avtUrl"></label>
-                    <input type="file" name="file" class="form-control">
-                    <img src="@Model.User.avtUrl" width="100%" style="border-radius: 5px; border: 1px solid #bbb9b9" />
-
-                </div> *@
 
                 <div class="row mt-3">
                     <div class="col-6 col-md-3">

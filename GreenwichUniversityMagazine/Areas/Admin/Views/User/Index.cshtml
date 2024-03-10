@@ -49,13 +49,13 @@
                                 <td>@obj.Email</td>
                                 <td>@obj.Password</td>
                                 <td>@obj.Code</td>
-                                <td>@obj.DateOfBirth</td>
+                                <td>@(obj.DateOfBirth?.ToString("dd/MM/yyyy") ?? "-")</td>
                                 <td>@obj.FacultyId</td>
                                 <td>@obj.Role</td>
                                 <td>
                                     @if (obj.Status.HasValue)
                                     {
-                                        <p>Status: @(obj.Status.Value ? "verify" : "unverify")</p>
+                                        <p>Status: @(obj.Status.Value ? "Verify" : "Unverify")</p>
                                     }
                                 </td>
                                 <td><img src="@obj.avtUrl" alt="Avatar" width="100" /></td>

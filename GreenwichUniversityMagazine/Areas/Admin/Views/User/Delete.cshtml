@@ -53,7 +53,7 @@
                     <label asp-for="User.DateOfBirth" class="col-sm-2 col-form-label p-0"></label>
                     <div class="col-sm-10">
                         <div class="form-floating py-2">
-                            <input disabled asp-for="User.DateOfBirth" class="form-control" />
+                            <input disabled asp-for="User.DateOfBirth" type="date"class="form-control" />
                         </div>
                     </div>
                 </div>
@@ -74,9 +74,9 @@
                     <div class="col-sm-10">
                         <div class="form-floating py-2">
                             <select asp-for="User.Role" class="form-select form-control" disabled>
-                                <option value="student">Student</option>
-                                <option value="cordinate">Cordinate</option>
-                                <option value="manager">Manager</option>
+                                <option value="Student">Student</option>
+                                <option value="Cordinate">Cordinate</option>
+                                <option value="Manager">Manager</option>
                             </select>
                         </div>
                     </div>
