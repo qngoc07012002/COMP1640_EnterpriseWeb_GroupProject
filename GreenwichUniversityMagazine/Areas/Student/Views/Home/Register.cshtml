@@ -3,6 +3,28 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <div class="body-register">
     <div class="register-container">
+        @if (!string.IsNullOrEmpty(ViewBag.Error))
+        {
+            <script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: '@Html.Raw(ViewBag.Error)'
+                });
+            </script>
+        }
+
+        @if (!string.IsNullOrEmpty(ViewBag.Success))
+        {
+            <script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: '@Html.Raw(ViewBag.Success)'
+                });
+            </script>
+        }
+
         <form class="register-form" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="email">Email:</label>
@@ -21,12 +43,10 @@
                 <button type="submit">Register</button>
             </div>
         </form>
-        <p>Already have an account? <a asp-area="Customer" asp-controller="User" asp-action="Login">Login here</a>.</p>
+        <p>Already have an account? <a asp-area="student" asp-controller="Home" asp-action="Login">Login here</a>.</p>
     </div>
 </div>
-@{
-    Layout = null;
-}
+
 <script>
     // Function to check if the passwords match
     function checkPasswordMatch() {
@@ -53,3 +73,6 @@
     });
 </script>
 
+@{
+    Layout = null;
+}

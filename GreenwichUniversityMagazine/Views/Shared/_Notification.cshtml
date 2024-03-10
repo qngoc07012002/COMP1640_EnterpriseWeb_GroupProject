@@ -1,18 +1,31 @@
-﻿@if (TempData["success"] != null)
+﻿@if (TempData["success"] != null || TempData["error"] != null)
 {
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-    <script type="text/javascript">
-         toastr.success('@TempData["success"]');
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        // Kiểm tra xem có thông báo từ TempData không và hiển thị SweetAlert2
+        @if (TempData["success"] != null)
+        {
+            <text>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: '@TempData["success"]',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            </text>
+        }
+        else if (TempData["error"] != null)
+        {
+            <text>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: '@TempData["error"]',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            </text>
+        }
     </script>
-
-}
-@if (TempData["error"] != null)
-{
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-    <script type="text/javascript">
-        toastr.error('@TempData["error"]');
-    </script>
-
 }
