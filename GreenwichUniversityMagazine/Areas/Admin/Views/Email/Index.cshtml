@@ -1,0 +1,13 @@
+﻿@{
+    ViewData["Title"] = "Send Confirmation Code";
+}
+
+<h1>Send Confirmation Code</h1>
+
+<form asp-action="SendCode" method="post">
+    <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" class="form-control" id="email" name="email" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Send Code</button>
+</form>

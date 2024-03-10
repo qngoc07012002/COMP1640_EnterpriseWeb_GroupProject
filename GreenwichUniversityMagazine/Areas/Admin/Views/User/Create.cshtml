@@ -1,0 +1,51 @@
+﻿@model UserVM
+
+<form method="POST" enctype="multipart/form-data">
+    <div class="boder p-3 mt-4" style="padding-bottom:100px">
+        <div class="mb-3 row p-1">
+            <label asp-for="User.Email" class="p-0"></label>
+            <input asp-for="User.Email" class="form-control" />
+            <span asp-validation-for="User.Email" class="text-danger"></span>
+        </div>
+        <div class="mb-3 row p-1">
+            <label asp-for="User.Password" class="p-0"></label>
+            <input asp-for="User.Password" class="form-control" />
+            <span asp-validation-for="User.Password" class="text-danger"></span>
+        </div>
+        <div class="mb-3 row p-1">
+            <label asp-for="User.Name" class="p-0"></label>
+            <input asp-for="User.Name" class="form-control" />
+            <span asp-validation-for="User.Name" class="text-danger"></span>
+        </div>
+        <div class="mb-3 row p-1">
+            <label asp-for="User.Code" class="p-0"></label>
+            <input asp-for="User.Code" class="form-control" />
+            <span asp-validation-for="User.Code" class="text-danger"></span>
+        </div>
+        <div class="mb-3 row p-1">
+            <label asp-for="User.DateOfBirth" class="p-0"></label>
+            <input asp-for="User.DateOfBirth" class="form-control" />
+            <span asp-validation-for="User.DateOfBirth" class="text-danger"></span>
+        </div>
+        <div class="row mb-3">
+            <label asp-for="User.FacultyId"></label>
+            <select asp-for="@Model.User.FacultyId" asp-items="@Model.MyFaculties" class="form-select form-control "></select>
+        </div>
+        <div class="row mb-3">
+            <label asp-for="User.avtUrl"></label>
+            <input type="file" name="file" class="form-control">
+        </div>
+
+        <div class="row">
+            <button type="submit" class="btn btn-outline-primary form-control" style="width:150px">Create</button>
+            <div class="col-6 col-md-3">
+                <a asp-controller="User" asp-action="Index" type="submit" class="btn btn-outline-secondary form-control" style="width:150px">Go Back</a>
+            </div>
+        </div>
+    </div>
+</form>
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
