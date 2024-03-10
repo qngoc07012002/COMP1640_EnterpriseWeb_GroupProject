@@ -1,4 +1,6 @@
 using GreenwichUniversityMagazine.Data;
+using GreenwichUniversityMagazine.Repository.IRepository;
+using GreenwichUniversityMagazine.Repository;
 using GreenwichUniversityMagazine.Serivces.IServices;
 using GreenwichUniversityMagazine.Serivces;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<dbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 
 // Add services to the container.
