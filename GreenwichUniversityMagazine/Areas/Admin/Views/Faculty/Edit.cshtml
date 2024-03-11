@@ -1,0 +1,19 @@
+﻿@model Faculty
+<h1> Edit new Faculty</h1>
+<form method="post">
+    <input asp-for="Id" hidden />
+    <div class="border p-3 mt-4">
+        <div class="row mb-3">
+            <label asp-for="Name"></label>
+            <input asp-for="Name">
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+     
+        <div class="btn group" role="group">
+            <button type="submit" class="btn btn-primary">Update</button>
+            <a asp-controller="Faculty" asp-action="Index" class="btn btn-primary">
+                Back to List
+            </a>
+        </div>
+    </div>
+</form>

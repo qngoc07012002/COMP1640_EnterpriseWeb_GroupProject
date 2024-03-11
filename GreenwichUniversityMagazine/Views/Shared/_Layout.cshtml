@@ -1,4 +1,6 @@
-﻿
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accessor
+<partial name="_Notification" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +9,7 @@
     <title>@ViewData["Title"] - GreenwichUniversityMagazine</title>
 
     <link rel="stylesheet" href="~/css/mainLayout.css" asp-append-version="true" />
-  
+
 </head>
 <body>
     <header>
@@ -21,7 +23,22 @@
                 <a href="#">Contact</a>
             </nav>
         </div>
-
+        <div class="nav-container">
+        @{
+            var userId = Accessor.HttpContext.Session.GetString("UserId");
+            if (userId == null)
+            {
+                <a asp-area="Student" asp-controller="Home" asp-action="Register" >Sign Up</a>
+                <a asp-area="Student" asp-controller="Home" asp-action="Login" >Sign In</a>
+            }
+            else
+            {
+                var userEmail = Accessor.HttpContext.Session.GetString("UserEmail");
+                    <a>@userEmail</a>
+                <a asp-area="Student" asp-controller="Home" asp-action="Logout">Logout</a>
+            }
+        }
+        </div>
         <div class="notification_container">
 
             <button id="fetchDataButton">
@@ -30,6 +47,7 @@
                 </button>
         </div>
         <div id="partialViewContainer" class="notification_list_container"></div>
+
         <div class="user-logo">
             <img src="~/img/Layout/user-logo.png" alt="User Logo">
         </div>
@@ -43,9 +61,10 @@
     <footer>
         <p>&copy; 2024 Greenwich University Forum. All rights reserved.</p>
     </footer>
-
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
@@ -85,3 +104,4 @@
         });
     });
 </script>
+

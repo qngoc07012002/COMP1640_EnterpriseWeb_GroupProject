@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\GreenwichUniversityMagazine",
+    "\\GreenwichUniversityMagazine\\Areas",
+    "\\GreenwichUniversityMagazine\\Areas\\Admin",
+    "\\GreenwichUniversityMagazine\\Areas\\Admin\\Views",
+    "\\GreenwichUniversityMagazine\\Areas\\Cordinate",
+    "\\GreenwichUniversityMagazine\\Areas\\Guest",
+    "\\GreenwichUniversityMagazine\\Areas\\Manager",
+    "\\GreenwichUniversityMagazine\\Areas\\Student",
+    "\\GreenwichUniversityMagazine\\Areas\\Student\\Controllers"
+  ],
+  "SelectedNode": "\\GreenwichUniversityMagazine\\GreenwichUniversityMagazine.sln",
+  "PreviewInSolutionExplorer": false
+}

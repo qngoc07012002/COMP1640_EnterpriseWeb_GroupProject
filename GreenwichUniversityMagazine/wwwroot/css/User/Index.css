@@ -1,0 +1,40 @@
+﻿.table-responsive {
+    overflow-x: auto;
+}
+
+/* Add your custom styles here */
+
+.table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+th, td {
+    text-align: center;
+    vertical-align: middle;
+    border: 2px solid #dee2e6; /* Increase border width for cells */
+    padding: 8px; /* Adjust padding for cells */
+}
+
+thead th {
+    background-color: #343a40;
+    color: #fff;
+}
+
+tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+.btn-group {
+    display: flex;
+    justify-content: space-around;
+    height: 100%; /* Set the height to match the image height */
+}
+
+.btn-primary,
+.btn-danger {
+    width: 80px;
+}
+
+/* Add your custom styles here */
