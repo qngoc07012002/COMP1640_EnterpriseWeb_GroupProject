@@ -17,3 +17,5 @@
 - Nguyen Hai Viet ([Github](https://github.com/Ghauol123))
 
 - Tran Huy Hoang ([Github](https://github.com/PainnIrene))
+
+- Tran Nguyen ([Github](https://github.com/nguyentranazz123))
