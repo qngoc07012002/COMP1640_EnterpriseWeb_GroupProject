@@ -1,17 +1,26 @@
-﻿<link rel="stylesheet" href="~/css/Student/Login.css" />
+﻿@model User
+<link rel="stylesheet" href="~/css/Student/Login.css" />
+
 <div class="body-login">
     <div class="login-container">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" placeholder="Enter your email">
-
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" placeholder="Enter your password">
-
-        <button type="button">Login</button>
-
-        <p>Don't have an account? <a href="#">Sign up here</a>.</p>
+        <partial name="_Notification" />
+        <form class="login-form" method="post">
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input asp-for="Email" type="email" placeholder="Enter your email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input asp-for="Password" type="password" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+            <div class="form-group">
+                <button type="submit">Login</button>
+            </div>
+        </form>
+        <p>Don't have an account? <a asp-area="student" asp-controller="Home" asp-action="Register">Sign up here</a>.
     </div>
 </div>
+
 @{
     Layout = null;
 }

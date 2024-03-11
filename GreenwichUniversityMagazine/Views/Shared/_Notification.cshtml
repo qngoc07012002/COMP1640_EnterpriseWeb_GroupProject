@@ -1,0 +1,61 @@
+@model List<Notification>
+    @if (Model != null)
+    {
+    <h3 class="notification_heading">Notification</h3>
+        @foreach(var notification in Model)
+        {
+        
+        <a class="notification_list_child" asp-action="action">
+            <div class="notification_detail_container">
+                <h4 class="notification_title">Hoang Tran</h4>
+                <div class="notification_detail_wrapper">
+                    <div class="user-logo">
+                        <img src="./user-logo.png" alt="User Logo" />
+                    </div>
+                    <div class="notification-detail_description">
+                        <h4 class="notification_description">
+                            I update my articles could you make a review of it
+                        </h4>
+                        <h4 class="notification_timeUpdate">Time Update:</h4>
+                    </div>
+                </div>
+            </div>
+        </a>
+
+        
+        }
+    <a class="notification_viewMore">
+        <h4 class="notification_viewMore_heading">View All Notifications</h4>
+    </a>
+    }
+@if (TempData["success"] != null || TempData["error"] != null)
+{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        // Kiểm tra xem có thông báo từ TempData không và hiển thị SweetAlert2
+        @if (TempData["success"] != null)
+        {
+            <text>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: '@TempData["success"]',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            </text>
+        }
+        else if (TempData["error"] != null)
+        {
+            <text>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: '@TempData["error"]',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            </text>
+        }
+    </script>
+}

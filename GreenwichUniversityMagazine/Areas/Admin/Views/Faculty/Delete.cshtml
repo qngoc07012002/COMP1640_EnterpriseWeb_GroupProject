@@ -1,0 +1,19 @@
+﻿@model Faculty
+<h1> Create new Category</h1>
+<form method="post">
+    <input asp-for="Id" hidden />
+    <div class="border p-3 mt-4">
+        <div class="row mb-3">
+            <label asp-for="Name"></label>
+            <input asp-for="Name" disabled>
+        </div>
+        <div class="btn group" role="group">
+            <button type="submit" class="btn btn-primary">Delete</button>
+            <a asp-controller="Faculty" asp-action="Index" class="btn btn-primary">
+                Back to List
+            </a>
+        </div>
+
+
+    </div>
+</form>
