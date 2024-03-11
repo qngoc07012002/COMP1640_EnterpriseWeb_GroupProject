@@ -1,68 +1,386 @@
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Arial', sans-serif;
-        }
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Arial", sans-serif;
+}
 
-        header {
-            background-color: #01013e;
-            color: #ffffff;
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-			flex-grow: 1;
-        }
-		
-		.nav-container{
-			padding-left: 100px;
-			flex-grow: 2;
-		}
-		
-        header img.logo {
-            width: 250px; /* Điều chỉnh kích thước của logo */
-            height: auto; /* Đảm bảo tỷ lệ khung hình đúng */
-        }
+header {
+    background-color: #01013e;
+    color: #ffffff;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-grow: 1;
+}
 
-        nav {
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-        }
+.nav-container {
+    padding-left: 100px;
+    flex-grow: 2;
+}
 
-        nav a {
-            color: #ffffff;
-            text-decoration: none;
-            margin: 0 20px;
-            font-size: 18px;
-            position: relative;
-        }
+header img.logo {
+    width: 250px; /* Điều chỉnh kích thước của logo */
+    height: auto; /* Đảm bảo tỷ lệ khung hình đúng */
+}
 
-        .user-logo {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%; /* Làm cho hình tròn */
-            overflow: hidden; /* Đảm bảo hình ảnh bị cắt theo hình tròn */
-			border: 2px solid #ffffff
-			
-        }
+nav {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
 
-        .user-logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover; /* Đảm bảo hình ảnh không bị méo khi cắt theo hình tròn */
-        }
+    nav a {
+        color: #ffffff;
+        text-decoration: none;
+        margin: 0 20px;
+        font-size: 18px;
+        position: relative;
+    }
 
-        main {
-            padding: 20px;
-        }
+.user-logo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%; /* Làm cho hình tròn */
+    overflow: hidden; /* Đảm bảo hình ảnh bị cắt theo hình tròn */
+    border: 2px solid #ffffff;
+}
 
-        footer {
-            background-color: #01013e;
-            color: #ffffff;
-            text-align: center;
-            padding: 10px 0;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
+    .user-logo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Đảm bảo hình ảnh không bị méo khi cắt theo hình tròn */
+    }
+
+main {
+    padding: 20px;
+}
+
+footer {
+    background-color: #01013e;
+    color: #ffffff;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.container {
+}
+
+.notification_container {
+    position: relative;
+    display: block;
+    width: 28px;
+    height: 28px;
+    height: auto;
+    overflow: hidden;
+    padding-right: 20px;
+}
+
+.notification_icon {
+    position: relative;
+    top: 4px;
+    z-index: 1;
+    font-size: 24px;
+    color: white;
+}
+
+.notification_count {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 2;
+    font-size: 11px;
+    border-radius: 50%;
+    background: #d60b28;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    display: block;
+    text-align: center;
+    color: white;
+    font-family: "Roboto", sans-serif;
+    font-weight: bold;
+}
+
+.notification_button {
+    background-color: transparent;
+    border: none;
+}
+
+.notification_list_container {
+    position: absolute;
+    width: 500px;
+    top: 10%;
+    right: 2%;
+    padding: 10px;
+    width: 20%;
+    border-radius: 10px;
+    background-color: #272790;
+}
+
+.notification_list_child {
+    max-width: 100%;
+    text-decoration: none;
+}
+
+.notification_detail_container {
+    border: 1px solid transparent;
+    margin-bottom: 10px;
+    height: 75px;
+    background-color: #272790;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+    .notification_detail_container:hover {
+        background-color: #3c3c9e;
+    }
+
+.notification_title,
+.notification_description,
+.notification_timeUpdate {
+    color: white;
+    font-size: 13px; /* Set font size for consistency */
+    max-width: 100%; /* Set maximum width to ensure text doesn't overflow */
+    overflow: hidden; /* Hide any overflowing text */
+    text-overflow: ellipsis; /* Add ellipsis (...) for text that overflows */
+    padding: 0;
+    margin: 0;
+}
+
+.notification_description {
+    font-size: 12px;
+}
+
+.notification_timeUpdate {
+    font-size: 11px;
+}
+
+.notification_viewMore {
+    text-decoration: none;
+}
+
+.notification_viewMore_heading:hover {
+    background-color: #5a5ad6;
+}
+
+.notification_viewMore_heading {
+    color: white;
+    background-color: #4444c3;
+    line-height: 30px;
+    font-size: 10px;
+    border-radius: 5px;
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+}
+
+.notification_detail_wrapper {
+    padding-top: 10px;
+    display: flex;
+}
+
+.notification-detail_description {
+    max-width: 75%;
+    margin-left: 10px;
+}
+
+.notification_heading {
+    margin: 5px;
+}
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Arial", sans-serif;
+}
+
+header {
+    background-color: #01013e;
+    color: #ffffff;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-grow: 1;
+}
+
+.nav-container {
+    padding-left: 100px;
+    flex-grow: 2;
+}
+
+header img.logo {
+    width: 250px; /* Điều chỉnh kích thước của logo */
+    height: auto; /* Đảm bảo tỷ lệ khung hình đúng */
+}
+
+nav {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+    nav a {
+        color: #ffffff;
+        text-decoration: none;
+        margin: 0 20px;
+        font-size: 18px;
+        position: relative;
+    }
+
+.user-logo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%; /* Làm cho hình tròn */
+    overflow: hidden; /* Đảm bảo hình ảnh bị cắt theo hình tròn */
+    border: 2px solid #ffffff;
+}
+
+    .user-logo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Đảm bảo hình ảnh không bị méo khi cắt theo hình tròn */
+    }
+
+main {
+    padding: 20px;
+}
+
+footer {
+    background-color: #01013e;
+    color: #ffffff;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.container {
+}
+
+.notification_container {
+    position: relative;
+    display: block;
+    width: 28px;
+    height: 28px;
+    height: auto;
+    overflow: hidden;
+    padding-right: 20px;
+}
+
+.notification_icon {
+    position: relative;
+    top: 4px;
+    z-index: 1;
+    font-size: 24px;
+    color: white;
+}
+
+.notification_count {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 2;
+    font-size: 11px;
+    border-radius: 50%;
+    background: #d60b28;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    display: block;
+    text-align: center;
+    color: white;
+    font-family: "Roboto", sans-serif;
+    font-weight: bold;
+}
+
+.notification_button {
+    background-color: transparent;
+    border: none;
+}
+
+.notification_list_container {
+    position: absolute;
+    width: 500px;
+    top: 10%;
+    right: 2%;
+    padding: 10px;
+    width: 20%;
+    border-radius: 10px;
+    background-color: #272790;
+}
+
+.notification_list_child {
+    max-width: 100%;
+    text-decoration: none;
+}
+
+.notification_detail_container {
+    border: 1px solid transparent;
+    margin-bottom: 10px;
+    height: 75px;
+    background-color: #272790;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+    .notification_detail_container:hover {
+        background-color: #3c3c9e;
+    }
+
+.notification_title,
+.notification_description,
+.notification_timeUpdate {
+    color: white;
+    font-size: 13px; /* Set font size for consistency */
+    max-width: 100%; /* Set maximum width to ensure text doesn't overflow */
+    overflow: hidden; /* Hide any overflowing text */
+    text-overflow: ellipsis; /* Add ellipsis (...) for text that overflows */
+    padding: 0;
+    margin: 0;
+}
+
+.notification_description {
+    font-size: 12px;
+}
+
+.notification_timeUpdate {
+    font-size: 11px;
+}
+
+.notification_viewMore {
+    text-decoration: none;
+}
+
+.notification_viewMore_heading:hover {
+    background-color: #5a5ad6;
+}
+
+.notification_viewMore_heading {
+    color: white;
+    background-color: #4444c3;
+    line-height: 30px;
+    font-size: 10px;
+    border-radius: 5px;
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+}
+
+.notification_detail_wrapper {
+    padding-top: 10px;
+    display: flex;
+}
+
+.notification-detail_description {
+    max-width: 75%;
+    margin-left: 10px;
+}
+
+.notification_heading {
+    margin: 5px;
+}
