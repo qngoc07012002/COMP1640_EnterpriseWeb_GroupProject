@@ -15,5 +15,6 @@ namespace GreenwichUniversityMagazine.Data
         public DbSet<Magazines> Magazines { get; set; }
         public DbSet<Resource> Resources { get; set; }
         public DbSet<Term> Terms { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
     }
 }

@@ -146,6 +146,33 @@ namespace GreenwichUniversityMagazine.Migrations
                     b.ToTable("Magazines");
                 });
 
+            modelBuilder.Entity("GreenwichUniversityMagazine.Models.Notification", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<int>("ArticleId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("ArticleId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Notifications");
+                });
+
             modelBuilder.Entity("GreenwichUniversityMagazine.Models.Resource", b =>
                 {
                     b.Property<int>("Id")
@@ -290,6 +317,25 @@ namespace GreenwichUniversityMagazine.Migrations
                     b.Navigation("Faculty");
 
                     b.Navigation("Term");
+                });
+
+            modelBuilder.Entity("GreenwichUniversityMagazine.Models.Notification", b =>
+                {
+                    b.HasOne("GreenwichUniversityMagazine.Models.Article", "Article")
+                        .WithMany()
+                        .HasForeignKey("ArticleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GreenwichUniversityMagazine.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Article");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("GreenwichUniversityMagazine.Models.Resource", b =>

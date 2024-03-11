@@ -20,6 +20,7 @@ namespace GreenwichUniversityMagazine.Repository
         public IFacultyRepository FacultyRepository { get; private set; }
 
         public IResourceRepository ResourceRepository { get; private set; }
+        public INotificationRepository NotificationRepository { get; private set; }
 
         public UnitOfWork(dbContext dbContext)
         {
@@ -31,6 +32,7 @@ namespace GreenwichUniversityMagazine.Repository
             MagazineRepository = new MagazineRepository(_dbContext);
             FacultyRepository = new FacultyRepository(_dbContext);
             ResourceRepository = new ResourceRepository(_dbContext);
+            NotificationRepository = new NotificationRepository(_dbContext);
         }
         public void Save()
         {
