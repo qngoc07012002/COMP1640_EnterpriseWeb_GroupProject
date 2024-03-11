@@ -73,8 +73,7 @@ footer {
     position: relative;
     display: block;
     width: 28px;
-    height: 28px;
-    height: auto;
+    margin: auto 0;
     overflow: hidden;
     padding-right: 20px;
 }
@@ -306,8 +305,8 @@ footer {
 .notification_list_container {
     position: absolute;
     width: 500px;
-    top: 10%;
-    right: 2%;
+    top: 15%;
+    right: 1%;
     padding: 10px;
     width: 20%;
     border-radius: 10px;
@@ -384,3 +383,105 @@ footer {
 .notification_heading {
     margin: 5px;
 }
+.logned_bar {
+    display: flex;
+    justify-content:flex-end;
+}
+
+
+/* Dropdown Button */
+.dropbtn {
+    border-radius: 50%;
+    overflow: hidden;
+    padding:0;
+    margin:0;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0px;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 10%;
+    overflow:hidden;
+}
+
+    /* Links inside the dropdown */
+    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        background-color:#272790;
+
+    }
+
+        /* Change color of dropdown links on hover */
+        .dropdown-content a:hover {
+            background-color: #3c3c9e;
+        }
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    display:block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+}
+
+.dropdown-content-child{
+    display:inline-block;
+}
+    .dropdown-content-child img {
+        display: inline-block;
+        vertical-align: middle;
+    }
+    .dropdown-content-child h4 {
+        display: inline-block;
+        vertical-align: middle;
+        margin: 0;
+       padding-left:10px;
+       color:white;
+       font-size:13px;
+    }
+
+
+.login-button-container a {
+    border: 1px solid black;
+    text-decoration: none;
+    color: white;
+    padding: 12px 30px;
+    border-radius: 10px;
+    font-size: 13px;
+
+}
+
+
+
+
+.register-button {
+    margin-left: 30%;
+    background-color: #f03e62;
+}
+    .register-button:hover {
+        background-color: #fc5677;
+    }
+.login-button {
+    background-color: #03aa6d;
+}
+
+    .login-button:hover {
+        background-color: #16c988;
+    }
