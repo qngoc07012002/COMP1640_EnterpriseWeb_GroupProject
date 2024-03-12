@@ -1,0 +1,80 @@
+﻿@model MagazineVM
+<link rel="stylesheet" href="~/css/User/Delete.css" />
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2">Create Magazine</h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        <form method="post" enctype="multipart/form-data">
+            <div class="border p-3 mt-4">
+                <div class="form-group row">
+                    <label asp-for="Magazines.Title" class="col-sm-2 col-form-label p-0"></label>
+                    <div class="col-sm-10">
+                        <div class="form-floating py-2">
+                            <input asp-for="Magazines.Title" class="form-control" />
+                            <span asp-validation-for="Magazines.Title" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label asp-for="Magazines.Description" class="col-sm-2 col-form-label p-0"></label>
+                    <div class="col-sm-10">
+                        <div class="form-floating py-2">
+                            <input asp-for="Magazines.Description" class="form-control" />
+                            <span asp-validation-for="Magazines.Description" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label asp-for="Magazines.FacultyId" class="col-sm-2 col-form-label p-0"></label>
+                    <div class="col-sm-10">
+                        <div class="form-floating py-2">
+                            <select asp-for="@Model.Magazines.FacultyId" asp-items="@Model.MyFaculties" class="form-select form-control"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label asp-for="Magazines.TermId" class="col-sm-2 col-form-label p-0"></label>
+                    <div class="col-sm-10">
+                        <div class="form-floating py-2">
+                            <select asp-for="@Model.Magazines.TermId" asp-items="@Model.MyTerms" class="form-select form-control"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label asp-for="Magazines.StartDate" class="col-sm-2 col-form-label p-0"></label>
+                    <div class="col-sm-10">
+                        <div class="form-floating py-2">
+                            <input asp-for="Magazines.StartDate" class="form-control"/>
+                            <span asp-validation-for="Magazines.StartDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label asp-for="Magazines.EndDate" class="col-sm-2 col-form-label p-0"></label>
+                    <div class="col-sm-10">
+                        <div class="form-floating py-2">
+                            <input asp-for="Magazines.EndDate" class="form-control" />
+                            <span asp-validation-for="Magazines.EndDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-6 col-md-3">
+                        <button type="submit" class="btn btn-danger form-control">Create</button>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <a asp-controller="Magazine" asp-action="Index" class="btn btn-secondary border form-control">
+                            Back to List
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
