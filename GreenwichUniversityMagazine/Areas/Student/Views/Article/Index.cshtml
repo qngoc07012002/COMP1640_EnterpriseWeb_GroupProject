@@ -37,7 +37,17 @@
                                 <div class="card">
                                     <img id="bookImg" class="card-img-top "src="@article.imgUrl" alt="Top Image">
                                     <div class="card-body">
-                                        <h5 class="card-title">@article.Title</h5>
+
+                                        <h5 class="card-title">
+                                            @if (article.Status == false)
+                                            {
+                                                <a>[Offline] -</a>
+                                            }
+                                            else
+                                            {
+                                                <a>[Online] -</a>
+                                            } @article.Title
+                                        </h5>
                                         <p class="card-text">Magazine: @article.Magazines.Title</p>
                                         <p class="card-text text-ellipsis">@article.SubTitle</p>
                                     </div>
