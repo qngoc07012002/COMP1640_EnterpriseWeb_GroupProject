@@ -1,5 +1,6 @@
 ﻿using GreenwichUniversityMagazine.Models;
 using GreenwichUniversityMagazine.Models.ViewModel;
+using GreenwichUniversityMagazine.Models.ViewModels;
 using GreenwichUniversityMagazine.Repository;
 using GreenwichUniversityMagazine.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
@@ -39,7 +40,6 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
             return View(articleVM);
         }
 
-        #region API CALLS
         public IActionResult Update(int id)
         {
             try
@@ -81,6 +81,7 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
 
         }
 
+        #region API CALLs
         [HttpPost]
         public IActionResult Create(ArticleVM articleVM, IFormFile? HeadImg, List<IFormFile> files)
         {
@@ -91,20 +92,11 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                 {
                     string fileName = Guid.NewGuid().ToString() + Path.GetExtension(HeadImg.FileName);
                     string bookPath = Path.Combine(wwwRootPath, "img/articleImg");
-                    if (!string.IsNullOrEmpty(articleVM.article.imgUrl))
-                    {
-                        //Delete old image
-                        var oldImagePath = Path.Combine(wwwRootPath, articleVM.article.imgUrl.TrimStart('/'));
-                        if (System.IO.File.Exists(oldImagePath))
-                        {
-                            System.IO.File.Delete(oldImagePath);
-                        }
-                    }
                     using (var fileStream = new FileStream(Path.Combine(bookPath, fileName), FileMode.Create))
                     {
                         HeadImg.CopyTo(fileStream);
                     }
-                    articleVM.article.imgUrl = @"/img/articleImg/" + fileName;
+                    articleVM.article.imgUrl = "~/img/articleImg/" + fileName;
                 }
                 else
                 {
@@ -179,31 +171,34 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
             {
                 ArticleVM articleVM2 = new();
                 articleVM2.article = _unitOfWork.ArticleRepository.Get(u => u.ArticleId == articleVM.article.ArticleId);
+                articleVM.article.imgUrl = articleVM2.article.imgUrl;
                 string wwwRootPath = _webhost.WebRootPath;
                 //Check file Img
                 if (HeadImg != null)
                 {
+                    string basePath = Path.Combine("img", "articleImg");
                     string fileName = Guid.NewGuid().ToString() + Path.GetExtension(HeadImg.FileName);
-                    string bookPath = Path.Combine(wwwRootPath, "img/articleImg");
-                    if (!string.IsNullOrEmpty(articleVM.article.imgUrl))
+                    string newPath = Path.Combine(basePath, fileName);
+
+                    var oldImagePath = Path.Combine(wwwRootPath, articleVM.article.imgUrl.TrimStart('/'));
+                    //Delete Old Img
+                    if (System.IO.File.Exists(oldImagePath))
                     {
-                        //Delete old image
-                        var oldImagePath = Path.Combine(wwwRootPath, articleVM.article.imgUrl.TrimStart('/'));
-                        if (System.IO.File.Exists(oldImagePath))
+                        try
                         {
                             System.IO.File.Delete(oldImagePath);
                         }
+                        catch (DirectoryNotFoundException) 
+                        {
+                            Console.WriteLine("Not Found this file !!");
+                        }
+                        
                     }
-                    using (var fileStream = new FileStream(Path.Combine(bookPath, fileName), FileMode.Create))
+                        using (var fileStream = new FileStream(Path.Combine(wwwRootPath, newPath), FileMode.Create))
                     {
                         HeadImg.CopyTo(fileStream);
                     }
-                    articleVM.article.imgUrl = @"/img/articleImg/" + fileName;
-                }
-                else
-                {
-                    articleVM.article.imgUrl = articleVM2.article.imgUrl;
-                    
+                    articleVM.article.imgUrl = Url.Content("~/img/articleImg/" + fileName);
                 }
                 articleVM.article.UserId = articleVM2.article.UserId;
                 articleVM.article.ModifyDate = DateTime.Today;
@@ -237,7 +232,7 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                         string fileName = Path.GetFileName(file.FileName);
                         string filePath = Path.Combine(basePath, fileName);
 
-                        if (System.IO.File.Exists(filePath))
+                        if (!string.IsNullOrEmpty(filePath))
                         {
                             System.IO.File.Delete(filePath);
                             using (FileStream stream = new FileStream(filePath, FileMode.Create))
@@ -291,6 +286,7 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
             string basePath = Path.Combine(wwwRootPath, "Resource", "Article", id.ToString());
             try
             {
+                System.IO.File.Delete(article.imgUrl);
                 if (Directory.Exists(basePath))
                 {
                     Directory.Delete(basePath, true);
