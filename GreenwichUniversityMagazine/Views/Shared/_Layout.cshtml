@@ -26,8 +26,7 @@
         <div class="nav-container">
         @{
             var userId = Accessor.HttpContext.Session.GetString("UserId");
-            // if (userId == null)
-            if(!true)
+             if (userId == null)
             {
                 <div class="login-button-container">
                         <a asp-area="Student" asp-controller="Home" asp-action="Register" class="register-button">Sign Up</a>
@@ -52,15 +51,22 @@
                                 </div>
                             </button>
                             <div class="dropdown-content">
-                                    <a href="#" class="dropdown-content-child">
-                                        <img src="~/css/Navigation/username.png" />
-                                        <h4>username</h4>
-                                    </a>
+                            <div class="black-header">
+                                    <div class="user-image">
+                                        <img src="~/img/Layout/user-logo.png" alt="User image" class="user-logo-details">
+                                    </div>
+                            </div>
+                                <div class="dropdown-content-header">
+                            
+                            
+                                        <h4 class="dropdown-content-fullname">Fullname</h4>
+                                        <h4 class="dropdown-content-email">email@gmail.com</h4>
+                                </div>
                                 <a class="dropdown-content-child" asp-area="Student" asp-asp-controller="Student" asp-action="EditProfile">
                                     <img src="~/css/Navigation/editprofile.png" />
                                     <h4>Edit Profile</h4>
                                 </a>
-                                <a href="#" class="dropdown-content-child">
+                                <a asp-area="Student" asp-controller="Home" asp-action="Logout" class="dropdown-content-child">
                                     <img src="~/css/Navigation/logout.png" />
                                     <h4>Log Out</h4>
                                 </a>
