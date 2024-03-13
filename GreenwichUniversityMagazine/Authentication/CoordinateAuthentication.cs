@@ -3,13 +3,13 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace GreenwichUniversityMagazine.Authentication
 {
-    public class AdminAuthentication : ActionFilterAttribute
+    public class CoordinateAuthentication : ActionFilterAttribute
     {
-        public AdminAuthentication() { }
+        public CoordinateAuthentication() { }
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             var userRoles = context.HttpContext.Session.GetString("UserRole");
-            if (userRoles == null || !userRoles.Contains("ADMIN"))
+            if (userRoles == null || !userRoles.Contains("COORDINATE"))
             {
                 context.Result = new RedirectToRouteResult(new RouteValueDictionary(new
                 {
