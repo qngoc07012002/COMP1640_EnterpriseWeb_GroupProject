@@ -102,6 +102,10 @@ namespace GreenwichUniversityMagazine.Areas.Manager.Controllers
                 return NotFound();
             }
             magazineVM.Magazines = _unitOfWork.MagazineRepository.Get(u => u.Id == id);
+            if(magazineVM.Magazines.IsDeleted == true)
+            {
+                return RedirectToAction("Index");
+            }
             return View(magazineVM);
         }
         [HttpPost]
