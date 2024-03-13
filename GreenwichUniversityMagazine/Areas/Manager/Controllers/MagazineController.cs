@@ -176,7 +176,6 @@ namespace GreenwichUniversityMagazine.Areas.Manager.Controllers
             {
                 return NotFound();
             }
-            //_unitOfWork.MagazineRepository.Remove(magazineToDelete);
             magazineToDelete.IsDeleted = true;
             _unitOfWork.MagazineRepository.Update(magazineToDelete);
             _unitOfWork.Save();

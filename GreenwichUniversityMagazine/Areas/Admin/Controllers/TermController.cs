@@ -56,6 +56,10 @@ namespace GreenwichUniversityMagazine.Areas.Admin.Controllers
             {
                 return NotFound();
             }
+            if(termFromDb.IsDeleted == true)
+            {
+                return RedirectToAction("Index");
+            }
             return View(termFromDb);
         }
         [HttpPost]
@@ -85,7 +89,8 @@ namespace GreenwichUniversityMagazine.Areas.Admin.Controllers
                             }
                             if (magazine.StartDate > obj.EndDate)
                             {
-                                magazine.StartDate = obj.EndDate;
+                                magazine.StartDate = obj.StartDate;
+                                magazine.EndDate = obj.EndDate;
                             }
                             _unitOfWork.MagazineRepository.Update(magazine);
                         }
@@ -128,7 +133,6 @@ namespace GreenwichUniversityMagazine.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            //_unitOfWork.TermRepository.Remove(termToDelete);
             termToDelete.IsDeleted = true;
             _unitOfWork.TermRepository.Update(termToDelete);
             _unitOfWork.Save();
