@@ -69,15 +69,26 @@ namespace GreenwichUniversityMagazine.Areas.Admin.Controllers
 
                     foreach (var magazine in magazinesToUpdate)
                     {
-                        if (magazine.StartDate < obj.StartDate)
+                        if (magazine.TermId == obj.Id && magazine.IsDeleted == false)
                         {
-                            magazine.StartDate = obj.StartDate;
+                            if (magazine.StartDate < obj.StartDate)
+                            {
+                                magazine.StartDate = obj.StartDate;
+                            }
+                            if (magazine.EndDate > obj.EndDate)
+                            {
+                                magazine.EndDate = obj.EndDate;
+                            }
+                            if (magazine.StartDate > magazine.EndDate)
+                            {
+                                magazine.EndDate = magazine.StartDate;
+                            }
+                            if (magazine.StartDate > obj.EndDate)
+                            {
+                                magazine.StartDate = obj.EndDate;
+                            }
+                            _unitOfWork.MagazineRepository.Update(magazine);
                         }
-                        if (magazine.EndDate > obj.EndDate)
-                        {
-                            magazine.EndDate = obj.EndDate;
-                        }
-                        _unitOfWork.MagazineRepository.Update(magazine);
                     }
 
                     _unitOfWork.TermRepository.Update(obj);
