@@ -424,6 +424,8 @@ footer {
     position: relative;
     padding: 0;
     margin: 0;
+    display:flex;
+    justify-content:center;
 }
 
 .user-image {
@@ -434,7 +436,6 @@ footer {
     border: 4px solid #1f1f1f;
     position:absolute;
     top:50%;
-    left:40%;
 }
 
     .user-image img {

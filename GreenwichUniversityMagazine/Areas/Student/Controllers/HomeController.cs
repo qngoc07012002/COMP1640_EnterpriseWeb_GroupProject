@@ -37,6 +37,12 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                 {
                     HttpContext.Session.SetString("UserEmail", user.Email);
                     HttpContext.Session.SetString("UserId", user.Id.ToString());
+                    if(user.Name!=null && user.avtUrl != null)
+                    {
+                        HttpContext.Session.SetString("UserName", user.Name);
+                        HttpContext.Session.SetString("avtUrl", user.avtUrl);
+                    }
+                  
                     /*TempData["success"] = "Login successful";*/ // Lưu thông báo đăng nhập thành công vào TempData
                 }
                 return RedirectToAction("Index", "Home", new { area = "student" });
@@ -79,6 +85,9 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
         {
             HttpContext.Session.Remove("UserId");
             HttpContext.Session.Remove("UserName");
+            HttpContext.Session.Remove("avtUrl");
+            HttpContext.Session.Remove("UserEmail");
+
             return RedirectToAction("Index", "Home", new { area = "student" });
         }
     }

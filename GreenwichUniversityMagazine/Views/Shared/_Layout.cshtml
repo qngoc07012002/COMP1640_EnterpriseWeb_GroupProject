@@ -26,6 +26,9 @@
         <div class="nav-container">
         @{
             var userId = Accessor.HttpContext.Session.GetString("UserId");
+                var userEmail = Accessor.HttpContext.Session.GetString("UserEmail");
+                var userName = Accessor.HttpContext.Session.GetString("UserName");
+                var avtUrl = Accessor.HttpContext.Session.GetString("avtUrl");
              if (userId == null)
             {
                 <div class="login-button-container">
@@ -47,22 +50,35 @@
                         <div class="dropdown">
                             <button class="dropbtn">
                                 <div class="user-logo">
-                                    <img src="~/img/Layout/user-logo.png" alt="User Logo">
+                                @if(avtUrl==null){
+                                        <img src="~/css/Navigation/gw.png" alt="User image">
+                                    }
+                                    else
+                                    {
+
+                                        <img src="@avtUrl" alt="User Logo">
+                                    }
                                 </div>
                             </button>
                             <div class="dropdown-content">
                             <div class="black-header">
                                     <div class="user-image">
-                                        <img src="~/img/Layout/user-logo.png" alt="User image" class="user-logo-details">
+                                        @if(avtUrl==null){
+                                            <img src="~/css/Navigation/gw.png" alt="User image" class="user-logo-details">
+                                        }
+                                        else
+                                        {
+                                            <img src="@avtUrl" alt="User image" class="user-logo-details">
+                                        }
                                     </div>
                             </div>
                                 <div class="dropdown-content-header">
                             
                             
-                                        <h4 class="dropdown-content-fullname">Fullname</h4>
-                                        <h4 class="dropdown-content-email">email@gmail.com</h4>
+                                        <h4 class="dropdown-content-fullname">@userName</h4>
+                                        <h4 class="dropdown-content-email">@userEmail</h4>
                                 </div>
-                                <a class="dropdown-content-child" asp-area="Student" asp-asp-controller="Student" asp-action="EditProfile">
+                                <a class="dropdown-content-child" asp-area="Student" asp-asp-controller="Home" asp-action="EditProfile">
                                     <img src="~/css/Navigation/editprofile.png" />
                                     <h4>Edit Profile</h4>
                                 </a>
