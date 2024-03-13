@@ -40,7 +40,7 @@ namespace GreenwichUniversityMagazine.Areas.Admin.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("StartDate", "Start date must be less than End date.");
+                    TempData["popupScript"] = "alert('Start date must be less than End date.');";
                 }
             }
             return View(obj);
@@ -63,13 +63,37 @@ namespace GreenwichUniversityMagazine.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                _unitOfWork.TermRepository.Update(obj);
-                _unitOfWork.Save();
-                TempData["success"] = "Term edited successfully";
-                return RedirectToAction("Index");
+                if (obj != null && obj.StartDate < obj.EndDate)
+                {
+                    var magazinesToUpdate = _unitOfWork.MagazineRepository.GetAll().ToList();
+
+                    foreach (var magazine in magazinesToUpdate)
+                    {
+                        if (magazine.StartDate < obj.StartDate)
+                        {
+                            magazine.StartDate = obj.StartDate;
+                        }
+                        if (magazine.EndDate > obj.EndDate)
+                        {
+                            magazine.EndDate = obj.EndDate;
+                        }
+                        _unitOfWork.MagazineRepository.Update(magazine);
+                    }
+
+                    _unitOfWork.TermRepository.Update(obj);
+                    _unitOfWork.Save();
+
+                    TempData["success"] = "Term updated successfully";
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    TempData["popupScript"] = "alert('Start date must be less than End date.');";
+                }
             }
-            return View();
+            return View(obj);
         }
+
         public IActionResult Delete(int? id)
         {
             if (id == null || id == 0)

@@ -44,7 +44,7 @@ namespace GreenwichUniversityMagazine.Areas.Manager.Controllers
             {
                 var term = _unitOfWork.TermRepository.GetById(magazineVM.Magazines.TermId);
 
-                if (term != null && magazineVM.Magazines.StartDate >= term.StartDate && magazineVM.Magazines.EndDate <= term.EndDate)
+                if (term != null && magazineVM.Magazines.StartDate >= term.StartDate && magazineVM.Magazines.EndDate <= term.EndDate && magazineVM.Magazines.StartDate < magazineVM.Magazines.EndDate)
                 {
                     _unitOfWork.MagazineRepository.Add(magazineVM.Magazines);
                     _unitOfWork.Save();
@@ -53,7 +53,7 @@ namespace GreenwichUniversityMagazine.Areas.Manager.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("Magazines.EndDate", "Magazine's time must be within the Term's time.");
+                    ModelState.AddModelError("Magazines.EndDate", "Magazine's time must be within the Term's time Or Enddate must be greater than Startdate.");
                 }
             }
 
@@ -111,7 +111,7 @@ namespace GreenwichUniversityMagazine.Areas.Manager.Controllers
             {
                 var term = _unitOfWork.TermRepository.GetById(magazineVM.Magazines.TermId);
 
-                if (term != null && magazineVM.Magazines.StartDate >= term.StartDate && magazineVM.Magazines.EndDate <= term.EndDate)
+                if (term != null && magazineVM.Magazines.StartDate >= term.StartDate && magazineVM.Magazines.EndDate <= term.EndDate && magazineVM.Magazines.StartDate < magazineVM.Magazines.EndDate)
                 {
                     _unitOfWork.MagazineRepository.Update(magazineVM.Magazines);
                     TempData["success"] = "Magazine updated successfully";
@@ -120,7 +120,7 @@ namespace GreenwichUniversityMagazine.Areas.Manager.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("Magazines.EndDate", "Magazine's time must be within the Term's time.");
+                    ModelState.AddModelError("Magazines.EndDate", "Magazine's time must be within the Term's time Or Enddate must be greater than Startdate.");
                 }
             }
             magazineVM.MyFaculties = _unitOfWork.FacultyRepository.GetAll()

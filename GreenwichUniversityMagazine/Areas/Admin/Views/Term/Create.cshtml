@@ -43,3 +43,9 @@
         </form>
     </div>
 </div>
+<script>
+    @if (TempData["popupScript"] != null)
+    {
+        @Html.Raw(TempData["popupScript"])
+    }
+</script>
