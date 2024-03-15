@@ -33,6 +33,7 @@ namespace GreenwichUniversityMagazine.Repository
             FacultyRepository = new FacultyRepository(_dbContext);
             ResourceRepository = new ResourceRepository(_dbContext);
             NotificationRepository = new NotificationRepository(_dbContext);
+            TermRepository = new TermRepository(_dbContext);
         }
         public void Save()
         {
