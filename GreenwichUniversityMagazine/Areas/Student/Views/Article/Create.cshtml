@@ -1,0 +1,110 @@
+﻿@using GreenwichUniversityMagazine.Models.ViewModel
+@model ArticleVM
+@{
+    ViewData["Title"] = "Create";
+}
+<link rel="stylesheet" href="~/css/Student/Article.css" />
+<script src="https://cdn.ckeditor.com/4.19.1/standard/ckeditor.js"></script>
+
+<h1>Create</h1>
+
+<h4>Article</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" enctype="multipart/form-data">
+            <div class="row">
+                <div class="form-group">
+                    <label class="control-label">Magazines Name</label>
+                    <select asp-for="@Model.article.MagazinedId" class="form-control" asp-items="@Model.MyMagazines"></select>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Name of Article: </label>
+                    <input asp-for="@Model.article.Title" class="form-control" />
+                    <span asp-validation-for="@Model.article.Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Subtitle: </label>
+                    <input asp-for="@Model.article.SubTitle" class="form-control" />
+                    <span asp-validation-for="@Model.article.SubTitle" class="text-danger"></span>
+                </div>
+                <div class="row mb-3">
+                    <label>Image Head</label>
+                    <input type="file" name="HeadImg" class="form-control" accept="image/*" />
+                    <span asp-validation-for="@Model.article.imgUrl" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label"></label>
+                    <textarea id="content" asp-for="@Model.article.Body" class="form-control">@Model.article.Body</textarea>
+                    <span asp-validation-for="@Model.article.Body" class="text-danger"></span>
+                </div>
+                <a> Want to add document:</a>
+                <div class="upload-container" id="upload-container">
+                    <input type="file" id="file-input" name="files" multiple style="display:none">
+                    <a class="upload-button" onclick="openFileUploader()">
+                        <span>+</span>
+                    </a>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </div>
+        </form>
+        <></>
+    </div>
+</div>
+<hr />
+
+<script>
+    CKEDITOR.replace('content');
+</script>
+<script>
+    let files = [];
+
+    function openFileUploader() {
+        document.getElementById('file-input').click();
+    }
+
+    document.getElementById('file-input').addEventListener('change', handleFileSelect);
+
+    function handleFileSelect(event) {
+        const selectedFiles = event.target.files;
+        for (let i = 0; i < selectedFiles.length; i++) {
+            const file = selectedFiles[i];
+            const fileName = file.name;
+            const fileType = fileName.split('.').pop().toUpperCase();
+            if (['DOC', 'DOCX', 'PDF', 'CSV'].includes(fileType)) {
+                files.push(file);
+                addUploadItem(file);
+            }
+        }
+    }
+
+    function addUploadItem(file) {
+        const uploadContainer = document.getElementById('upload-container');
+        const uploadItem = document.createElement('div');
+        uploadItem.classList.add('upload-item');
+        uploadItem.innerHTML = `
+            <img src="file-icon.png" alt="File Icon">
+            <span>${file.name}</span>
+          `;
+        uploadContainer.appendChild(uploadItem);
+        uploadItem.addEventListener('click', function () {
+            cancelUpload(file, uploadItem);
+        });
+    }
+   
+    function cancelUpload(file, uploadItem) {
+        const index = files.indexOf(file);
+        if (index !== -1) {
+            files.splice(index, 1);
+        }
+        uploadItem.remove();
+    }
+
+</script>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

@@ -1,5 +1,6 @@
 ﻿using GreenwichUniversityMagazine.Models;
 using GreenwichUniversityMagazine.Repository.IRepository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GreenwichUniversityMagazine.Areas.Cordinate.Controllers
@@ -16,7 +17,7 @@ namespace GreenwichUniversityMagazine.Areas.Cordinate.Controllers
         {
             return View();
         }
-
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult GetNotification()
         {
