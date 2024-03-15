@@ -1,5 +1,8 @@
 @using Microsoft.AspNetCore.Http
 @inject IHttpContextAccessor Accessor
+
+@* <partial name="_Notification" /> *@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,31 +28,77 @@
         <div class="nav-container">
         @{
             var userId = Accessor.HttpContext.Session.GetString("UserId");
-            if (userId == null)
+                var userEmail = Accessor.HttpContext.Session.GetString("UserEmail");
+                var userName = Accessor.HttpContext.Session.GetString("UserName");
+                var avtUrl = Accessor.HttpContext.Session.GetString("avtUrl");
+             if (userId == null)
             {
-                <a asp-area="Student" asp-controller="Home" asp-action="Register" >Sign Up</a>
-                <a asp-area="Student" asp-controller="Home" asp-action="Login" >Sign In</a>
+                <div class="login-button-container">
+                        <a asp-area="Student" asp-controller="Home" asp-action="Register" class="register-button">Sign Up</a>
+                        <a asp-area="Student" asp-controller="Home" asp-action="Login" class="login-button">Sign In</a>
+                </div>
+                
             }
             else
             {
-                var userEmail = Accessor.HttpContext.Session.GetString("UserEmail");
-                    <a>@userEmail</a>
-                <a asp-area="Student" asp-controller="Home" asp-action="Logout">Logout</a>
+                <div class="logned_bar">
+                        <div class="notification_container">
+                            <button id="fetchDataButton" class="notification_button">
+                                <span class="notification_count">1</span>
+                                <img src="~/css/Navigation/notification.png" class="notification_icon" />
+                            </button>
+                        </div>
+                        <div id="partialViewContainer"></div>
+                        <div class="dropdown">
+                            <button class="dropbtn">
+                                <div class="user-logo">
+                                @if(avtUrl==null){
+                                        <img src="~/css/Navigation/gw.png" alt="User image">
+                                    }
+                                    else
+                                    {
+
+                                        <img src="@avtUrl" alt="User Logo">
+                                    }
+                                </div>
+                            </button>
+                            <div class="dropdown-content">
+                            <div class="black-header">
+                                    <div class="user-image">
+                                        @if(avtUrl==null){
+                                            <img src="~/css/Navigation/gw.png" alt="User image" class="user-logo-details">
+                                        }
+                                        else
+                                        {
+                                            <img src="@avtUrl" alt="User image" class="user-logo-details">
+                                        }
+                                    </div>
+                            </div>
+                                <div class="dropdown-content-header">
+                            
+                            
+                                        <h4 class="dropdown-content-fullname">@userName</h4>
+                                        <h4 class="dropdown-content-email">@userEmail</h4>
+                                </div>
+                                <a class="dropdown-content-child" asp-area="Student" asp-asp-controller="Home" asp-action="EditProfile">
+                                    <img src="~/css/Navigation/editprofile.png" />
+                                    <h4>Edit Profile</h4>
+                                </a>
+                                <a asp-area="Student" asp-controller="Home" asp-action="Logout" class="dropdown-content-child">
+                                    <img src="~/css/Navigation/logout.png" />
+                                    <h4>Log Out</h4>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                // var userEmail = Accessor.HttpContext.Session.GetString("UserEmail");
+                //     <a>@userEmail</a>
+                // <a asp-area="Student" asp-controller="Home" asp-action="Logout">Logout</a>
             }
         }
         </div>
-        <div class="notification_container">
 
-            <button id="fetchDataButton">
-                    <span class="notification_count">1</span>
-                    <img src="~/css/Navigation/notification.png" class="notification_icon" />
-                </button>
-        </div>
-        <div id="partialViewContainer" class="notification_list_container"></div>
-
-        <div class="user-logo">
-            <img src="~/img/Layout/user-logo.png" alt="User Logo">
-        </div>
     </header>
     <div class="container">
         <main role="main" class="pb-3">
@@ -65,6 +114,7 @@
 </html>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/_framework/aspnetcore-browser-refresh.js"></script>
 <script>
     $(document).ready(function () {
         // Variable to track if data is visible
@@ -75,7 +125,7 @@
             if (!dataVisible) {
                 // If data is not visible, fetch and display
                 $.ajax({
-                    url: 'Cordinate/Cordinate/GetNotification',
+                    url: '/Cordinate/Cordinate/GetNotification',
                     type: 'GET',
                     success: function (data) {
                         $('#partialViewContainer').html(data);

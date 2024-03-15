@@ -128,11 +128,18 @@ namespace GreenwichUniversityMagazine.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("FacultyId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
@@ -216,6 +223,9 @@ namespace GreenwichUniversityMagazine.Migrations
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
