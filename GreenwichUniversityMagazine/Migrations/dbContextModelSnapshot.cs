@@ -37,13 +37,17 @@ namespace GreenwichUniversityMagazine.Migrations
                     b.Property<int?>("MagazinedId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("ModifyDate")
+                    b.Property<DateTime?>("ModifyDate")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("SubmitDate")
+                    b.Property<string>("SubTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("SubmitDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Title")
@@ -52,6 +56,9 @@ namespace GreenwichUniversityMagazine.Migrations
 
                     b.Property<int?>("UserId")
                         .HasColumnType("int");
+
+                    b.Property<string>("imgUrl")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ArticleId");
 

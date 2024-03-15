@@ -1,0 +1,146 @@
+﻿@using GreenwichUniversityMagazine.Models.ViewModel
+@model ArticleVM
+@{
+    ViewData["Title"] = "Update";
+}
+<link rel="stylesheet" href="~/css/Student/Article.css" />
+<script src="https://cdn.ckeditor.com/4.19.1/standard/ckeditor.js"></script>
+
+<h1>Update</h1>
+
+<h4>Article</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" enctype="multipart/form-data">
+            <div class="row">
+                <input asp-for="@Model.article.ArticleId" hidden />
+                <input asp-for="@Model.article.SubmitDate" hidden />
+                <div class="form-group">
+                    <label class="control-label">Magazines Name</label>
+                    <select asp-for="@Model.article.MagazinedId" class="form-control" asp-items="@Model.MyMagazines"></select>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Name of Article: </label>
+                    <input asp-for="@Model.article.Title" class="form-control" />
+                    <span asp-validation-for="@Model.article.Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Subtitle: </label>
+                    <input asp-for="@Model.article.SubTitle" class="form-control" />
+                    <span asp-validation-for="@Model.article.SubTitle" class="text-danger"></span>
+                </div>
+                <div class="row mb-3">
+                    <label>Image Head</label>
+                    <img class="col-2" src="@Model.article.imgUrl" />
+                    <input type="file" name="HeadImg" class="form-control" accept="image/*" />
+                    <span asp-validation-for="@Model.article.imgUrl" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label"></label>
+                    <textarea id="content" asp-for="@Model.article.Body" class="form-control">@Model.article.Body</textarea>
+                    <span asp-validation-for="@Model.article.Body" class="text-danger"></span>
+                </div>
+                <a>Document Already Exits:</a>
+                <input id="filesDeleteInput" name="filesDelete" multiple style="display:none" />
+                <div>
+                    @if (Model.MyResources != null)
+                    {
+                        @foreach (var resource in Model.MyResources)
+                        {
+                            var fileName = System.IO.Path.GetFileName(resource.Text);
+                            <div class="old-item" id="@resource.Value" onclick="confirmAndRemove('@resource.Value')">
+                                <span>@fileName</span>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <p>No files attached</p>
+                    }
+                </div>
+                <hr />
+
+                <a> Want to add more document:</a>
+                <div class="upload-container" id="upload-container">
+                    <input type="file" id="file-input" name="files" multiple style="display:none">
+                    <a class="upload-button" onclick="openFileUploader()">
+                        <span>+</span>
+                    </a>
+                    
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Update" class="btn btn-primary" />
+                </div>
+            </div>
+        </form>
+        <></>
+    </div>
+</div>
+<hr />
+
+<script>
+    CKEDITOR.replace('content');
+</script>
+<script>
+    let files = [];
+    let filesDelete = [];
+    function openFileUploader() {
+        document.getElementById('file-input').click();
+    }
+
+    document.getElementById('file-input').addEventListener('change', handleFileSelect);
+
+    function handleFileSelect(event) {
+        const selectedFiles = event.target.files;
+        for (let i = 0; i < selectedFiles.length; i++) {
+            const file = selectedFiles[i];
+            const fileName = file.name;
+            const fileType = fileName.split('.').pop().toUpperCase();
+            if (['DOC', 'DOCX', 'PDF', 'CSV'].includes(fileType)) {
+                files.push(file);
+                addUploadItem(file);
+            }
+        }
+    }
+
+    function addUploadItem(file) {
+        const uploadContainer = document.getElementById('upload-container');
+        const uploadItem = document.createElement('div');
+        uploadItem.classList.add('upload-item');
+        uploadItem.innerHTML = ` <span>${file.name}</span> `;
+        uploadContainer.appendChild(uploadItem);
+        uploadItem.addEventListener('click', function () {
+            cancelUpload(file, uploadItem);
+        });
+    }
+
+    function cancelUpload(file, uploadItem) {
+        const index = files.indexOf(file);
+        if (index !== -1) {
+            files.splice(index, 1);
+        }
+        uploadItem.remove();
+    }
+
+    function confirmAndRemove(resourceId) {
+        var result = confirm("Do you want to delete this file ?");
+        if (result) {
+            removeResource(resourceId);
+        }
+    }
+
+    function removeResource(resourceId) {
+        var element = document.getElementById(resourceId);
+        element.remove();
+        filesDelete.push(resourceId);
+        var filesDeleteInput = document.getElementById('filesDeleteInput');
+        filesDeleteInput.value = filesDelete;
+    }
+
+</script>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
