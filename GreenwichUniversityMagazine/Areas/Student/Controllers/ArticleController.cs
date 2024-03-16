@@ -96,7 +96,7 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                     {
                         HeadImg.CopyTo(fileStream);
                     }
-                    articleVM.article.imgUrl = "~/img/articleImg/" + fileName;
+                    articleVM.article.imgUrl = "/img/articleImg/" + fileName;
                 }
                 else
                 {
