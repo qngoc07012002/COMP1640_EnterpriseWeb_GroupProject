@@ -12,7 +12,7 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
 
         public IActionResult Index()
         {
-            IEnumerable<Article> articleList = _unitOfWork.ArticleRepository.GetAll(includeProperty: "Magazines");
+            IEnumerable<Article> articleList = _unitOfWork.ArticleRepository.GetAll(includeProperty: "Magazines").ToList();
             return View(articleList);
         }
         public HomeController(IUnitOfWork db, IWebHostEnvironment webhost)

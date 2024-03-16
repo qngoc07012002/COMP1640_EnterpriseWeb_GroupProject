@@ -1,0 +1,42 @@
+﻿.card-img {
+    margin: auto;
+    padding: 5px;
+    border-radius: 0.7em;
+    width: 100%; /* Chiều rộng 100% của parent container */
+    height: auto;
+}
+
+
+.fixed-size-img {
+    width: 100%; /* Đảm bảo rằng hình ảnh sẽ điền vào phần đầu tiên của cha */
+    height: auto; /* Đảm bảo tỷ lệ khung hình bị thay đổi tùy thuộc vào chiều rộng */
+    max-width: 100%; /* Đảm bảo hình ảnh không vượt quá kích thước của container cha */
+}
+
+.c-item{
+    height : 480px;
+}
+.c-img{
+    height: 100%;
+    object-fit: cover;
+}
+
+.pagination-container {
+    display: flex;
+    justify-content: center;
+}
+
+
+.card-left {
+   
+    transition: transform 0.3s ease;
+}
+.card-img-custom {
+    width: 100%; /* Đặt chiều rộng của ảnh là 100% của phần tử cha */
+    height: 50%; /* Để giữ tỷ lệ khung hình */
+}
+
+
+.card-left:hover {
+   transform: scale(1.05); /* Khi di chuột vào, phóng to card bên trái */
+}
