@@ -1,0 +1,70 @@
+﻿@model GreenwichUniversityMagazine.Models.ViewModels.UserVM
+<link rel="stylesheet" href="~/css/Student/editprofile.css">
+
+<div class="body_editprofile">
+    <form class="editprofile-form" action="#" method="post" enctype="multipart/form-data" id="profileForm">
+        <input asp-for="@Model.User.Email" hidden type="text">
+        <input asp-for="@Model.User.Id" hidden />
+        <input asp-for="@Model.User.avtUrl" hidden />
+        <input asp-for="@Model.User.Role" hidden />
+        <input asp-for="@Model.User.Status" hidden />
+        <input asp-for="@Model.User.Password" hidden />
+        <input asp-for="@Model.User.FacultyId" hidden />
+
+
+
+        <h2>Change Information</h2>
+        <div class="avatar-container" id="avatarContainer">
+            <img id="currentAvatar" src="@Model.User.avtUrl" alt="Avatar">
+        </div>
+
+        <div class="upload-btn-wrapper">
+            <button class="btn-image">Choose New Image</button>
+            <input type="file" name="file" accept="image/*" id="file" onchange="updateAvatar()">
+        </div>
+
+        <label for="name">Name:</label>
+        <input asp-for="@Model.User.Name" readonly>
+        <label for="code">Code:</label>
+        <input asp-for="@Model.User.Code" readonly>
+        <label for="dob">Date of Birth:</label>
+        <input type="date" asp-for="@Model.User.DateOfBirth" readonly>
+     
+        <label for="faculty">Faculty:</label>
+        <select asp-for="@Model.User.FacultyId" asp-items="@Model.MyFaculties" class="form-control" id="facultyDropdown" disabled>
+        </select>
+
+        
+        <input type="submit" value="Save">
+    </form>
+
+    <script>
+        function updateAvatar() {
+            var input = document.getElementById('file');
+
+            var container = document.getElementById('avatarContainer');
+            var currentAvatar = document.getElementById('currentAvatar');
+
+            var file = input.files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    currentAvatar.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
+ 
+    <script>
+        // Disable selecting other items in the dropdown
+        document.getElementById("facultyDropdown").addEventListener("change", function () {
+            this.value = @Model.User.FacultyId; // Reset the value to the original value
+        });
+
+        // Disable dropdown functionality
+        document.getElementById("facultyDropdown").addEventListener("click", function () {
+            this.blur();
+        });
+    </script>
+</div>
