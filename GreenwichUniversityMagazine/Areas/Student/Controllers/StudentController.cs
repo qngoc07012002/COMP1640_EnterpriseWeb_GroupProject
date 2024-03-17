@@ -83,6 +83,35 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
             // Return the view with the updated UserVM model
             return View(userVM);
         }
+        public IActionResult ChangePassword()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult ChangePassword(string currentPassword, string newPassword, string confirmNewPassword)
+        {
+            if (newPassword != confirmNewPassword)
+            {
+                TempData["error"] = "Password Doesn't Match";
+            }
+            else
+            {
+                int userId = int.Parse(HttpContext.Session.GetString("UserId"));
+                if (!_unitOfWork.UserRepository.CheckPassword(userId, currentPassword))
+                {
+                    TempData["error"] = "Invalid Password";
+                }
+                else
+                {
+                    User user = _unitOfWork.UserRepository.Get(b => b.Id == userId);
+                    user.Password = newPassword;
+                    _unitOfWork.UserRepository.Update(user);
+                    _unitOfWork.Save();
+                    TempData["success"] = "Update Password Successfully";
+                }
+            }
+            return View();
+        }
 
     }
 }
