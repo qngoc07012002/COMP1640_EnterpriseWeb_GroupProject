@@ -29,12 +29,12 @@
         <input asp-for="@Model.User.Code" readonly>
         <label for="dob">Date of Birth:</label>
         <input type="date" asp-for="@Model.User.DateOfBirth" readonly>
-     
+
         <label for="faculty">Faculty:</label>
         <select asp-for="@Model.User.FacultyId" asp-items="@Model.MyFaculties" class="form-control" id="facultyDropdown" disabled>
         </select>
 
-        
+
         <input type="submit" value="Save">
     </form>
 
@@ -55,7 +55,7 @@
             }
         }
     </script>
- 
+
     <script>
         // Disable selecting other items in the dropdown
         document.getElementById("facultyDropdown").addEventListener("change", function () {
