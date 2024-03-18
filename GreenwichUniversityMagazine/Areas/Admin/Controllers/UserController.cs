@@ -188,7 +188,5 @@ namespace GreenwichUniversityMagazine.Areas.Admin.Controllers
             _unitOfWork.Save();
             return RedirectToAction("Index");
         }
-
-
     }
 }

@@ -1,0 +1,181 @@
+﻿/* Reset CSS */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding-top: 20px;
+}
+
+.card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.card-header {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 15px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.card-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.card-body {
+    padding: 15px;
+}
+
+.card-footer {
+    background-color: #f8f9fa;
+    padding: 10px 15px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 8px 16px;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.card-img-top {
+    width: 100%; /* Đảm bảo hình ảnh chiếm toàn bộ chiều rộng của thẻ cha */
+    height: auto; /* Đảm bảo tỷ lệ khung hình ảnh được bảo toàn */
+    object-fit: cover; /* Đảm bảo hình ảnh bao phủ toàn bộ phần địa chỉ của thẻ */
+}
+
+#bookImg {
+    width: 242px;
+    min-width: 242px;
+    min-height: 290px;
+    height: 290px;
+    object-fit: cover;
+}
+
+.upload-container {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+}
+
+.upload-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Shadow */
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+    .upload-button:hover {
+        background-color: #0056b3;
+        transform: scale(1.05); /* Zoom effect */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Increased shadow */
+    }
+
+    .upload-button span {
+        font-size: 24px;
+    }
+
+.upload-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #8bc34a; /* Màu xanh lá cây */
+    color: #fff;
+    border-radius: 25px;
+    padding: 10px 20px;
+    margin-right: 10px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+    .upload-item:hover {
+        background-color: #689f38; /* Màu xanh lá cây nhạt */
+    }
+
+    .upload-item img {
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+    }
+
+.old-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #8bc34a; /* Màu xanh lá cây */
+    color: #fff;
+    border-radius: 25px;
+    padding: 10px 20px;
+    margin-right: 10px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+    .old-item:hover {
+        background-color: red; /* Màu xanh lá cây nhạt */
+    }
+
+    .old-item img {
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+    }
