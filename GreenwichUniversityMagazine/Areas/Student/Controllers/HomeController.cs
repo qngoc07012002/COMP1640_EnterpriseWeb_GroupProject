@@ -86,6 +86,8 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
         {
             HttpContext.Session.Remove("UserId");
             HttpContext.Session.Remove("UserName");
+            HttpContext.Session.Remove("avtUrl");
+            HttpContext.Session.Remove("UserEmail");
             return RedirectToAction("Index", "Home", new { area = "student" });
         }
 
