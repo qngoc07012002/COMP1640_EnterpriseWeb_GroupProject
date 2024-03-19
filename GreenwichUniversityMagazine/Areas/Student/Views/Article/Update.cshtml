@@ -1,5 +1,6 @@
 ﻿@using GreenwichUniversityMagazine.Models.ViewModel
 @model ArticleVM
+@inject IHttpContextAccessor Accessor
 @{
     ViewData["Title"] = "Update";
 }
@@ -80,6 +81,40 @@
                     </a>
                     
                 </div>
+                <hr />
+                <div class="body-container"> Coordinate Comment:
+                    @foreach (var comment in Model.MyComments)
+                    {
+                        <div class="comment-private">
+                            <div class="avatar-coordinate">
+                                <img src="~/css/Student/logo_greenwich.png" alt="Avatar" class="avatar-coordinate-img">
+                            </div>
+                            <div class="comment-content">
+                                <a class="box"><strong>
+                                        @if (comment.UserId.ToString() == Accessor.HttpContext.Session.GetString("UserId"))
+                                        {
+                                            <span class="comment-value">Student</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="comment-value">Coordinate</span>
+                                        }
+                                </strong> - <span class="comment-value">@comment.Date</span></a>
+                                <hr>
+                                <div class="card__content">
+                                    @comment.Description
+                                </div>
+                            </div>
+                        </div>
+               
+                    }
+                    <div class="comment-input">
+                        <textarea placeholder="Enter your comment..." rows="4"></textarea>
+                        <button class="pushable" onclick="submitComment()">Send Comment</button>
+                    </div>
+                </div>
+                
+                
                 <button type="submit" value="Update" class="pushable">
                     <span class="edge"></span>
                     <span class="front">Update</span>

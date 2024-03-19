@@ -1,4 +1,4 @@
-﻿using GreenwichUniversityMagazine.Models;
+﻿    using GreenwichUniversityMagazine.Models;
 using GreenwichUniversityMagazine.Models.ViewModel;
 using GreenwichUniversityMagazine.Models.ViewModels;
 using GreenwichUniversityMagazine.Repository;
@@ -52,7 +52,9 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                         Text = u.Title,
                         Value = u.Id.ToString()
                     }),
+                    MyComments = _unitOfWork.CommentRepository.GetAll().Where(u => u.ArticleId == id && u.Type == "PRIVATE").ToList(),
                     article = new Article()
+                    
 
                 };
                 var UserIdGet = HttpContext.Session.GetString("UserId");

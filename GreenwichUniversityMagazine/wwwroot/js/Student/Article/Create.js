@@ -131,3 +131,33 @@ var loadFile = function (event) {
 /* If the user clicks anywhere outside the select box,
 then close all select boxes: */
 document.addEventListener("click", closeAllSelect);
+
+function submitComment() {
+    var comment = document.querySelector('.comment-input textarea').value;
+    var urlParams = new URLSearchParams(window.location.search);
+    var articleId = parseInt(urlParams.get('id'));
+    var data = {
+        CommentInput: comment,
+        articleId: articleId
+    };
+
+    // Gửi request POST tới API endpoint
+    fetch('https://localhost:7112/Student/Comment/UploadPrivate', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+        .then(response => {
+            if (response.ok) {
+                alert("Bình luận của bạn đã được gửi thành công!");
+            } else {
+                alert("Đã xảy ra lỗi khi gửi bình luận. Vui lòng thử lại sau.");
+            }
+        })
+        .catch(error => {
+            console.error('Có lỗi xảy ra:', error);
+            alert("Đã xảy ra lỗi khi gửi bình luận. Vui lòng thử lại sau.");
+        });
+    document.querySelector('.comment-input textarea').value = '';

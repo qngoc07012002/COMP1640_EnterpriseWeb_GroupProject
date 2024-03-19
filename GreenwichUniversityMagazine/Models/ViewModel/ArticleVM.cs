@@ -14,6 +14,6 @@ namespace GreenwichUniversityMagazine.Models.ViewModel
         [ValidateNever]
         public IEnumerable<SelectListItem> MyResources { get; set; }
 
-        public IEnumerable<SelectListItem> MyComments { get; set; }
+        public IEnumerable<Comment> MyComments { get; set; }
     }
 }
