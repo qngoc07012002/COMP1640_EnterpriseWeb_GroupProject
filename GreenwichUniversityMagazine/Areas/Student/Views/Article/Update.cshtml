@@ -49,7 +49,7 @@
                     <img class="img-select" src="@Model.article.imgUrl" id="output" />
                     <span asp-validation-for="@Model.article.imgUrl" class="text-danger"></span>
                 </div>
-                <div class="form-group">
+                <div class="body-container">
                     <label class="control-label"></label>
                     <textarea id="content" asp-for="@Model.article.Body" class="form-control">@Model.article.Body</textarea>
                     <span asp-validation-for="@Model.article.Body" class="text-danger"></span>
@@ -72,7 +72,6 @@
                         <p>No files attached</p>
                     }
                 </div>
-                <hr />
                 <div class="upload-container body-container" id="upload-container">
                     <label class="upload-text">Add document:  </label>
                     <input type="file" id="file-input" name="files" multiple style="display:none">
@@ -81,46 +80,48 @@
                     </a>
                     
                 </div>
-                <hr />
-                <div class="body-container"> Coordinate Comment:
-                    @foreach (var comment in Model.MyComments)
-                    {
-                        <div class="comment-private">
-                            <div class="avatar-coordinate">
-                                <img src="~/css/Student/logo_greenwich.png" alt="Avatar" class="avatar-coordinate-img">
-                            </div>
-                            <div class="comment-content">
-                                <a class="box"><strong>
-                                        @if (comment.UserId.ToString() == Accessor.HttpContext.Session.GetString("UserId"))
-                                        {
-                                            <span class="comment-value">Student</span>
-                                        }
-                                        else
-                                        {
-                                            <span class="comment-value">Coordinate</span>
-                                        }
-                                </strong> - <span class="comment-value">@comment.Date</span></a>
-                                <hr>
-                                <div class="card__content">
-                                    @comment.Description
-                                </div>
-                            </div>
-                        </div>
-               
-                    }
-                    <div class="comment-input">
-                        <textarea placeholder="Enter your comment..." rows="4"></textarea>
-                        <button class="pushable" onclick="submitComment()">Send Comment</button>
-                    </div>
+                <div class="body-container">
+                    <button type="submit" value="Update" class="pushable">
+                        <span class="edge"></span>
+                        <span class="front">Update</span>
+                    </button>
                 </div>
-                
-                
-                <button type="submit" value="Update" class="pushable">
-                    <span class="edge"></span>
-                    <span class="front">Update</span>
-                </button>
             </div>
         </form>
+        <div class="body-container">
+            Coordinate Comment:
+            @foreach (var comment in Model.MyComments)
+            {
+                <div class="comment-private">
+                    <div class="avatar-coordinate">
+                        <img src="~/css/Student/logo_greenwich.png" alt="Avatar" class="avatar-coordinate-img">
+                    </div>
+                    <div class="comment-content">
+                        <a class="box">
+                            <strong>
+                                @if (comment.UserId.ToString() == Accessor.HttpContext.Session.GetString("UserId"))
+                                {
+                                    <span class="comment-value">Student</span>
+                                }
+                                else
+                                {
+                                    <span class="comment-value">Coordinate</span>
+                                }
+                            </strong> - <span class="comment-value">@comment.Date</span>
+                        </a>
+                        <hr>
+                        <div class="card__content">
+                            @comment.Description
+                        </div>
+                    </div>
+                </div>
+
+            }
+            <div class="comment-input">
+                <textarea placeholder="Enter your comment..." rows="4"></textarea>
+                <button class="pushable" onclick="submitComment()">Send Comment</button>
+            </div>
+        </div>
     </div>
 </div>
 <hr />

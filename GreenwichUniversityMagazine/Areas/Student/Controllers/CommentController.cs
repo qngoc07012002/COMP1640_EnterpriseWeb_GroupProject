@@ -34,6 +34,7 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                 try
                 {
                     Comment newComment = new();
+                    newComment.UserId = studentId;
                     newComment.ArticleId = articleId;
                     newComment.Description = CommentInput;
                     newComment.Type = "PRIVATE";

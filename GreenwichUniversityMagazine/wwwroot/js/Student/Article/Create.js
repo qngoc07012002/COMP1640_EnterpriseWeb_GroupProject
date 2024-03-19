@@ -132,32 +132,34 @@ var loadFile = function (event) {
 then close all select boxes: */
 document.addEventListener("click", closeAllSelect);
 
-function submitComment() {
+function submitComment(event) {
+
     var comment = document.querySelector('.comment-input textarea').value;
     var urlParams = new URLSearchParams(window.location.search);
     var articleId = parseInt(urlParams.get('id'));
-    var data = {
-        CommentInput: comment,
-        articleId: articleId
-    };
+
+    // Chuyển đổi đối tượng JSON sang chuỗi query string
+    var formData = `CommentInput=${encodeURIComponent(comment)}&articleId=${encodeURIComponent(articleId)}`;
 
     // Gửi request POST tới API endpoint
     fetch('https://localhost:7112/Student/Comment/UploadPrivate', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: JSON.stringify(data)
+        body: formData
     })
         .then(response => {
             if (response.ok) {
-                alert("Bình luận của bạn đã được gửi thành công!");
+                alert("Comment Successfuly!");
+                window.location.reload();
             } else {
-                alert("Đã xảy ra lỗi khi gửi bình luận. Vui lòng thử lại sau.");
+                alert("ERROR !!! Cannot send comment.");
             }
         })
         .catch(error => {
-            console.error('Có lỗi xảy ra:', error);
-            alert("Đã xảy ra lỗi khi gửi bình luận. Vui lòng thử lại sau.");
+            console.error('ERROR !!! Cannot send comment.:', error);
+            alert("ERROR !!! Cannot send comment.");
         });
     document.querySelector('.comment-input textarea').value = '';
+}
