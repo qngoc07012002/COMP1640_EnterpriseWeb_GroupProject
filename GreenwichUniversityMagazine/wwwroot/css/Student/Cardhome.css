@@ -3,6 +3,7 @@
     margin: auto;
     padding: 10px;
     border-radius: 0.7em;
+
 }
 
 
@@ -52,5 +53,5 @@
 
 
 .card-left:hover {
-   transform: scale(1.05); /* Khi di chuột vào, phóng to card bên trái */
+   transform: scale(1.05); 
 }

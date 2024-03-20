@@ -1,4 +1,6 @@
-﻿@model IEnumerable<Article>
+﻿
+@model IEnumerable<Article>
+
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -92,7 +94,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card mb-3" style="max-width: 600px; min-width: 200px; max-height: 200px; min-height: 170px; display: flex;" ">
+                <div class="card mb-3" style="max-width: 600px; min-width: 200px; max-height: 200px; min-height: 170px; display: flex;">
                     <div class="row no-gutters">
                         <div class="col-md-3">
                             <img src="~/img/Home/1.png" class="card-img" alt="...">
@@ -120,7 +122,7 @@
             <h2 class="m-0"> ARTICLES New</h2>
         </div>
     </div>
-    <div class="row p-3 ">
+    <div class="row p-3 " >
         <div class="col-md-3">
             <div class="d-flex  align-items-center mb-3">
                 <h6 class="m-1 mr-2">ARTICLES</h6>
@@ -165,74 +167,36 @@
         </div>
     </div>
     
-    <div class="row pb-3 " id="article-container">
-        @{
-            int itemsPerPageSmall = 6; // Số lượng bài viết trên mỗi trang
-            int totalItemsSmall = Model.Count(); // Tổng số bài viết
-            int totalPagesSmall = (int)Math.Ceiling((double)totalItemsSmall / itemsPerPageSmall); // Tổng số trang
-            int currentPageSmall = Context.Request.Query["pageSmall"].Count > 0 ? Convert.ToInt32(Context.Request.Query["pageSmall"]) : 1; // Trang hiện tại
-            int startIndexSmall = (currentPageSmall - 1) * itemsPerPageSmall; // Chỉ số bắt đầu của bài viết trên trang hiện tại
-        }
-            @foreach (var article in Model.Skip(startIndexSmall).Take(itemsPerPageSmall))
-            {
-                <div class="clo-lg-3 col-sm-6">
-                    <div class="row p-2">
-                        <div class="col-12 p-1">
-                            <div class="card mb-3" style="max-width: 700px; min-width: 200px; max-height:180px; min-height: 180px; display: flex;">
-                                <div class="row no-gutters">
-                                    <div class="col-md-4 fixed-col-size">
-                                        <img src="@article.imgUrl" class="card-img" alt="..." style="max-width: 300px; min-width: 220px; max-height: 200px; min-height: 150px;">
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="card-body">
-                                            <div class="pd-1"> <a asp-area="Admin" asp-controller="User" asp-action="Index" class="card-title h6 text-primary opacity-75 text-uppercase text-center">@article.Title</a> </div>
-                                            <p class="card-text">@article.SubTitle</p>
-                                           @*  <p class="card-title"><small class="text-muted">Magazine @article.Magazines.Title</small></p> *@
-                                        </div>
+    <div class="row pb-3" id="articleContainer">
+    @foreach (var article in  Model.Take(6))
+    {
+            <div class="clo-lg-3 col-sm-6">
+                <div class="row p-2">
+                    <div class="col-12 p-1">
+                        <div class="card mb-3" style="max-width: 700px; min-width: 200px; max-height:180px; min-height: 180px; display: flex; ">
+                            <div class="row no-gutters">
+                                <div class="col-md-4 fixed-col-size">
+                                    <img src="@article.imgUrl" class="card-img" alt="..." style="max-width: 300px; min-width: 220px; max-height: 200px; min-height: 150px;">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <div class="pd-1"> <a asp-area="Admin" asp-controller="User" asp-action="Index" class="card-title h6 text-primary opacity-75 text-uppercase text-center">@article.Title</a> </div>
+                                        <p class="card-text">@article.SubTitle</p>
+                                    @*  <p class="card-title"><small class="text-muted">Magazine @article.Magazines.Title</small></p> *@
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            }
-
+            </div>
+    }
+              
     </div>
-    <div id="pagination-wrapper">
-        <nav aria-label="Page navigation">
-            <div class="row justify-content-center">
-                <ul class="pagination justify-content-center">
-                    <li class="page-item @(currentPageSmall == 1 ? "disabled" : "")">
-                        <a class="page-link" href="?pageSmall=1" tabindex="-1" aria-disabled="true">First</a>
-                    </li>
-                    <li class="page-item @(currentPageSmall == 1 ? "disabled" : "")">
-                        <a class="page-link" href="?pageSmall=@(currentPageSmall - 1)" tabindex="-1" aria-disabled="true">Previous</a>
-                    </li>
-                @for (int i = 1; i <= totalPagesSmall; i++)
-                {
-                        <li class="page-item @(i == currentPageSmall ? "active" : "")">
-                            <a class="page-link" href="?pageSmall=@i">@i</a>
-                        </li>
-                }
-                    <li class="page-item @(currentPageSmall == totalPagesSmall ? "disabled" : "")">
-                        <a class="page-link" href="?pageSmall=@(currentPageSmall + 1)">Next</a>
-                    </li>
-                    <li class="page-item @(currentPageSmall == totalPagesSmall ? "disabled" : "")">
-                        <a class="page-link" href="?pageSmall=@totalPagesSmall">Last</a>
-                    </li>
-                </ul>
-        </nav>
+    <div class="col-12 text-center mt-3">
+        <button id="load-more-btn" class="btn btn-primary">Load more</button>
     </div>
-
-    
-
-
-    
     <h1>sss</h1>
-
-   
-
-</div>
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -247,15 +211,9 @@
             }
         });
     });
+        var skip = 6; // Số lượng bài báo đã hiển thị ban đầu
 
-    
        
-
-
-
-
-
-   
 </script>
 
 
