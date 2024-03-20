@@ -10,16 +10,28 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _webhost;
 
+        
+
         public IActionResult Index()
         {
             IEnumerable<Article> articleList = _unitOfWork.ArticleRepository.GetAll(includeProperty: "Magazines").ToList();
             return View(articleList);
         }
+        [HttpGet]
+        public IActionResult LoadPageSmall(int pageSmall)
+        {
+            int itemsPerPageSmall = 6;
+            var startIndexSmall = (pageSmall - 1) * itemsPerPageSmall;
+            var articles = _unitOfWork.ArticleRepository.GetAll(includeProperty: "Magazines").Skip(startIndexSmall).Take(itemsPerPageSmall).ToList();
+            return PartialView("_YourPartialViewName", articles);
+        }
+
         public HomeController(IUnitOfWork db, IWebHostEnvironment webhost)
         {
             _unitOfWork = db;
             _webhost = webhost;
         }
+
         public IActionResult About()
         {
             return View();
@@ -91,5 +103,6 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
 
             return RedirectToAction("Index", "Home", new { area = "student" });
         }
+        
     }
 }

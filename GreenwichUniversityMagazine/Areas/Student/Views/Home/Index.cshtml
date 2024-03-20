@@ -45,6 +45,10 @@
                 <h2 class="m-0">HOT ARTICLES</h2>
             </div>
         </div>
+
+
+    
+
     @* ///////////////////////////////////////////////////////////////////// *@
     
     <div class="container-homepage">
@@ -116,9 +120,52 @@
             <h2 class="m-0"> ARTICLES New</h2>
         </div>
     </div>
+    <div class="row p-3 ">
+        <div class="col-md-3">
+            <div class="d-flex  align-items-center mb-3">
+                <h6 class="m-1 mr-2">ARTICLES</h6>
+                <select class="form-select" style="width:230px;" aria-label="Articles">
+                    <option selected>Open this select menu</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="d-flex  align-items-center mb-3">
+                <h6 class="m-1 mr-2">Magazine</h6>
+                <select class="form-select" style="width:230px;" aria-label="Magazine">
+                    <option selected>Open this select menu</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+            </div>
+        </div>
 
+        <div class="col-md-3">
+            <div class="d-flex  align-items-center mb-3">
+                <h6 class="m-1 mr-2">DSSSDASa</h6>
+                <select class="form-select" style="width:230px;" aria-label="Magazine">
+                    <option selected>Open this select menu</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-md-3 ">
+
+            <div class="input-group">
+                <input type="search " class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                <button type="button" class="btn btn-outline-primary" data-mdb-ripple-init>search</button>
+            </div>
+        </div>
+    </div>
     
-    <div class="row pb-3">
+    <div class="row pb-3 " id="article-container">
         @{
             int itemsPerPageSmall = 6; // Số lượng bài viết trên mỗi trang
             int totalItemsSmall = Model.Count(); // Tổng số bài viết
@@ -126,60 +173,61 @@
             int currentPageSmall = Context.Request.Query["pageSmall"].Count > 0 ? Convert.ToInt32(Context.Request.Query["pageSmall"]) : 1; // Trang hiện tại
             int startIndexSmall = (currentPageSmall - 1) * itemsPerPageSmall; // Chỉ số bắt đầu của bài viết trên trang hiện tại
         }
-        @foreach (var article in Model.Skip(startIndexSmall).Take(itemsPerPageSmall))
-        {
-            <div class="clo-lg-3 col-sm-6">
-                <div class="row p-2">
-                    <div class="col-12 p-1">
-                        <div class="card mb-3" style="max-width: 600px; min-width: 200px; max-height: 300px; min-height: 200px; display: flex;">
-                            <div class="row no-gutters">
-                                <div class="col-md-4 fixed-col-size">
-                                    <img src="@article.imgUrl" class="card-img" alt="..." style="max-width: 200px; min-width: 100px; max-height: 200px; min-height: 20px;">
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body">
-                                        <div class="pd-1"> <p class="card-title h5 text-drak opacity-75 text-uppercase text-center">@article.Magazines.Title</p> </div>
-                                        <div class="pd-1"> <p class="card-title h5 text-drak opacity-75 text-uppercase text-center">@article.Title</p> </div>
-                                        <div class="pd-1" id="subtitleDiv"> <p class="card-text h5 text-drak opacity-75 text-uppercase text-center">@article.SubTitle</p> </div>
+            @foreach (var article in Model.Skip(startIndexSmall).Take(itemsPerPageSmall))
+            {
+                <div class="clo-lg-3 col-sm-6">
+                    <div class="row p-2">
+                        <div class="col-12 p-1">
+                            <div class="card mb-3" style="max-width: 700px; min-width: 200px; max-height:180px; min-height: 180px; display: flex;">
+                                <div class="row no-gutters">
+                                    <div class="col-md-4 fixed-col-size">
+                                        <img src="@article.imgUrl" class="card-img" alt="..." style="max-width: 300px; min-width: 220px; max-height: 200px; min-height: 150px;">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <div class="pd-1"> <a asp-area="Admin" asp-controller="User" asp-action="Index" class="card-title h6 text-primary opacity-75 text-uppercase text-center">@article.Title</a> </div>
+                                            <p class="card-text">@article.SubTitle</p>
+                                           @*  <p class="card-title"><small class="text-muted">Magazine @article.Magazines.Title</small></p> *@
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        }
+            }
+
+    </div>
+    <div id="pagination-wrapper">
+        <nav aria-label="Page navigation">
+            <div class="row justify-content-center">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item @(currentPageSmall == 1 ? "disabled" : "")">
+                        <a class="page-link" href="?pageSmall=1" tabindex="-1" aria-disabled="true">First</a>
+                    </li>
+                    <li class="page-item @(currentPageSmall == 1 ? "disabled" : "")">
+                        <a class="page-link" href="?pageSmall=@(currentPageSmall - 1)" tabindex="-1" aria-disabled="true">Previous</a>
+                    </li>
+                @for (int i = 1; i <= totalPagesSmall; i++)
+                {
+                        <li class="page-item @(i == currentPageSmall ? "active" : "")">
+                            <a class="page-link" href="?pageSmall=@i">@i</a>
+                        </li>
+                }
+                    <li class="page-item @(currentPageSmall == totalPagesSmall ? "disabled" : "")">
+                        <a class="page-link" href="?pageSmall=@(currentPageSmall + 1)">Next</a>
+                    </li>
+                    <li class="page-item @(currentPageSmall == totalPagesSmall ? "disabled" : "")">
+                        <a class="page-link" href="?pageSmall=@totalPagesSmall">Last</a>
+                    </li>
+                </ul>
+        </nav>
     </div>
 
-    <nav aria-label="Page navigation">
-        <ul class="pagination justify-content-center">
-            <li class="page-item @(currentPageSmall == 1 ? "disabled" : "")">
-                <a class="page-link" href="?pageSmall=1" tabindex="-1" aria-disabled="true">First</a>
-            </li>
-            <li class="page-item @(currentPageSmall == 1 ? "disabled" : "")">
-                <a class="page-link" href="?pageSmall=@(currentPageSmall - 1)" tabindex="-1" aria-disabled="true">Previous</a>
-            </li>
-            @for (int i = 1; i <= totalPagesSmall; i++)
-            {
-                <li class="page-item @(i == currentPageSmall ? "active" : "")">
-                    <a class="page-link" href="?pageSmall=@i">@i</a>
-                </li>
-            }
-            <li class="page-item @(currentPageSmall == totalPagesSmall ? "disabled" : "")">
-                <a class="page-link" href="?pageSmall=@(currentPageSmall + 1)">Next</a>
-            </li>
-            <li class="page-item @(currentPageSmall == totalPagesSmall ? "disabled" : "")">
-                <a class="page-link" href="?pageSmall=@totalPagesSmall">Last</a>
-            </li>
-        </ul>
-    </nav>
+    
 
 
-
-
-
-
-
+    
     <h1>sss</h1>
 
    
@@ -188,7 +236,7 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        var maxLength = 50; 
+        var maxLength = 120; 
 
         var cardTextElements = document.querySelectorAll(".card-body .card-text");
         cardTextElements.forEach(function (element) {
@@ -200,8 +248,14 @@
         });
     });
 
-     
+    
+       
 
+
+
+
+
+   
 </script>
 
 

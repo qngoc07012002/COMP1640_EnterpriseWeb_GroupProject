@@ -1,10 +1,12 @@
 ﻿.card-img {
+    display: block;
     margin: auto;
-    padding: 5px;
+    padding: 10px;
     border-radius: 0.7em;
-    width: 100%; /* Chiều rộng 100% của parent container */
-    height: auto;
 }
+
+
+
 
 .fixed-col-size {
     max-width: 150px; /* Định cỡ chiều rộng tuyệt đối */
@@ -29,8 +31,14 @@
 }
 
 .pagination {
+    display: flex;
     justify-content: center;
 }
+
+    .pagination .page-item {
+        margin: 0 5px;
+    }
+
 
 
 .card-left {
