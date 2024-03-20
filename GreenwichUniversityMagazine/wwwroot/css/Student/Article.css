@@ -239,6 +239,11 @@ body {
 
 }
 
+.file-container {
+    position: relative;
+    border-radius: 5px;
+}
+
 .img-select {
     margin-left: 50px auto;
     margin-bottom: 20px;
@@ -298,7 +303,6 @@ body {
 /* New button */
 .pushable {
     position: relative;
-    margin: 50px auto;
     background: transparent;
     padding: 0px;
     border: none;
@@ -422,6 +426,7 @@ body {
 }
 
 .avatar-coordinate {
+    margin-top: 10px;
     width: 50px; /* Điều chỉnh kích thước của avatar */
     height: 50px;
     border-radius: 50%; /* Làm cho hình ảnh tròn */
@@ -478,3 +483,26 @@ body {
         .comment-input button:hover {
             background-color: #0056b3; /* Màu nền khi di chuột qua */
         }
+
+
+/* test hr*/
+.separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+    .separator::before,
+    .separator::after {
+        content: '';
+        flex: 1;
+        border-bottom: 1px solid #000;
+    }
+
+    .separator:not(:empty)::before {
+        margin-right: .25em;
+    }
+
+    .separator:not(:empty)::after {
+        margin-left: .25em;
+    }

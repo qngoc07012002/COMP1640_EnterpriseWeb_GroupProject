@@ -1,6 +1,6 @@
 ﻿CKEDITOR.replace('content');
 let files = [];
-
+let filesDelete = [];
 function openFileUploader() {
     document.getElementById('file-input').click();
 }
@@ -96,7 +96,19 @@ for (i = 0; i < l; i++) {
         this.classList.toggle("select-arrow-active");
     });
 }
-
+function confirmAndRemove(resourceId) {
+    var result = confirm("Do you want to delete this file ?");
+    if (result) {
+        removeResource(resourceId);
+    }
+}
+function removeResource(resourceId) {
+    var element = document.getElementById(resourceId);
+    element.remove();
+    filesDelete.push(resourceId);
+    var filesDeleteInput = document.getElementById('filesDeleteInput');
+    filesDeleteInput.value = filesDelete;
+}
 function closeAllSelect(elmnt) {
     /* A function that will close all select boxes in the document,
     except the current select box: */
@@ -151,15 +163,12 @@ function submitComment(event) {
     })
         .then(response => {
             if (response.ok) {
-                alert("Comment Successfuly!");
+               
                 window.location.reload();
-            } else {
-                alert("ERROR !!! Cannot send comment.");
             }
         })
         .catch(error => {
             console.error('ERROR !!! Cannot send comment.:', error);
-            alert("ERROR !!! Cannot send comment.");
         });
     document.querySelector('.comment-input textarea').value = '';
 }

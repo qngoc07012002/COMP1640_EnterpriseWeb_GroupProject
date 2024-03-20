@@ -43,20 +43,20 @@
                     <span asp-validation-for="@Model.article.SubTitle" class="text-danger"></span>
                 </div>
                 <div class="body-container">
-                    <label>Image: </label>
+                    <label for="input" class="label">Image: </label>
                     <input type="file" name="HeadImg" class="form-control" accept="image/*" onchange="loadFile(event)" />
                     <br />
                     <img class="img-select" src="@Model.article.imgUrl" id="output" />
                     <span asp-validation-for="@Model.article.imgUrl" class="text-danger"></span>
                 </div>
                 <div class="body-container">
-                    <label class="control-label"></label>
+                    <label for="input" class="label"></label>
                     <textarea id="content" asp-for="@Model.article.Body" class="form-control">@Model.article.Body</textarea>
                     <span asp-validation-for="@Model.article.Body" class="text-danger"></span>
                 </div>
-                <label class="input-container">Current Documents:</label>
-                <input class="body-container" id="filesDeleteInput" name="filesDelete" multiple style="display:none" />
-                <div>
+                <div class="body-container separator"><strong>Current Documents</strong> </div>
+                <input class="input-container file-container" id="filesDeleteInput" name="filesDelete" multiple style="display:none" />
+                <div class="input-container file-container">
                     @if (Model.MyResources != null)
                     {
                         @foreach (var resource in Model.MyResources)
@@ -72,14 +72,15 @@
                         <p>No files attached</p>
                     }
                 </div>
+                <div class="body-container separator"><strong>Add Document</strong> </div>
                 <div class="upload-container body-container" id="upload-container">
-                    <label class="upload-text">Add document:  </label>
                     <input type="file" id="file-input" name="files" multiple style="display:none">
                     <a class="upload-button" onclick="openFileUploader()">
                         <span>+</span>
                     </a>
                     
                 </div>
+                <div class="body-container separator"></div>
                 <div class="body-container">
                     <button type="submit" value="Update" class="pushable">
                         <span class="edge"></span>
@@ -89,19 +90,33 @@
             </div>
         </form>
         <div class="body-container">
-            Coordinate Comment:
+            <div class="separator"><strong>Comment</strong> </div>
+
+           
             @foreach (var comment in Model.MyComments)
             {
                 <div class="comment-private">
                     <div class="avatar-coordinate">
-                        <img src="~/css/Student/logo_greenwich.png" alt="Avatar" class="avatar-coordinate-img">
+                        @{
+                            var avtUrl = Accessor.HttpContext.Session.GetString("avtUrl");
+                            @if (comment.UserId.ToString() == Accessor.HttpContext.Session.GetString("UserId"))
+                            {
+                                <img src="@avtUrl" alt="Avatar" class="avatar-coordinate-img">
+                            }
+                            else
+                            {
+                                <img src="~/css/Student/logo_greenwich.png" alt="Avatar" class="avatar-coordinate-img">
+                            }
+                        }
+                        
                     </div>
                     <div class="comment-content">
                         <a class="box">
                             <strong>
                                 @if (comment.UserId.ToString() == Accessor.HttpContext.Session.GetString("UserId"))
                                 {
-                                    <span class="comment-value">Student</span>
+                                    var userName = Accessor.HttpContext.Session.GetString("UserName");
+                                    <span class="comment-value">@userName</span>
                                 }
                                 else
                                 {

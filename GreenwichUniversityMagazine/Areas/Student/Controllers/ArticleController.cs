@@ -123,6 +123,7 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
 
                     foreach (var file in files)
                     {
+
                         string basePath = Path.Combine(wwwRootPath, "Resource", "Article", articleId.ToString());
                         if (!Directory.Exists(basePath))
                         {
@@ -138,7 +139,7 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                         Resource resource = new Resource
                         {
                             ArticleId = articleId,
-                            Path = filePath,
+                            Path = $"/Resource/Article/{articleId.ToString()}/{fileName}",
                             Type = Path.GetExtension(fileName)
                         };
                         _unitOfWork.ResourceRepository.Add(resource);
@@ -207,14 +208,31 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                 articleVM.article.Status = false;
 
                 //Delete Old Files
+
+
                 if (filesDelete !=null)
                 {
                     int[] IdsToDelete = filesDelete.Split(',').Select(int.Parse).ToArray();
+                    var oldImagePath = Path.Combine(wwwRootPath, articleVM.article.imgUrl.TrimStart('/'));
+                    //Delete Old Img
+                    if (System.IO.File.Exists(oldImagePath))
+                    {
+                        try
+                        {
+                            System.IO.File.Delete(oldImagePath);
+                        }
+                        catch (DirectoryNotFoundException)
+                        {
+                            Console.WriteLine("Not Found this file !!");
+                        }
+
+                    }
                     foreach (int i in IdsToDelete)
                     {
                         Resource resource = _unitOfWork.ResourceRepository.Get(u=> u.Id == i);
+                        var oldResource = Path.Combine(wwwRootPath, resource.Path.TrimStart('/'));
                         _unitOfWork.ResourceRepository.Remove(resource);
-                        System.IO.File.Delete(resource.Path);
+                        System.IO.File.Delete(oldResource);
                         _unitOfWork.Save();
                     }
                 }
@@ -254,7 +272,7 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                             Resource resource = new Resource
                             {
                                 ArticleId = articleId,
-                                Path = filePath,
+                                Path = $"/Resource/Article/{articleId.ToString()}/{fileName}",
                                 Type = Path.GetExtension(fileName)
                             };
                             _unitOfWork.ResourceRepository.Add(resource);

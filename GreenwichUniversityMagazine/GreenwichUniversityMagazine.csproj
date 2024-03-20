@@ -21,7 +21,6 @@
     <Folder Include="wwwroot\img\articleImg\" />
     <Folder Include="wwwroot\img\userAvt\" />
     <Folder Include="wwwroot\img\avtImg\" />
-    <Folder Include="wwwroot\Resource\Article\10\" />
     <Folder Include="wwwroot\Resource\Article\12\" />
 
   </ItemGroup>
