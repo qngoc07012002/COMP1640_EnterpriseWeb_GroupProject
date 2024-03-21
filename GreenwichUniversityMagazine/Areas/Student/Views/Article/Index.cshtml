@@ -32,31 +32,24 @@
                 @{
                     @foreach (var article in Model.Skip(startIndex).Take(itemsPerPage))
                     {
-                        <div class="custom-col mb-4">
-                            <div class="custom-book-wrapper">
-                                <div class="card">
-                                    <img id="bookImg" class="card-img-top "src="@article.imgUrl" alt="Top Image">
-                                    <div class="card-body">
-
-                                        <h5 class="card-title">
-                                            @if (article.Status == false)
-                                            {
-                                                <a>[Offline] -</a>
-                                            }
-                                            else
-                                            {
-                                                <a>[Online] -</a>
-                                            } @article.Title
-                                        </h5>
-                                        <p class="card-text">Magazine: @article.Magazines.Title</p>
-                                        <p class="card-text text-ellipsis">@article.SubTitle</p>
-                                    </div>
-                                    <div class="card-footer">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <a href="/student/article/Update?id=@article.ArticleId" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i>Modify</a>
-                                            <a onClick=confirmDelete('@article.ArticleId') class="btn btn-danger mx-2"><i class="bi bi-trash-fill"></i>Delete</a>
-                                        </div>
-                                    </div>
+                        <div class="article-card">
+                            <img class="article-card-img" src="@article.imgUrl" alt="Top Image">
+                            <div class="article-information">
+                                <label class="article-card-text">Magazine: @article.Magazines.Title</label>
+                                <h2 class="article-card-text">
+                                    @if (article.Status == false)
+                                    {
+                                    }
+                                    else
+                                    {
+                                    } @article.Title
+                                </h2>
+                                <p class="article-card-text text-ellipsis">@article.SubTitle</p>
+                            </div>
+                            <div class="card-button">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <a href="/student/article/Update?id=@article.ArticleId" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i>Modify</a>
+                                    <a onClick=confirmDelete('@article.ArticleId') class="btn btn-danger mx-2"><i class="bi bi-trash-fill"></i>Delete</a>
                                 </div>
                             </div>
                         </div>
