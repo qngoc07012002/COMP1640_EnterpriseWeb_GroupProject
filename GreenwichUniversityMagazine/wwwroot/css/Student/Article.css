@@ -1,25 +1,4 @@
-﻿/* Reset CSS */
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-size: 100%;
-    font: inherit;
-    vertical-align: baseline;
-}
-
+﻿
 /* Global Styles */
 body {
     font-family: Arial, sans-serif;
@@ -90,9 +69,9 @@ body {
 }
 
 .card-img-top {
-    width: 100%; /* Đảm bảo hình ảnh chiếm toàn bộ chiều rộng của thẻ cha */
-    height: auto; /* Đảm bảo tỷ lệ khung hình ảnh được bảo toàn */
-    object-fit: cover; /* Đảm bảo hình ảnh bao phủ toàn bộ phần địa chỉ của thẻ */
+    width: 100%; 
+    height: auto; 
+    object-fit: cover; 
 }
 
 #bookImg {
@@ -106,7 +85,15 @@ body {
 .upload-container {
     display: flex;
     flex-wrap: wrap;
-    padding: 20px;
+}
+
+.upload-text {
+    display: flex;
+    height: 50px;
+    align-items: center;
+    border: none;
+    margin-right: 20px;
+    cursor: pointer;
 }
 
 .upload-button {
@@ -138,17 +125,17 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #8bc34a; /* Màu xanh lá cây */
+    background-color: #8bc34a;
     color: #fff;
     border-radius: 25px;
-    padding: 10px 20px;
+    padding: 10px;
     margin-right: 10px;
     transition: background-color 0.3s ease;
     cursor: pointer;
 }
 
     .upload-item:hover {
-        background-color: #689f38; /* Màu xanh lá cây nhạt */
+        background-color: #689f38; 
     }
 
     .upload-item img {
@@ -161,7 +148,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #8bc34a; /* Màu xanh lá cây */
+    background-color: #8bc34a; 
     color: #fff;
     border-radius: 25px;
     padding: 10px 20px;
@@ -171,11 +158,352 @@ body {
 }
 
     .old-item:hover {
-        background-color: red; /* Màu xanh lá cây nhạt */
+        background-color: red;
     }
 
     .old-item img {
         width: 20px;
         height: 20px;
         margin-right: 10px;
+    }
+
+/* select, options css
+/* The container must be positioned relative: */
+/* Container must be positioned relative: */
+.custom-select {
+    position: relative;
+    font-family: Arial;
+    margin: 50px; /* Canh giữa theo chiều ngang */
+}
+
+/* Hide original SELECT element: */
+.custom-select select {
+    display: none;
+}
+
+/* Selected item style: */
+.select-selected {
+    background-color: DodgerBlue;
+    padding: 8px 20px;
+    border-radius: 5px;
+    color: #fff;
+    position: relative;
+}
+
+    /* Style the arrow inside the select element: */
+    .select-selected:after {
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        color: #fff;
+    }
+
+    /* Point the arrow upwards when the select box is open (active): */
+    .select-selected.select-arrow-active:after {
+        transform: translateY(-50%) rotate(180deg);
+    }
+
+/* Style the items (options), including the selected item: */
+.select-items div, .select-selected {
+    padding: 8px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+    color: #ffffff;
+}
+
+/* Style items (options): */
+.select-items {
+    background-color: DodgerBlue;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    border-radius: 0 0 5px 5px;
+    z-index: 1;
+}
+
+/* Hide the items when the select box is closed: */
+.select-hide {
+    display: none;
+}
+
+/* Hover and selected item style: */
+.select-items div:hover, .same-as-selected {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.body-container {
+    margin: 50px;
+    position: relative;
+    border-radius: 5px;
+
+}
+
+.file-container {
+    margin: 50px;
+    position: relative;
+    border-radius: 5px;
+}
+
+.img-select {
+    margin-left: 50px auto;
+    margin-bottom: 20px;
+    justify-items: center;
+    max-height: 300px;
+    max-width: 500px;
+}
+/* Input */
+.input-container {
+    position: relative;
+    margin: 50px;
+    width: 500px;
+}
+
+    .input-container input[type="text"] {
+        font-size: 20px;
+        width: 100%;
+        border: none;
+        border-bottom: 2px solid #ccc;
+        padding: 5px 0;
+        background-color: transparent;
+        outline: none;
+    }
+
+    .input-container .label {
+        position: absolute;
+        top: 0;
+        left: 0;
+        color: #ccc;
+        transition: all 0.3s ease;
+        pointer-events: none;
+    }
+
+    .input-container input[type="text"]:focus ~ .label,
+    .input-container input[type="text"]:valid ~ .label {
+        top: -20px;
+        font-size: 16px;
+        color: black;
+    }
+
+    .input-container .underline {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 2px;
+        width: 100%;
+        background-color: #333;
+        transform: scaleX(0);
+        transition: all 0.3s ease;
+    }
+
+    .input-container input[type="text"]:focus ~ .underline,
+    .input-container input[type="text"]:valid ~ .underline {
+        transform: scaleX(1);
+    }
+
+/* New button */
+.pushable {
+    position: relative;
+    background: transparent;
+    padding: 0px;
+    border: none;
+    cursor: pointer;
+    outline-offset: 4px;
+    outline-color: deeppink;
+    transition: filter 250ms;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+
+.edge {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  border-radius: 8px;
+  background: linear-gradient(
+    to right,
+    hsl(248, 39%, 39%) 0%,
+    hsl(248, 39%, 49%) 8%,
+    hsl(248, 39%, 39%) 92%,
+    hsl(248, 39%, 29%) 100%
+  );
+}
+
+.front {
+  display: block;
+  position: relative;
+  border-radius: 8px;
+  background: hsl(248, 53%, 58%);
+  padding: 16px 32px;
+  color: white;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-size: 1rem;
+  transform: translateY(-4px);
+  transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
+}
+
+.pushable:hover {
+  filter: brightness(110%);
+}
+
+.pushable:hover .front {
+  transform: translateY(-6px);
+  transition: transform 250ms cubic-bezier(0.3, 0.7, 0.4, 1.5);
+}
+
+.pushable:active .front {
+  transform: translateY(-2px);
+  transition: transform 34ms;
+}
+
+.pushable:hover .shadow {
+  transform: translateY(4px);
+  transition: transform 250ms cubic-bezier(0.3, 0.7, 0.4, 1.5);
+}
+
+.pushable:active .shadow {
+  transform: translateY(1px);
+  transition: transform 34ms;
+}
+
+.pushable:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.article-card {
+    height: 230px;
+    max-width: 1080px;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    padding: 5px;
+    box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+}
+    .article-information {
+        margin-top: 30px;
+        width: 550px;
+        padding: 10px;
+    }
+.article-card-img {
+    margin: 30px;
+    width: 280px;
+    height: 150px;
+    min-width: 250px;
+    object-fit: contain;
+    object-position: center;
+}
+.article-card-text {
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden; /* Ẩn văn bản bị tràn ra ngoài phần tử */
+    text-overflow: ellipsis;
+}
+.card-button {
+    position: absolute;
+    right:0;
+    bottom: 0;
+    padding: 10px;
+    padding-bottom: 20px;
+    margin-right: 50px;
+    box-sizing: border-box;
+    transition: all 0.3s ease; /* Hiệu ứng chuyển động */
+}
+
+/*Commennt article coordinate box*/
+.comment-private {
+    width: 500px;
+    height: auto;
+    border-radius: 8px;
+    z-index: 1;
+    overflow: hidden; /* Đảm bảo avt không bị tràn ra ngoài */
+    display: flex; /* Dùng flexbox để sắp xếp các thành phần */
+}
+
+.avatar-coordinate {
+    margin-top: 10px;
+    width: 50px; /* Điều chỉnh kích thước của avatar */
+    height: 50px;
+    border-radius: 50%; /* Làm cho hình ảnh tròn */
+    overflow: hidden; /* Đảm bảo hình ảnh không bị tràn ra ngoài vùng chứa */
+}
+
+.avatar-coordinate-img {
+    width: 100%; /* Đảm bảo hình ảnh lấp đầy vùng chứa */
+    height: 100%;
+    object-fit: cover; /* Đảm bảo hình ảnh không bị méo khi thu nhỏ */
+}
+
+.comment-content {
+    flex: 1; /* Chia phần còn lại của ô comment */
+    padding: 10px; /* Thêm padding cho nội dung comment */
+}
+
+.box {
+    width: 10px;
+    height: 10px;
+    padding: 1px;
+    border-radius: 50%;
+    font-weight: bold;
+}
+.comment-value {
+    /* CSS để làm mờ nội dung của @comment.Value */
+    opacity: 0.5; /* Độ mờ */
+}
+
+/* Comment Reply */
+.comment-input {
+    margin-bottom: 20px;
+}
+
+    .comment-input textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        resize: vertical; /* Cho phép điều chỉnh kích thước theo chiều dọc */
+        box-sizing: border-box; /* Đảm bảo kích thước của textarea không bị thay đổi khi thêm border và padding */
+    }
+
+    .comment-input button {
+        padding: 10px 20px;
+        background-color: #007bff; /* Màu nút */
+        color: #fff; /* Màu chữ */
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s; /* Hiệu ứng chuyển đổi màu nền nút */
+    }
+
+        .comment-input button:hover {
+            background-color: #0056b3; /* Màu nền khi di chuột qua */
+        }
+
+
+/* test hr*/
+.separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+    .separator::before,
+    .separator::after {
+        content: '';
+        flex: 1;
+        border-bottom: 1px solid #000;
+    }
+
+    .separator:not(:empty)::before {
+        margin-right: .25em;
+    }
+
+    .separator:not(:empty)::after {
+        margin-left: .25em;
     }

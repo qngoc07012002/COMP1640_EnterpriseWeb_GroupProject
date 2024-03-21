@@ -14,7 +14,7 @@ namespace GreenwichUniversityMagazine.Models
         [ValidateNever]
         public User? User { get; set; }
 
-        public int? MagazinedId { get; set; }
+        public int MagazinedId { get; set; }
         [ForeignKey("MagazinedId")]
         [ValidateNever]
         public Magazines? Magazines { get; set; }
