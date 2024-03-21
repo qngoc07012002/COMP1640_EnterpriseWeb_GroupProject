@@ -11,15 +11,28 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _webhost;
 
+
+
         public IActionResult Index()
         {
-            return View("~/Areas/Student/Views/Home/Index.cshtml");
+            IEnumerable<Article> articleList = _unitOfWork.ArticleRepository.GetAll(includeProperty: "Magazines").ToList();
+            return View(articleList);
         }
+
+        public IActionResult LoadMore(int skip)
+        {
+            IEnumerable<Article> articleList = _unitOfWork.ArticleRepository.GetAll(includeProperty: "Magazines")
+                                                  .Skip(skip).Take(6).ToList();
+            return PartialView("_ArticlePartial", articleList);
+        }
+
+
         public HomeController(IUnitOfWork db, IWebHostEnvironment webhost)
         {
             _unitOfWork = db;
             _webhost = webhost;
         }
+
         public IActionResult About()
         {
             return View();
