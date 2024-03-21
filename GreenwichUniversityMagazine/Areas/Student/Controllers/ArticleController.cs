@@ -87,7 +87,7 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
         [HttpPost]
         public IActionResult Create(ArticleVM articleVM, IFormFile? HeadImg, List<IFormFile> files)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && HeadImg != null)
             {
                 string wwwRootPath = _webhost.WebRootPath;
                 if (HeadImg != null)
@@ -104,7 +104,6 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                 {
                     ArticleVM articleVM2 = new();
                     articleVM2.article = _unitOfWork.ArticleRepository.Get(u => u.ArticleId == articleVM.article.ArticleId);
-                    articleVM.article.imgUrl = articleVM2.article.imgUrl;
                 }
                 if (articleVM.article.ArticleId == 0)
                 {
@@ -208,25 +207,10 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                 articleVM.article.Status = false;
 
                 //Delete Old Files
-
-
                 if (filesDelete !=null)
                 {
                     int[] IdsToDelete = filesDelete.Split(',').Select(int.Parse).ToArray();
                     var oldImagePath = Path.Combine(wwwRootPath, articleVM.article.imgUrl.TrimStart('/'));
-                    //Delete Old Img
-                    if (System.IO.File.Exists(oldImagePath))
-                    {
-                        try
-                        {
-                            System.IO.File.Delete(oldImagePath);
-                        }
-                        catch (DirectoryNotFoundException)
-                        {
-                            Console.WriteLine("Not Found this file !!");
-                        }
-
-                    }
                     foreach (int i in IdsToDelete)
                     {
                         Resource resource = _unitOfWork.ResourceRepository.Get(u=> u.Id == i);

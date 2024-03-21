@@ -240,6 +240,7 @@ body {
 }
 
 .file-container {
+    margin: 50px;
     position: relative;
     border-radius: 5px;
 }

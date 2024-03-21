@@ -25,7 +25,6 @@ function addUploadItem(file) {
     const uploadItem = document.createElement('div');
     uploadItem.classList.add('upload-item');
     uploadItem.innerHTML = `
-                <img src="file-icon.png" alt="File Icon">
                 <span>${file.name}</span>
               `;
     uploadContainer.appendChild(uploadItem);
