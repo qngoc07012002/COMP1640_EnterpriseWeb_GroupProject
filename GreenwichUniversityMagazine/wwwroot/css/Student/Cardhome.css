@@ -15,7 +15,6 @@
 }
 
 
-
 .fixed-size-img {
     width: 100%; /* Đảm bảo rằng hình ảnh sẽ điền vào phần đầu tiên của cha */
     height: auto; /* Đảm bảo tỷ lệ khung hình bị thay đổi tùy thuộc vào chiều rộng */

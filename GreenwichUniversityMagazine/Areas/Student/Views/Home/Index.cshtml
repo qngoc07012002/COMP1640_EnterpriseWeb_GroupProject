@@ -66,10 +66,10 @@
 
 
             <div class="col-md-6">
-                <div class="card mb-3" style="max-width: 600px; min-width: 200px; max-height: 200px; min-height: 170px; display: flex;" ">
+                <div class="card mb-3" style="max-width: 600px; min-width: 200px; max-height: 200px; min-height: 170px; display: flex;">
                     <div class="row no-gutters">
-                        <div class="col-md-3">
-                            <img src="~/img/Home/10.webp" class="card-img" style="max-width: 200px; min-width: 100px; max-height: 200px; min-height: 20px;">
+                        <div class="col-md-4 fixed-col-size">
+                            <img src="~/img/Home/1.png" class="card-img" alt="..." style="max-width: 300px; min-width: 220px; max-height: 200px; min-height: 150px;">
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
@@ -82,8 +82,8 @@
                 </div>
                 <div class="card mb-3" style="max-width: 600px; min-width: 200px; max-height: 200px; min-height: 170px; display: flex;">
                     <div class="row no-gutters">
-                        <div class="col-md-3">
-                            <img src="~/img/Home/1.png" class="card-img" alt="...">
+                        <div class="col-md-4 fixed-col-size">
+                            <img src="~/img/Home/1.png" class="card-img" alt="..." style="max-width: 300px; min-width: 220px; max-height: 200px; min-height: 150px;">
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
@@ -94,10 +94,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="card mb-3" style="max-width: 600px; min-width: 200px; max-height: 200px; min-height: 170px; display: flex;">
+                <div class="card mb-3" style="max-width: 700px; min-width: 200px; max-height: 200px; min-height: 170px; display: flex;">
                     <div class="row no-gutters">
-                        <div class="col-md-3">
-                            <img src="~/img/Home/1.png" class="card-img" alt="...">
+                        <div class="col-md-4 fixed-col-size">
+                            <img src="~/img/Home/1.png" class="card-img" style="max-width: 300px; min-width: 220px; max-height: 200px; min-height: 150px;">
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
@@ -118,10 +118,18 @@
 
     <div class="border-bottom border-dark">
         <div class="text-center bg-white py-2">
-
-            <h2 class="m-0"> ARTICLES New</h2>
+            <div style="display: inline-block; float: left;">
+                <h4 class="m-0"> Articles New</h4>
+            </div>
+            <div style="display: inline-block; float: right;">
+                <a href="#" class="viewall">View All</a>
+            </div>
+            <div style="clear:both;"></div>
         </div>
     </div>
+
+@* ///////////////////////////////////////////////////////////////////// *@
+
     <div class="row p-3 " >
         <div class="col-md-3">
             <div class="d-flex  align-items-center mb-3">
@@ -193,9 +201,9 @@
     }
               
     </div>
-    <div class="col-12 text-center mt-3">
+   @*  <div class="col-12 text-center mt-3">
         <button id="load-more-btn" class="btn btn-primary">Load more</button>
-    </div>
+    </div> *@
     <h1>sss</h1>
 
 <script>
@@ -211,7 +219,7 @@
             }
         });
     });
-        var skip = 6; // Số lượng bài báo đã hiển thị ban đầu
+       
 
        
 </script>
