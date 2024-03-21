@@ -1,6 +1,6 @@
 ﻿@model GreenwichUniversityMagazine.Models.ViewModels.UserVM
 <link rel="stylesheet" href="~/css/Student/editprofile.css">
-
+<partial name="_NotificationJS" />
 <div class="body_editprofile">
     <form class="editprofile-form" action="#" method="post" enctype="multipart/form-data" id="profileForm">
         <input asp-for="@Model.User.Email" hidden type="text">
