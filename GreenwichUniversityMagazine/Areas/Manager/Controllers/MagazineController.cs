@@ -32,7 +32,7 @@ namespace GreenwichUniversityMagazine.Areas.Manager.Controllers
                 MyTerms = _unitOfWork.TermRepository.GetAll().Where(b => b.IsDeleted == false).
                             Select(u => new SelectListItem
                             {
-                                Text = $"{u.StartDate.ToString()} - {u.EndDate.ToString()}",
+                                Text = $"{u.StartDate.ToString()} - {u.EndDate.ToString()}",    
                                 Value = u.Id.ToString()
                             }),
             }; return View(magazineVM);
