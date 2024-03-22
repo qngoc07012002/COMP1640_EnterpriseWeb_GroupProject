@@ -1,49 +1,62 @@
 ﻿@using GreenwichUniversityMagazine.Models.ViewModel
 @model ArticleVM
+@inject IHttpContextAccessor Accessor
 @{
     ViewData["Title"] = "Update";
 }
 <link rel="stylesheet" href="~/css/Student/Article.css" />
 <script src="https://cdn.ckeditor.com/4.19.1/standard/ckeditor.js"></script>
-
-<h1>Update</h1>
-
-<h4>Article</h4>
-<hr />
-<div class="row">
+<div class="card shadow border-2 my-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="py-2">Update Article</h2>
+            </div>
+        </div>
+    </div>
+    <br />
     <div class="col-md-4">
         <form method="post" enctype="multipart/form-data">
-            <div class="row">
+            <div class="">
                 <input asp-for="@Model.article.ArticleId" hidden />
                 <input asp-for="@Model.article.SubmitDate" hidden />
-                <div class="form-group">
-                    <label class="control-label">Magazines Name</label>
-                    <select asp-for="@Model.article.MagazinedId" class="form-control" asp-items="@Model.MyMagazines"></select>
+                <div class="form-group custom-select" style="width:200px;">
+                    <select asp-for="@Model.article.MagazinedId" class="form-control" asp-items="@Model.MyMagazines">
+                        <option value="">--Choose Magazines--</option>
+                        @foreach (var magazine in Model.MyMagazines)
+                        {
+                            <option value="@magazine.Value">@magazine.Text</option>
+                        }
+                    </select>
+                    <span asp-validation-for="@Model.article.MagazinedId" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label class="control-label">Name of Article: </label>
-                    <input asp-for="@Model.article.Title" class="form-control" />
+                <div class="input-container">
+                    <input asp-for="@Model.article.Title" type="text" id="input" required="">
+                    <label for="input" class="label">Article Name</label>
+                    <div class="underline"></div>
                     <span asp-validation-for="@Model.article.Title" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label class="control-label">Subtitle: </label>
-                    <input asp-for="@Model.article.SubTitle" class="form-control" />
+                <div class="input-container">
+                    <input type="text" id="input" asp-for="@Model.article.SubTitle" required="" />
+                    <label for="input" class="label">Subtitle</label>
+                    <div class="underline"></div>
                     <span asp-validation-for="@Model.article.SubTitle" class="text-danger"></span>
                 </div>
-                <div class="row mb-3">
-                    <label>Image Head</label>
-                    <img class="col-2" src="@Model.article.imgUrl" />
-                    <input type="file" name="HeadImg" class="form-control" accept="image/*" />
+                <div class="body-container">
+                    <label for="input" class="label">Image: </label>
+                    <input type="file" name="HeadImg" class="form-control" accept="image/*" onchange="loadFile(event)" />
+                    <br />
+                    <img class="img-select" src="@Model.article.imgUrl" id="output" />
                     <span asp-validation-for="@Model.article.imgUrl" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label class="control-label"></label>
+                <div class="body-container">
+                    <label for="input" class="label"></label>
                     <textarea id="content" asp-for="@Model.article.Body" class="form-control">@Model.article.Body</textarea>
                     <span asp-validation-for="@Model.article.Body" class="text-danger"></span>
                 </div>
-                <a>Document Already Exits:</a>
-                <input id="filesDeleteInput" name="filesDelete" multiple style="display:none" />
-                <div>
+                <div class="body-container separator"><strong>Current Documents</strong> </div>
+                <input class="input-container file-container" id="filesDeleteInput" name="filesDelete" multiple style="display:none" />
+                <div class="file-container">
                     @if (Model.MyResources != null)
                     {
                         @foreach (var resource in Model.MyResources)
@@ -59,85 +72,80 @@
                         <p>No files attached</p>
                     }
                 </div>
-                <hr />
-
-                <a> Want to add more document:</a>
-                <div class="upload-container" id="upload-container">
+                <div class="body-container separator"><strong>Add Document</strong> </div>
+                <div class="upload-container body-container" id="upload-container">
                     <input type="file" id="file-input" name="files" multiple style="display:none">
                     <a class="upload-button" onclick="openFileUploader()">
                         <span>+</span>
                     </a>
                     
                 </div>
-                <div class="form-group">
-                    <input type="submit" value="Update" class="btn btn-primary" />
+                <div class="body-container separator"></div>
+                <div class="body-container">
+                    <button type="submit" value="Update" class="pushable">
+                        <span class="edge"></span>
+                        <span class="front">Update</span>
+                    </button>
                 </div>
             </div>
         </form>
-        <></>
+        <div class="body-container">
+            <div class="separator"><strong>Comment</strong> </div>
+
+           
+            @foreach (var comment in Model.MyComments)
+            {
+                <div class="comment-private">
+                    <div class="avatar-coordinate">
+                        @{
+                            var avtUrl = Accessor.HttpContext.Session.GetString("avtUrl");
+                            @if (comment.UserId.ToString() == Accessor.HttpContext.Session.GetString("UserId"))
+                            {
+                                <img src="@avtUrl" alt="Avatar" class="avatar-coordinate-img">
+                            }
+                            else
+                            {
+                                <img src="~/css/Student/logo_greenwich.png" alt="Avatar" class="avatar-coordinate-img">
+                            }
+                        }
+                        
+                    </div>
+                    <div class="comment-content">
+                        <a class="box">
+                            <strong>
+                                @if (comment.UserId.ToString() == Accessor.HttpContext.Session.GetString("UserId"))
+                                {
+                                    var userName = Accessor.HttpContext.Session.GetString("UserName");
+                                    <span class="comment-value">@userName</span>
+                                }
+                                else
+                                {
+                                    <span class="comment-value">Coordinate</span>
+                                }
+                            </strong> - <span class="comment-value">@comment.Date</span>
+                        </a>
+                        <hr>
+                        <div class="card__content">
+                            @comment.Description
+                        </div>
+                    </div>
+                </div>
+
+            }
+            <div class="comment-input">
+                <textarea placeholder="Enter your comment..." rows="4"></textarea>
+                <button class="pushable" onclick="submitComment()">Send Comment</button>
+            </div>
+        </div>
     </div>
 </div>
 <hr />
 
-<script>
-    CKEDITOR.replace('content');
-</script>
-<script>
-    let files = [];
-    let filesDelete = [];
-    function openFileUploader() {
-        document.getElementById('file-input').click();
-    }
+@section Scripts
+{
+        <script src="@Url.Content("~/js/Student/Article/Create.js")" ></script>
+}
 
-    document.getElementById('file-input').addEventListener('change', handleFileSelect);
-
-    function handleFileSelect(event) {
-        const selectedFiles = event.target.files;
-        for (let i = 0; i < selectedFiles.length; i++) {
-            const file = selectedFiles[i];
-            const fileName = file.name;
-            const fileType = fileName.split('.').pop().toUpperCase();
-            if (['DOC', 'DOCX', 'PDF', 'CSV'].includes(fileType)) {
-                files.push(file);
-                addUploadItem(file);
-            }
-        }
-    }
-
-    function addUploadItem(file) {
-        const uploadContainer = document.getElementById('upload-container');
-        const uploadItem = document.createElement('div');
-        uploadItem.classList.add('upload-item');
-        uploadItem.innerHTML = ` <span>${file.name}</span> `;
-        uploadContainer.appendChild(uploadItem);
-        uploadItem.addEventListener('click', function () {
-            cancelUpload(file, uploadItem);
-        });
-    }
-
-    function cancelUpload(file, uploadItem) {
-        const index = files.indexOf(file);
-        if (index !== -1) {
-            files.splice(index, 1);
-        }
-        uploadItem.remove();
-    }
-
-    function confirmAndRemove(resourceId) {
-        var result = confirm("Do you want to delete this file ?");
-        if (result) {
-            removeResource(resourceId);
-        }
-    }
-
-    function removeResource(resourceId) {
-        var element = document.getElementById(resourceId);
-        element.remove();
-        filesDelete.push(resourceId);
-        var filesDeleteInput = document.getElementById('filesDeleteInput');
-        filesDeleteInput.value = filesDelete;
-    }
-</script>
 
 <div>
     <a asp-action="Index">Back to List</a>

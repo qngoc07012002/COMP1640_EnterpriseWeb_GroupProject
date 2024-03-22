@@ -19,6 +19,7 @@ header {
     flex-grow: 2;
 }
 
+
 header img.logo {
     width: 250px; /* Điều chỉnh kích thước của logo */
     height: auto; /* Đảm bảo tỷ lệ khung hình đúng */
