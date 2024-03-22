@@ -42,7 +42,7 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                         HttpContext.Session.SetString("UserName", user.Name);
                         HttpContext.Session.SetString("avtUrl", user.avtUrl);
                     }
-                  
+
                     /*TempData["success"] = "Login successful";*/ // Lưu thông báo đăng nhập thành công vào TempData
                 }
                 return RedirectToAction("Index", "Home", new { area = "student" });
