@@ -66,7 +66,7 @@
 
 
             <div class="col-md-6">
-                <div class="card mb-3" style="max-width: 600px; min-width: 200px; max-height: 200px; min-height: 170px; display: flex;">
+                <div class="card mb-3" style="max-width: 600px; min-width: 200px; max-height: 500px; min-height: 170px; display: flex;">
                     <div class="row no-gutters">
                         <div class="col-md-4 fixed-col-size">
                             <img src="~/img/Home/1.png" class="card-img" alt="..." style="max-width: 300px; min-width: 220px; max-height: 200px; min-height: 150px;">
@@ -80,7 +80,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card mb-3" style="max-width: 600px; min-width: 200px; max-height: 200px; min-height: 170px; display: flex;">
+                <div class="card mb-3" style="max-width: 600px; min-width: 200px; max-height: 500px; min-height: 170px; display: flex;">
                     <div class="row no-gutters">
                         <div class="col-md-4 fixed-col-size">
                             <img src="~/img/Home/1.png" class="card-img" alt="..." style="max-width: 300px; min-width: 220px; max-height: 200px; min-height: 150px;">
@@ -94,10 +94,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="card mb-3" style="max-width: 700px; min-width: 200px; max-height: 200px; min-height: 170px; display: flex;">
+                <div class="card mb-3" style="max-width: 600px; min-width: 200px; max-height: 500px; min-height: 170px; display: flex;">
                     <div class="row no-gutters">
                         <div class="col-md-4 fixed-col-size">
-                            <img src="~/img/Home/1.png" class="card-img" style="max-width: 300px; min-width: 220px; max-height: 200px; min-height: 150px;">
+                            <img src="~/img/Home/1.png" class="card-img" alt="..." style="max-width: 300px; min-width: 220px; max-height: 200px; min-height: 150px;">
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
@@ -108,6 +108,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -176,29 +177,29 @@
     </div>
     
     <div class="row pb-3" id="articleContainer">
-    @foreach (var article in  Model.Take(6))
-    {
-            <div class="clo-lg-3 col-sm-6">
-                <div class="row p-2">
-                    <div class="col-12 p-1">
-                        <div class="card mb-3" style="max-width: 700px; min-width: 200px; max-height:180px; min-height: 180px; display: flex; ">
-                            <div class="row no-gutters">
-                                <div class="col-md-4 fixed-col-size">
-                                    <img src="@article.imgUrl" class="card-img" alt="..." style="max-width: 300px; min-width: 220px; max-height: 200px; min-height: 150px;">
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body">
-                                        <div class="pd-1"> <a asp-area="Admin" asp-controller="User" asp-action="Index" class="card-title h6 text-primary opacity-75 text-uppercase text-center">@article.Title</a> </div>
-                                        <p class="card-text">@article.SubTitle</p>
-                                    @*  <p class="card-title"><small class="text-muted">Magazine @article.Magazines.Title</small></p> *@
+        @foreach (var article in  Model.Take(6))
+        {
+                <div class="clo-lg-2 col-sm-6">
+                    <div class="row p-2">
+                        <div class="col-12 p-1">
+                        <div class="card mb-3" style="max-width: 700px; min-width: 200px; max-height: 500px;; min-height: 180px; display: flex; ">
+                                <div class="row no-gutters">
+                                    <div class="col-md-4">
+                                    <img src="@article.imgUrl" class="card-img" alt="..." style="max-width: 300px; min-width: 220px; max-height: 200px; min-height: 150px; object-fit: cover;">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <div class="pd-1"> <a asp-area="Admin" asp-controller="User" asp-action="Index" class="card-title h6 text-primary opacity-75 text-uppercase text-center">@article.Title</a> </div>
+                                            <p class="card-text" style="max-width: 100%;">@article.SubTitle</p>
+                                        @*  <p class="card-title"><small class="text-muted">Magazine @article.Magazines.Title</small></p> *@
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-    }
+        }
               
     </div>
    @*  <div class="col-12 text-center mt-3">
