@@ -15,7 +15,9 @@
 </head>
 <body>
     <header>
+        <a asp-area="Student" asp-controller="Home" asp-action="Index"> 
         <img src="~/img/Layout/logo.png" alt="Greenwich University Logo" class="logo">
+        </a>
         <div class="nav-container">
             <nav>
                 <a asp-area="Student" asp-controller="Home" asp-action="Index">Home</a>
@@ -34,7 +36,6 @@
              if (userId == null)
             {
                 <div class="login-button-container">
-                        <a asp-area="Student" asp-controller="Home" asp-action="Register" class="register-button">Sign Up</a>
                         <a asp-area="Student" asp-controller="Home" asp-action="Login" class="login-button">Sign In</a>
                 </div>
                 
@@ -80,9 +81,14 @@
                                         <h4 class="dropdown-content-fullname">@userName</h4>
                                         <h4 class="dropdown-content-email">@userEmail</h4>
                                 </div>
-                                <a class="dropdown-content-child" asp-area="Student" asp-asp-controller="Home" asp-action="EditProfile">
+                                <a class="dropdown-content-child" asp-area="Student" asp-controller="Student" asp-action="EditProfile">
                                     <img src="~/css/Navigation/editprofile.png" />
                                     <h4>Edit Profile</h4>
+                                </a>
+                                <a class="dropdown-content-child" asp-area="Student" asp-controller="Student" asp-action="ChangePassword">
+                                    <img src="~/css/Navigation/changepassword.png" />
+
+                                    <h4>Change Password</h4>
                                 </a>
                                 <a asp-area="Student" asp-controller="Home" asp-action="Logout" class="dropdown-content-child">
                                     <img src="~/css/Navigation/logout.png" />
