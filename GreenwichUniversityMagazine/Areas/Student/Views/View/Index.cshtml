@@ -1,4 +1,12 @@
 ﻿@model IEnumerable<Article>
+@{
+    ViewData["Title"] = "Article Management";
+    int itemsPerPage = 6;
+    int totalItems = Model.Count();
+    int totalPages = (int)Math.Ceiling((double)totalItems / itemsPerPage);
+    int currentPage = Context.Request.Query["page"].Count > 0 ? Convert.ToInt32(Context.Request.Query["page"]) : 1;
+    int startIndex = (currentPage - 1) * itemsPerPage;
+}
 
 
 
@@ -9,7 +17,7 @@
 <div class="main-container">
     <div class="content">
         <div class="card-container" id="cardContainer">
-            @foreach (var article in Model)
+            @foreach (var article in Model.Skip(startIndex).Take(itemsPerPage))
             {
                 <div class="card-1">
                     <div class="card-image-1">
@@ -67,18 +75,29 @@
     </div>
 </div>
 
-<div class="pagination-container">
-    <div class="pagination" id="pagination">
-        <a href="#" id="prevBtn">&laquo; Previous</a>
-        <a class="active" href="#">1</a>
-        <a href="#">2</a>
-        <a href="#">3</a>
-        <a href="#">4</a>
-        <a href="#">5</a>
-        <a href="#">6</a>
-        <a href="#" id="nextBtn">Next &raquo;</a>
-    </div>
-</div>
+<ul class="pagination home-product-pagination text-center" id="pagination">
+    @if (currentPage > 1)
+    {
+        <li class="pagination-item pagination-previous">
+            <a href="#" class="pagination-item-link" data-page="@(currentPage - 1)">Previous</a>
+        </li>
+    }
+    @for (int i = 1; i <= totalPages; i++)
+    {
+        <li class="pagination-item @(i == currentPage ? "pagination-item--active" : "")">
+            <a href="#" class="pagination-item-link" data-page="@i">@i</a>
+        </li>
+    }
+    @if (currentPage < totalPages)
+    {
+        <li class="pagination-item pagination-next">
+            <a href="#" class="pagination-item-link" data-page="@(currentPage + 1)">Next</a>
+        </li>
+    }
+</ul>
+
+
+
 
 
 
@@ -104,12 +123,24 @@
         }
     });
 
+  
+    document.addEventListener("DOMContentLoaded", function () {
+        const pagination = document.getElementById("pagination");
+        pagination.addEventListener("click", function (event) {
+            event.preventDefault();
+            const target = event.target;
+            if (target.classList.contains("pagination-item-link")) {
+                const page = target.getAttribute("data-page");
+                if (page) {
+                    const url = `${window.location.pathname}?page=${page}`;
+                    window.location.href = url;
+                }
+            }
+        });
+    });
 
 
-
-
-    
-
+ 
 
 </script>
 
