@@ -19,13 +19,7 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
             return View(articleList);
         }
 
-        public IActionResult LoadMore(int skip)
-        {
-            IEnumerable<Article> articleList = _unitOfWork.ArticleRepository.GetAll(includeProperty: "Magazines")
-                                                  .Skip(skip).Take(6).ToList();
-            return PartialView("_ArticlePartial", articleList);
-        }
-
+        
 
         public HomeController(IUnitOfWork db, IWebHostEnvironment webhost)
         {
