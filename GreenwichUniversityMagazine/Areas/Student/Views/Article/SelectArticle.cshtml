@@ -1,0 +1,55 @@
+﻿@model ArticleVM
+@* <div>ID của bài báo: @Model.article.ArticleId</div> *@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="~/css/Student/ArticleView.css">
+</head>
+<body>
+    <div class="content clearfix">
+        <div class="main-content">
+            <div class="article">
+                <i class="far fa-user">@Model.Magazines.Title</i>
+                &nbsp;
+                <i class="far calendar">@Model.FormattedModifyDate</i>
+                <div class="recent-post-title">
+                    <h1>@Model.article.Title</h1>
+                </div>
+                <div class="subTitle">
+                    <h3>@Model.article.SubTitle</h3>
+                </div>
+                <div class="username">
+                    @if (Model.User != null)
+                    {
+                        <p>By @Model.User.Name</p>
+                    }
+                </div>
+                <div class="post">
+                    <img class="post-image" src="/img/articleImg/b52c5a02-a75d-44c8-9053-6a9d5f194927.jpg" alt="Thumbnail">
+                    <div class="post-content">
+                        <!-- Hiển thị nội dung của bài báo -->
+                        @Html.Raw(Model.article.Body)
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar">
+            <img class="sidebar-image" src="~/css/Student/logo_greenwich.png" alt="Italian Trulli">
+            <div class="search-button">
+                <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
+
+            </div>
+            <h1 class="sidebar-title">Articles</h1>
+            <div class="select-article">
+                <select  asp-for="@Model.article.ModifyDate" asp-items="@Model.MonthYearOptions"></select>
+
+            </div>
+            <h1 class="sidebar-title">Something else</h1>
+            <select class="select" name="Datetime" id="Datetime">Datetime</select>
+        </div>
+    </div>
+</body>
+</html>

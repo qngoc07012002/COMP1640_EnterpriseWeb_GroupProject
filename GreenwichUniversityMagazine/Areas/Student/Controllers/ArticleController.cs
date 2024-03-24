@@ -5,6 +5,7 @@ using GreenwichUniversityMagazine.Repository;
 using GreenwichUniversityMagazine.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Globalization;
 
 namespace GreenwichUniversityMagazine.Areas.Student.Controllers
 {
@@ -79,6 +80,53 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                 return RedirectToAction("Error", "Home");
             }
 
+        }
+        public IActionResult SelectArticle(int id)
+        {
+            // Lấy Id của sinh viên từ Session và kiểm tra nếu không thành công thì trả về trang không hợp lệ
+            if (!int.TryParse(HttpContext.Session.GetString("UserId"), out int studentId))
+            {
+                return RedirectToAction("InvalidSession", "Error");
+            }
+
+            // Lấy thông tin của bài báo có ID tương ứng
+            Article article = _unitOfWork.ArticleRepository.Get(
+                includeProperty: "Magazines",
+                filter: a => a.ArticleId == id && a.UserId == studentId
+            );
+
+            if (article == null)
+            {
+                return RedirectToAction("Index", "Home"); // Hoặc trang thông báo lỗi nếu không tìm thấy bài báo
+            }
+
+            // Chuyển đổi bài báo thành ArticleVM nếu cần thiết
+            ArticleVM articleVM = new ArticleVM
+            {
+                article = article,
+                User = article.User,
+                Magazines = article.Magazines,
+                FormattedModifyDate = article.ModifyDate?.ToString("dd/MM/yyyy") // Định dạng ModifyDate thành chuỗi ngày giờ
+            };
+            articleVM.MonthYearOptions = GetMonthYearOptions();
+            return View(articleVM); // Trả về trang chi tiết bài báo hoặc trang hiển thị nội dung bài báo
+        }
+        private List<SelectListItem> GetMonthYearOptions()
+        {
+            var options = new List<SelectListItem>();
+            // Lặp qua các tháng và năm để tạo các tùy chọn
+            for (int year = 2024; year >= 2019; year--)
+            {
+                for (int month = 1; month <= 12; month++)
+                {
+                    options.Add(new SelectListItem
+                    {
+                        Value = $"{month:00}/{year}",
+                        Text = $"{CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month)} {year}"
+                    });
+                }
+            }
+            return options;
         }
 
         #region API CALLs

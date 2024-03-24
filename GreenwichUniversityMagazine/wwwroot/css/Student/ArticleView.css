@@ -1,0 +1,118 @@
+body {
+    margin: 0;
+    font-family: 'Lato', sans-serif;
+    color: #333333;
+    line-height: 28px;
+    
+}
+  h1,
+  h2,
+  h3 {
+    margin: 0;
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+
+
+
+.content{
+    display:flex;
+    width: 60%;
+    height:auto;
+    margin: 30px auto 30px;
+   
+}
+    .content .main-content {
+        
+        margin: 10px;
+        width: 60%;
+        float: left;
+    }
+.content .main-content .article{
+    margin-bottom:100px;
+}
+.content .main-content .post{
+    width: 95%;
+    height: auto;
+    margin: 10px;
+    border-radius: 10px;
+    background: white;
+    background-size: cover;
+    
+
+}
+.content .main-content .post .post-content{
+    width: 98%;
+    padding: 10px;
+}
+    .content .main-content .post .post-image {
+        display: flex;
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        margin-left: auto;
+        margin-right: auto;
+    }
+.content .main-content .recent-post-title{
+    color:#01013e;
+    line-height:40px;
+}
+.content .main-content .subTitle{
+    font-style:oblique;
+}
+.content .sidebar{
+    margin: 10px;
+    width: 30%;
+    float: left;
+    position:relative;
+    height: 300px;
+}
+
+    .content .sidebar .sidebar-image {
+        display:flex;
+        width: 200px;
+        height: auto;
+        margin-left:auto;
+        margin-right:auto;
+        border-radius: 10px;
+        justify-content:center;
+    }
+.content .sidebar .search-button{
+    width:320px;
+    height:30px;
+    margin: 10px;
+    margin-bottom: 20px;
+    display: block;
+    text-align: center;
+    justify-content: center;
+}
+.content .sidebar .search-button #myInput{
+    width: 95%;
+    height: 100%;
+    border: 2px solid black;
+    border-radius: 10px;
+    text-align:center;
+}
+    .content .sidebar .sidebar-title {
+        width:300px;
+        height:auto;
+        background-color: #01013e;
+        color: white;
+        padding: 20px;
+        text-align: center;
+        border-radius: 20px;
+    }
+    .content .sidebar .select-article {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    .content .sidebar .select-article > select{
+        width:200px;
+        height:50px;
+    }
+    .clearfix {
+        content: '';
+        display: block;
+        clear: both;
+    }
