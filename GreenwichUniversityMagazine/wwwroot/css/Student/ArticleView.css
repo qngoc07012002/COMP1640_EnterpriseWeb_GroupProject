@@ -3,7 +3,7 @@ body {
     font-family: 'Lato', sans-serif;
     color: #333333;
     line-height: 28px;
-    
+    height: 100%;
 }
   h1,
   h2,
@@ -14,24 +14,40 @@ body {
     font-weight: bold;
   }
 
-
-
-.content{
-    display:flex;
-    width: 60%;
-    height:auto;
+.content {
+    display: flex;
+    width: 100%;
+    height: auto;
     margin: 30px auto 30px;
-   
+    align-items: center;
+    justify-content: center;
 }
     .content .main-content {
-        
         margin: 10px;
-        width: 60%;
+        width: 53%;
         float: left;
+        margin-left: 200px;
     }
 .content .main-content .article{
     margin-bottom:100px;
 }
+
+.content .main-content .article .userImg>img{
+   height:50px;
+   width:50px;
+   float:left;
+   border-radius:30px;
+}
+.content .main-content .article .userName{
+    display: table-cell; /* Important */ 
+    vertical-align: middle; /* Important */ 
+    padding-left:15px;
+    width: auto;
+    height: 50px;
+    
+    
+}
+
 .content .main-content .post{
     width: 95%;
     height: auto;
@@ -39,9 +55,8 @@ body {
     border-radius: 10px;
     background: white;
     background-size: cover;
-    
-
 }
+
 .content .main-content .post .post-content{
     width: 98%;
     padding: 10px;
@@ -63,10 +78,11 @@ body {
 }
 .content .sidebar{
     margin: 10px;
-    width: 30%;
+    margin-left:200px;
+    width: 340px;
     float: left;
     position:relative;
-    height: 300px;
+    height: auto;
 }
 
     .content .sidebar .sidebar-image {

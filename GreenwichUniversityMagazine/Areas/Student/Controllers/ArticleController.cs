@@ -83,33 +83,27 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
         }
         public IActionResult SelectArticle(int id)
         {
-            // Lấy Id của sinh viên từ Session và kiểm tra nếu không thành công thì trả về trang không hợp lệ
             if (!int.TryParse(HttpContext.Session.GetString("UserId"), out int studentId))
             {
                 return RedirectToAction("InvalidSession", "Error");
             }
-
-            // Lấy thông tin của bài báo có ID tương ứng
             Article article = _unitOfWork.ArticleRepository.Get(
-                includeProperty: "Magazines",
+                includeProperty: "Magazines,User",
                 filter: a => a.ArticleId == id && a.UserId == studentId
             );
-
             if (article == null)
             {
-                return RedirectToAction("Index", "Home"); // Hoặc trang thông báo lỗi nếu không tìm thấy bài báo
+                return RedirectToAction("Index", "Home"); 
             }
-
-            // Chuyển đổi bài báo thành ArticleVM nếu cần thiết
             ArticleVM articleVM = new ArticleVM
             {
                 article = article,
                 User = article.User,
                 Magazines = article.Magazines,
-                FormattedModifyDate = article.ModifyDate?.ToString("dd/MM/yyyy") // Định dạng ModifyDate thành chuỗi ngày giờ
+                FormattedModifyDate = article.ModifyDate?.ToString("dd/MM/yyyy") 
             };
             articleVM.MonthYearOptions = GetMonthYearOptions();
-            return View(articleVM); // Trả về trang chi tiết bài báo hoặc trang hiển thị nội dung bài báo
+            return View(articleVM); 
         }
         private List<SelectListItem> GetMonthYearOptions()
         {

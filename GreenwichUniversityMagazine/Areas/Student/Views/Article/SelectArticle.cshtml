@@ -21,12 +21,13 @@
                 <div class="subTitle">
                     <h3>@Model.article.SubTitle</h3>
                 </div>
-                <div class="username">
-                    @if (Model.User != null)
-                    {
-                        <p>By @Model.User.Name</p>
-                    }
+                <div class="userImg">
+                     <img src="~/img/articleImg/54e911ce-345b-463d-95f8-1fa76a532120.jpg" alt="User Image">
                 </div>
+                <div class="userName">
+                    <i>@Model.User.Name</i>
+                </div>
+                
                 <div class="post">
                     <img class="post-image" src="/img/articleImg/b52c5a02-a75d-44c8-9053-6a9d5f194927.jpg" alt="Thumbnail">
                     <div class="post-content">
