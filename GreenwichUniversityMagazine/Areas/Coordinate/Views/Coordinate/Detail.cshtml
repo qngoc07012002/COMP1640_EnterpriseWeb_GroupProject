@@ -118,7 +118,7 @@
                             var fileName = System.IO.Path.GetFileName(resource.Path);
                             var relativePath = Url.Content($"~/Resource/Article/{resource.ArticleId}/{fileName}"); // Đường dẫn tương đối đến tệp PDF
                             <div class="resource-item">
-                                <a href="@relativePath" target="_blank" type="application/pdf">@fileName</a>
+                                <a href="@relativePath" class="old-item"  target="_blank" type="application/pdf">@fileName</a>
                             </div>
                         }
                     }
