@@ -1,0 +1,185 @@
+﻿.main-container {
+    display: flex;
+    width: 80%;
+    margin: 0 auto; 
+    padding-left: 150px;
+    
+    
+
+ }
+
+.content {
+    width: 60%; 
+}
+
+.sidebar {
+    width: 40%; 
+    margin-left: 80px; 
+    padding: 10px;
+}
+
+.card-container {
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.card-1 {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    display: flex;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    
+}
+
+.card-image-1 {
+    width: 40%;
+}
+.card-image-1 img {
+        min-height: 100%;
+        width: 100%;
+        max-height: 200px;
+        object-fit: cover;
+     
+}
+
+.card-text-1 {
+    width: 60%;
+    padding: 10px;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+    .main-container {
+        flex-direction: column;
+    }
+
+    .content,
+    .sidebar {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .card-container {
+        width: 100%;
+    }
+
+    .card-1 {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card-image-1,
+    .card-text-1 {
+        width: 100%;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+}
+
+    .sidebar {
+        padding: 10px; 
+    }
+
+    .custom-select select {
+        width: 100%; 
+    }
+
+    
+
+    .sidebar > * {
+        margin-bottom: 10px; 
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .card-text-1 {
+        width: 100%;
+    }
+}
+
+.custom-select {
+    margin-bottom: 50px; 
+    
+}
+.custom-select select {
+        width: 50%; /* Phóng to thanh select ra toàn bộ chiều rộng của container */
+        padding: 8px; /* Khoảng cách trong nội dung */
+        font-size: 16px; /* Kích thước chữ */
+        border: 1px solid #ccc; /* Đường viền */
+        border-radius: 5px; /* Bo tròn góc */
+        background-color: white; /* Màu nền */
+        appearance: none; /* Loại bỏ giao diện mặc định của select */
+        outline: none; /* Loại bỏ đường viền khi focus */
+        cursor: pointer; /* Chỉ định con trỏ khi di chuột qua */
+}
+
+.search-container input[type="text"] {
+    width: 70%; 
+    padding: 8px; 
+    font-size: 16px; 
+    border: 1px solid #ccc; 
+    border-radius: 5px; 
+}
+
+.search-container i {
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+.search-container button {
+    padding: 8px; 
+    font-size: 16px;
+    border: none; 
+    background: none; 
+    cursor: pointer; 
+}
+
+.search-container button:hover {
+        color: #555; 
+}
+
+.home-product-pagination {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center; /* Căn giữa ngang */
+    align-items: center; /* Căn giữa dọc */
+    margin-top: 20px; /* Khoảng cách giữa phân trang và nội dung */
+}
+
+
+.pagination-item {
+    display: inline-block;
+    margin: 0 5px;
+}
+
+.pagination-item-link {
+    padding: 5px 10px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    color: #333;
+    text-decoration: none;
+}
+
+.pagination-item-link:hover {
+    background-color: #ccc;
+}
+
+.pagination-item--active .pagination-item-link {
+    background-color: #333;
+    color: #fff;
+}
+
+.pagination-previous,
+.pagination-next {
+    padding: 8px 16px;
+    margin: 0 10px; /* Khoảng cách giữa các nút phân trang */
+}
+
+
+
+
+
+
