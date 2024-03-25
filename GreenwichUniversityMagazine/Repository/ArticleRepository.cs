@@ -10,6 +10,11 @@ namespace GreenwichUniversityMagazine.Repository
         public ArticleRepository(dbContext dbContext): base(dbContext) {
             _dbContext = dbContext;
         }
+
+        public Article GetById(int id)
+        {
+            return _dbContext.Articles.FirstOrDefault(t => t.ArticleId == id);
+
         //Query for Chart 1 Overview
         public IEnumerable<int> GetArticleCountsByTerm()
         {
@@ -174,6 +179,7 @@ namespace GreenwichUniversityMagazine.Repository
                 });
             }
             return listObj;
+
         }
     }
 }

@@ -18,6 +18,10 @@
         </div>
     </div>
     <div class="card-body p-5">
+        <div class="row pb-3">
+            <div class="col-6">
+            </div>
+        </div>
         <div class="container">
             <div class="row" id="bookList">
                 @{
@@ -68,7 +72,8 @@
             </div>
         </div>
     </div>
-</div> *@
+</div>
+ *@
 
 @model CoordinateVM
 ﻿@{
@@ -90,15 +95,6 @@
         </div>
     </div>
     <div class="card-body p-5">
-        <div class="row pb-3">
-            <div class="col-6">
-            </div>
-            <div class="col-6 text-end">
-                <a asp-area="Student" asp-action="Create" asp-controller="Article" class="btn btn-primary">
-                    <i class="bi bi-plus-circle"></i>  Create New Article
-                </a>
-            </div>
-        </div>
         <div class="container">
             <div class="row" id="bookList">
                 @{
@@ -120,9 +116,11 @@
                             </div>
                             <div class="card-button">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    @* <a href="/student/article/Update?id=@article.ArticleId" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i>Detail</a>*@
                                     <a asp-controller="Coordinate" asp-action="Detail" asp-route-Id="@article.ArticleId" class="btn btn-primary mx-2">
                                         <i class="bi bi-pencil-square"></i> Detail
+                                    </a>
+                                    <a asp-controller="Coordinate" asp-action="Detail" asp-route-Id="@article.ArticleId" class="btn btn-primary mx-2">
+                                        <i class="bi bi-pencil-square"></i> Aprove
                                     </a>
                                 </div>
                             </div>

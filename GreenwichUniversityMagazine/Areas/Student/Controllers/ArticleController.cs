@@ -68,7 +68,6 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                         Value = u.Id.ToString(),
                         Text = u.Path.ToString(),
                     });
-
                     return View(articleVM);
                 }
                 else
