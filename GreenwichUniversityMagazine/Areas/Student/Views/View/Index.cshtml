@@ -24,9 +24,9 @@
                         <img src="@article.imgUrl" alt="image" />
                     </div>
                     <div class="card-text-1">
-                        <h2>@article.Title</h2>
+                        <h3 >@article.Title</h3>
                         <p>@article.SubTitle</p>
-                        <a href="" class="read-more">Read More</a>
+                        <p style="color: #00BFFF"> Magazine @article.Magazines.Title</p>
                     </div>
                 </div>
             }
@@ -106,8 +106,8 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        var maxTitleWords = 5; // Số từ tối đa cho Title
-        var maxSubtitleWords = 15; // Số từ tối đa cho SubTitle
+        var maxTitleWords = 15; // Số từ tối đa cho Title
+        var maxSubtitleWords = 20; // Số từ tối đa cho SubTitle
 
         limitWords('.card-text-1 h2', maxTitleWords);
         limitWords('.card-text-1 p', maxSubtitleWords);

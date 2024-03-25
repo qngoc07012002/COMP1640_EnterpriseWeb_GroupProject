@@ -1,11 +1,15 @@
 ﻿.main-container {
     display: flex;
-    width: 70%;
+    width: 80%;
     margin: 0 auto; 
-}
+    padding-left: 150px;
+    
+    
+
+ }
 
 .content {
-    width: 50%; 
+    width: 60%; 
 }
 
 .sidebar {
@@ -17,32 +21,31 @@
 .card-container {
     display: flex;
     flex-direction: column;
+    
 }
 
 .card-1 {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     display: flex;
-    background-color: antiquewhite;
     border-radius: 5px;
     margin-bottom: 20px;
-
     overflow: hidden;
     
 }
 
 .card-image-1 {
-    width: 50%;
+    width: 40%;
 }
 .card-image-1 img {
         min-height: 100%;
         width: 100%;
         max-height: 200px;
         object-fit: cover;
-        border-top-right-radius: 5px;
-        border-bottom-right-radius: 5px;
+     
 }
 
 .card-text-1 {
-    width: 50%;
+    width: 60%;
     padding: 10px;
 }
 
@@ -160,9 +163,9 @@
     text-decoration: none;
 }
 
-    .pagination-item-link:hover {
-        background-color: #ccc;
-    }
+.pagination-item-link:hover {
+    background-color: #ccc;
+}
 
 .pagination-item--active .pagination-item-link {
     background-color: #333;
@@ -176,10 +179,7 @@
 }
 
 
-    .pagination-previous:hover,
-    .pagination-next:hover {
-        background-color: #ccc;
-    }
+
 
 
 
