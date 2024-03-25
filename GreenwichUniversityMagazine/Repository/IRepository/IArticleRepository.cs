@@ -6,12 +6,12 @@ namespace GreenwichUniversityMagazine.Repository.IRepository
     public interface IArticleRepository : IRepository<Article>
     {
 
-        Article GetById(int id);
+        public Article GetById(int id);
 
-        IEnumerable<int> GetArticleCountsByTerm();
-        Task<IEnumerable<object>> GetMultipleLineChartData();
-        Task<IEnumerable<object>> GetGroupBarChart();
-        Task<IEnumerable<object>> GetStackBarChartContributions();
+        public IEnumerable<int> GetArticleCountsByTerm();
+        public Task<IEnumerable<object>> GetMultipleLineChartData();
+        public Task<IEnumerable<object>> GetGroupBarChart();
+        public Task<IEnumerable<object>> GetStackBarChartContributions();
 
 
     }
