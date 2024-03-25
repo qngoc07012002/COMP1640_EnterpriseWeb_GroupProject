@@ -1,0 +1,41 @@
+﻿@model ArticleVM
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="~/css/Student/ArticleView.css">
+</head>
+<body>
+    <div class="content clearfix">
+        <div class="main-content">
+            <div class="article">
+                <i class="far fa-user">@Model.Magazines.Title</i>
+                &nbsp;
+                <i class="far calendar">@Model.article.ModifyDate</i>
+                <div class="recent-post-title">
+                    <h1>@Model.article.Title</h1>
+                </div>
+                <div class="SubTitle">
+                    <h3>@Model.article.SubTitle</h3>
+                </div>
+                <div class="username">
+                    <p>By @Model.User.Name (@Model.article.UserId)</p>
+                </div>
+                <div class="post">
+                    <img class="post-image" src="@Model.article.imgUrl" alt="Thumbnail">
+                    <div class="post-content">
+                        <!-- Hiển thị nội dung của bài báo -->
+                        @Html.Raw(Model.article.Body)
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar">
+            <!-- Nội dung thanh bên -->
+        </div>
+    </div>
+</body>
+</html>

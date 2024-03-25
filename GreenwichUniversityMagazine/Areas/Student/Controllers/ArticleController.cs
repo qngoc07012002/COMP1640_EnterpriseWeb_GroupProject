@@ -5,6 +5,7 @@ using GreenwichUniversityMagazine.Repository;
 using GreenwichUniversityMagazine.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Globalization;
 
 namespace GreenwichUniversityMagazine.Areas.Student.Controllers
 {
@@ -80,6 +81,43 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                 return RedirectToAction("Error", "Home");
             }
 
+        }
+        public IActionResult SelectArticle(int id)
+        {
+            Article article = _unitOfWork.ArticleRepository.Get(
+                includeProperty: "Magazines,User",
+                filter: a => a.ArticleId == id 
+            );
+            if (article == null)
+            {
+                return RedirectToAction("Index", "Home"); 
+            }
+            ArticleVM articleVM = new ArticleVM
+            {
+                article = article,
+                User = article.User,
+                Magazines = article.Magazines,
+                FormattedModifyDate = article.ModifyDate?.ToString("dd/MM/yyyy") 
+            };
+            articleVM.MonthYearOptions = GetMonthYearOptions();
+            return View(articleVM); 
+        }
+        private List<SelectListItem> GetMonthYearOptions()
+        {
+            var options = new List<SelectListItem>();
+            // Lặp qua các tháng và năm để tạo các tùy chọn
+            for (int year = 2024; year >= 2019; year--)
+            {
+                for (int month = 1; month <= 12; month++)
+                {
+                    options.Add(new SelectListItem
+                    {
+                        Value = $"{month:00}/{year}",
+                        Text = $"{CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month)} {year}"
+                    });
+                }
+            }
+            return options;
         }
 
         #region API CALLs
