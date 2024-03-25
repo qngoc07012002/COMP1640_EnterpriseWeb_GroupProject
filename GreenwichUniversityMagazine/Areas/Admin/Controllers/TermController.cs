@@ -83,71 +83,71 @@ namespace GreenwichUniversityMagazine.Areas.Admin.Controllers
 
         //public IActionResult Edit(int? id)
         //{
-    //        if (id == null || id == 0)
-    //        {
-    //            return NotFound();
-    //}
-    //    Term? termFromDb = _unitOfWork.TermRepository.Get(u => u.Id == id);
-    //    if (termFromDb == null)
-    //    {
-    //        return NotFound();
-    //    }
-    //    if(termFromDb.IsDeleted == true)
-    //    {
-    //        return RedirectToAction("Index");
-    //    }
-    //    return View(termFromDb);
-    //}
-    //[HttpPost]
-    //public IActionResult Edit(Term obj)
-    //{
-    //    if (ModelState.IsValid)
-    //    {
-    //        string[] parts = obj.Name.Split(' ');
-    //        string season = parts[0];
-    //        if (obj != null && obj.StartDate < obj.EndDate)
-    //        {
-    //            var magazinesToUpdate = _unitOfWork.MagazineRepository.GetAll().ToList();
-    //            foreach (var magazine in magazinesToUpdate)
-    //            {
-    //                if (magazine.TermId == obj.Id && magazine.IsDeleted == false)
-    //                {
-    //                    if (magazine.StartDate < obj.StartDate)
-    //                    {
-    //                        magazine.StartDate = obj.StartDate;
-    //                    }
-    //                    if (magazine.EndDate > obj.EndDate)
-    //                    {
-    //                        magazine.EndDate = obj.EndDate;
-    //                    }
-    //                    if (magazine.StartDate > magazine.EndDate)
-    //                    {
-    //                        magazine.EndDate = magazine.StartDate;
-    //                    }
-    //                    if (magazine.StartDate > obj.EndDate)
-    //                    {
-    //                        magazine.StartDate = obj.StartDate;
-    //                        magazine.EndDate = obj.EndDate;
-    //                    }
-    //                    _unitOfWork.MagazineRepository.Update(magazine);
-    //                }
-    //            }
+        //    if (id == null || id == 0)
+        //    {
+        //        return NotFound();
+        //    }
+        //    Term? termFromDb = _unitOfWork.TermRepository.Get(u => u.Id == id);
+        //    if (termFromDb == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    if(termFromDb.IsDeleted == true)
+        //    {
+        //        return RedirectToAction("Index");
+        //    }
+        //    return View(termFromDb);
+        //}
+        //[HttpPost]
+        //public IActionResult Edit(Term obj)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        string[] parts = obj.Name.Split(' ');
+        //        string season = parts[0];
+        //        if (obj != null && obj.StartDate < obj.EndDate)
+        //        {
+        //            var magazinesToUpdate = _unitOfWork.MagazineRepository.GetAll().ToList();
+        //            foreach (var magazine in magazinesToUpdate)
+        //            {
+        //                if (magazine.TermId == obj.Id && magazine.IsDeleted == false)
+        //                {
+        //                    if (magazine.StartDate < obj.StartDate)
+        //                    {
+        //                        magazine.StartDate = obj.StartDate;
+        //                    }
+        //                    if (magazine.EndDate > obj.EndDate)
+        //                    {
+        //                        magazine.EndDate = obj.EndDate;
+        //                    }
+        //                    if (magazine.StartDate > magazine.EndDate)
+        //                    {
+        //                        magazine.EndDate = magazine.StartDate;
+        //                    }
+        //                    if (magazine.StartDate > obj.EndDate)
+        //                    {
+        //                        magazine.StartDate = obj.StartDate;
+        //                        magazine.EndDate = obj.EndDate;
+        //                    }
+        //                    _unitOfWork.MagazineRepository.Update(magazine);
+        //                }
+        //            }
 
-    //            _unitOfWork.TermRepository.Update(obj);
-    //            _unitOfWork.Save();
+        //            _unitOfWork.TermRepository.Update(obj);
+        //            _unitOfWork.Save();
 
-    //            TempData["success"] = "Term updated successfully";
-    //            return RedirectToAction("Index");
-    //        }
-    //        else
-    //        {
-    //            TempData["popupScript"] = "alert('Start date must be less than End date.');";
-    //        }
-    //    }
-    //    return View(obj);
-    //}
+        //            TempData["success"] = "Term updated successfully";
+        //            return RedirectToAction("Index");
+        //        }
+        //        else
+        //        {
+        //            TempData["popupScript"] = "alert('Start date must be less than End date.');";
+        //        }
+        //    }
+        //    return View(obj);
+        //}
 
-    public IActionResult Delete(int? id)
+        public IActionResult Delete(int? id)
         {
             if (id == null || id == 0)
             {
@@ -166,20 +166,19 @@ namespace GreenwichUniversityMagazine.Areas.Admin.Controllers
         {
             var termToDelete = _unitOfWork.TermRepository.Get(u => u.Id == id);
             var magazineList = _unitOfWork.MagazineRepository.GetAll().ToList();
+            var articleList = _unitOfWork.ArticleRepository.GetAll().ToList();
             if (termToDelete == null)
             {
                 return NotFound();
             }
-            termToDelete.IsDeleted = true;
-            foreach(var magazine in  magazineList)
-            {
-                if(magazine.TermId == id)
+                foreach (var magazine in magazineList)
                 {
-                    magazine.IsDeleted = true;
-                    _unitOfWork.MagazineRepository.Update(magazine);
+                    if (magazine.TermId == id)
+                    {
+                        _unitOfWork.MagazineRepository.Remove(magazine);
+                    }
                 }
-            }
-            _unitOfWork.TermRepository.Update(termToDelete);
+            _unitOfWork.TermRepository.Remove(termToDelete);
             _unitOfWork.Save();
             TempData["success"] = "Term delete successfully";
             return RedirectToAction("Index");

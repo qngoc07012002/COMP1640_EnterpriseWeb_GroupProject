@@ -10,6 +10,8 @@ namespace GreenwichUniversityMagazine.Models.ViewModel
         public Magazines magazines { get; set; }
         public Article articles { get; set; }
         public User user { get; set; }
+        public string CurrentMagazineId { get; set; }
+
         public Resource resource { get; set; }
 
         [ValidateNever]
@@ -25,7 +27,8 @@ namespace GreenwichUniversityMagazine.Models.ViewModel
 
         [ValidateNever]
         public IEnumerable<SelectListItem> MyResources { get; set; }
-        public List<string> PdfFilePaths { get; set; }
+        [ValidateNever]
+        public IEnumerable<Comment> MyComments { get; set; }
 
     }
 }
