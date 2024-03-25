@@ -156,7 +156,7 @@
 @model CoordinateVM
 @{
     ViewData["Title"] = "Article Management";
-    int itemsPerPage = 6;
+    int itemsPerPage = 2;
     int totalItems = Model.ListArticle.Count();
     int totalPages = (int)Math.Ceiling((double)totalItems / itemsPerPage);
     int currentPage = Context.Request.Query["page"].Count > 0 ? Convert.ToInt32(Context.Request.Query["page"]) : 1;

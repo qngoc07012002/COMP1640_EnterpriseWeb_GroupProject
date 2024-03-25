@@ -68,7 +68,7 @@ namespace GreenwichUniversityMagazine.Areas.Coordinate.Controllers
                     {
                         var selectedMagazineId = id.Value;
                         var articles = _unitOfWork.ArticleRepository.GetAll()
-                                                    .Where(article => article.MagazinedId == selectedMagazineId && article.Magazines.TermId == term.Id)
+                                                    .Where(article => article.MagazinedId == selectedMagazineId)
                                                     .ToList();
                         model.ListArticle = articles;
                     }
