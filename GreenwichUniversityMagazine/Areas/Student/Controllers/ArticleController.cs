@@ -83,13 +83,9 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
         }
         public IActionResult SelectArticle(int id)
         {
-            if (!int.TryParse(HttpContext.Session.GetString("UserId"), out int studentId))
-            {
-                return RedirectToAction("InvalidSession", "Error");
-            }
             Article article = _unitOfWork.ArticleRepository.Get(
                 includeProperty: "Magazines,User",
-                filter: a => a.ArticleId == id && a.UserId == studentId
+                filter: a => a.ArticleId == id 
             );
             if (article == null)
             {

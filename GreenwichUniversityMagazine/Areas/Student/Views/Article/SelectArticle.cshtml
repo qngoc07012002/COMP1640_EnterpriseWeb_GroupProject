@@ -1,14 +1,7 @@
 ﻿@model ArticleVM
-@* <div>ID của bài báo: @Model.article.ArticleId</div> *@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+
     <link rel="stylesheet" href="~/css/Student/ArticleView.css">
-</head>
-<body>
+
     <div class="content clearfix">
         <div class="main-content">
             <div class="article">
@@ -22,7 +15,7 @@
                     <h3>@Model.article.SubTitle</h3>
                 </div>
                 <div class="userImg">
-                     <img src="~/img/articleImg/54e911ce-345b-463d-95f8-1fa76a532120.jpg" alt="User Image">
+                     <img src="~/img/articleImg/" alt="User Image">
                 </div>
                 <div class="userName">
                     <i>@Model.User.Name</i>
@@ -39,18 +32,26 @@
         </div>
         <div class="sidebar">
             <img class="sidebar-image" src="~/css/Student/logo_greenwich.png" alt="Italian Trulli">
-            <div class="search-button">
-                <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
 
+            <form method="post">
+            <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
+            
+            </form>
+            <div>
+                <h1 class="sidebar-title">Term</h1>
+                <div class="select-article">
+                    <select asp-for="@Model.article.ModifyDate" asp-items="@Model.MonthYearOptions"></select>
+                </div>
+                <h1 class="sidebar-title">Faculty</h1>
+                <div class="select-article">
+                    <select asp-for="@Model.article.ModifyDate" asp-items="@Model.MonthYearOptions"></select>
+                </div>
+                <h1 class="sidebar-title">Magazine</h1>
+                <div class="select-article">
+                    <select asp-for="@Model.article.ModifyDate" asp-items="@Model.MonthYearOptions"></select>
+                </div>
             </div>
-            <h1 class="sidebar-title">Articles</h1>
-            <div class="select-article">
-                <select  asp-for="@Model.article.ModifyDate" asp-items="@Model.MonthYearOptions"></select>
-
-            </div>
-            <h1 class="sidebar-title">Something else</h1>
-            <select class="select" name="Datetime" id="Datetime">Datetime</select>
         </div>
+        
     </div>
-</body>
-</html>
+
