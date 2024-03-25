@@ -12,6 +12,7 @@ header {
     align-items: center;
     justify-content: space-between;
     flex-grow: 1;
+
 }
 
 .nav-container {
@@ -78,6 +79,7 @@ footer {
     margin: auto 0;
     overflow: hidden;
     padding-right: 20px;
+ 
 }
 
 .notification_icon {
@@ -121,6 +123,7 @@ footer {
     width: 20%;
     border-radius: 10px;
     background-color: #272790;
+    z-index: 2;
 }
 
 .notification_list_child {
