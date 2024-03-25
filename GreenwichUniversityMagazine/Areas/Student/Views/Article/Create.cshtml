@@ -1,0 +1,80 @@
+﻿@using GreenwichUniversityMagazine.Models.ViewModel
+@model ArticleVM
+@{
+    ViewData["Title"] = "Create";
+}
+<link rel="stylesheet" href="~/css/Student/Article.css" />
+<script src="https://cdn.ckeditor.com/4.19.1/standard/ckeditor.js"></script>
+<div class="card shadow border-2 my-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="py-2">Create Article</h2>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="col-md-5">
+        <form method="post" enctype="multipart/form-data">
+            <div class="">
+                <div class="form-group custom-select" style="width:200px;">
+                    <select asp-for="@Model.article.MagazinedId" class="form-control" asp-items="@Model.MyMagazines">
+                        <option value="">--Choose Magazines--</option>
+                        @foreach (var magazine in Model.MyMagazines)
+                        {
+                            <option value="@magazine.Value">@magazine.Text</option>
+                        }
+                    </select>
+                    <span asp-validation-for="@Model.article.MagazinedId" class="text-danger"></span>
+                </div>
+                <div class="input-container">
+                    <input asp-for="@Model.article.Title" type="text" id="input" required="">
+                    <label for="input" class="label">Article Name</label>
+                    <div class="underline"></div>
+                    <span asp-validation-for="@Model.article.Title" class="text-danger"></span>
+                </div>
+                <div class="input-container">
+                    <input type="text" id="input" asp-for="@Model.article.SubTitle" required=""/>
+                    <label for="input" class="label">Subtitle</label>
+                    <div class="underline"></div>
+                    <span asp-validation-for="@Model.article.SubTitle" class="text-danger"></span>
+                </div>
+                <div class="body-container">
+                    <label>Image: </label>
+                    <input type="file" name="HeadImg" class="form-control" accept="image/*" onchange="loadFile(event)" />
+                    <br />
+                    <img class="img-select" id="output" />
+                    <span asp-validation-for="@Model.article.imgUrl" class="text-danger"></span>
+                </div>
+                <div class="body-container">
+                    <label class="control-label"></label>
+                    <textarea id="content" asp-for="@Model.article.Body" class="form-control">@Model.article.Body</textarea>
+                    <span asp-validation-for="@Model.article.Body" class="text-danger"></span>
+                </div>
+                <div class="upload-container body-container" id="upload-container">
+                    <label class="upload-text">Add document:  </label>
+                    <input type="file" id="file-input" name="files" multiple style="display:none">
+                    <a class="upload-button" onclick="openFileUploader()">
+                        <span>+</span>
+                    </a>
+                </div>
+                <div class="body-container">
+                    <button type="submit" value="Create" class="pushable">
+                        <span class="edge"></span>
+                        <span class="front">Create</span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<hr />
+
+@section Scripts
+{
+    <script src="@Url.Content("~/js/Student/Article/Create.js")"></script>
+}
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

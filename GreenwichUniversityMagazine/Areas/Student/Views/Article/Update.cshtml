@@ -1,0 +1,153 @@
+﻿@using GreenwichUniversityMagazine.Models.ViewModel
+@model ArticleVM
+@inject IHttpContextAccessor Accessor
+@{
+    ViewData["Title"] = "Update";
+}
+<link rel="stylesheet" href="~/css/Student/Article.css" />
+<script src="https://cdn.ckeditor.com/4.19.1/standard/ckeditor.js"></script>
+<div class="card shadow border-2 my-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="py-2">Update Article</h2>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="col-md-4">
+        <form method="post" enctype="multipart/form-data">
+            <div class="">
+                <input asp-for="@Model.article.ArticleId" hidden />
+                <input asp-for="@Model.article.SubmitDate" hidden />
+                <div class="form-group custom-select" style="width:200px;">
+                    <select asp-for="@Model.article.MagazinedId" class="form-control" asp-items="@Model.MyMagazines">
+                        <option value="">--Choose Magazines--</option>
+                        @foreach (var magazine in Model.MyMagazines)
+                        {
+                            <option value="@magazine.Value">@magazine.Text</option>
+                        }
+                    </select>
+                    <span asp-validation-for="@Model.article.MagazinedId" class="text-danger"></span>
+                </div>
+                <div class="input-container">
+                    <input asp-for="@Model.article.Title" type="text" id="input" required="">
+                    <label for="input" class="label">Article Name</label>
+                    <div class="underline"></div>
+                    <span asp-validation-for="@Model.article.Title" class="text-danger"></span>
+                </div>
+                <div class="input-container">
+                    <input type="text" id="input" asp-for="@Model.article.SubTitle" required="" />
+                    <label for="input" class="label">Subtitle</label>
+                    <div class="underline"></div>
+                    <span asp-validation-for="@Model.article.SubTitle" class="text-danger"></span>
+                </div>
+                <div class="body-container">
+                    <label for="input" class="label">Image: </label>
+                    <input type="file" name="HeadImg" class="form-control" accept="image/*" onchange="loadFile(event)" />
+                    <br />
+                    <img class="img-select" src="@Model.article.imgUrl" id="output" />
+                    <span asp-validation-for="@Model.article.imgUrl" class="text-danger"></span>
+                </div>
+                <div class="body-container">
+                    <label for="input" class="label"></label>
+                    <textarea id="content" asp-for="@Model.article.Body" class="form-control">@Model.article.Body</textarea>
+                    <span asp-validation-for="@Model.article.Body" class="text-danger"></span>
+                </div>
+                <div class="body-container separator"><strong>Current Documents</strong> </div>
+                <input class="input-container file-container" id="filesDeleteInput" name="filesDelete" multiple style="display:none" />
+                <div class="file-container">
+                    @if (Model.MyResources != null)
+                    {
+                        @foreach (var resource in Model.MyResources)
+                        {
+                            var fileName = System.IO.Path.GetFileName(resource.Text);
+                            <div class="old-item" id="@resource.Value" onclick="confirmAndRemove('@resource.Value')">
+                                <span>@fileName</span>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <p>No files attached</p>
+                    }
+                </div>
+                <div class="body-container separator"><strong>Add Document</strong> </div>
+                <div class="upload-container body-container" id="upload-container">
+                    <input type="file" id="file-input" name="files" multiple style="display:none">
+                    <a class="upload-button" onclick="openFileUploader()">
+                        <span>+</span>
+                    </a>
+                    
+                </div>
+                <div class="body-container separator"></div>
+                <div class="body-container">
+                    <button type="submit" value="Update" class="pushable">
+                        <span class="edge"></span>
+                        <span class="front">Update</span>
+                    </button>
+                </div>
+            </div>
+        </form>
+        <div class="body-container">
+            <div class="separator"><strong>Comment</strong> </div>
+
+           
+            @foreach (var comment in Model.MyComments)
+            {
+                <div class="comment-private">
+                    <div class="avatar-coordinate">
+                        @{
+                            var avtUrl = Accessor.HttpContext.Session.GetString("avtUrl");
+                            @if (comment.UserId.ToString() == Accessor.HttpContext.Session.GetString("UserId"))
+                            {
+                                <img src="@avtUrl" alt="Avatar" class="avatar-coordinate-img">
+                            }
+                            else
+                            {
+                                <img src="~/css/Student/logo_greenwich.png" alt="Avatar" class="avatar-coordinate-img">
+                            }
+                        }
+                        
+                    </div>
+                    <div class="comment-content">
+                        <a class="box">
+                            <strong>
+                                @if (comment.UserId.ToString() == Accessor.HttpContext.Session.GetString("UserId"))
+                                {
+                                    var userName = Accessor.HttpContext.Session.GetString("UserName");
+                                    <span class="comment-value">@userName</span>
+                                }
+                                else
+                                {
+                                    <span class="comment-value">Coordinate</span>
+                                }
+                            </strong> - <span class="comment-value">@comment.Date</span>
+                        </a>
+                        <hr>
+                        <div class="card__content">
+                            @comment.Description
+                        </div>
+                    </div>
+                </div>
+
+            }
+            <div class="comment-input">
+                <textarea placeholder="Enter your comment..." rows="4"></textarea>
+                <button class="pushable" onclick="submitComment()">Send Comment</button>
+            </div>
+        </div>
+    </div>
+</div>
+<hr />
+
+@section Scripts
+{
+        <script src="@Url.Content("~/js/Student/Article/Create.js")" ></script>
+}
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

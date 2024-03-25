@@ -9,8 +9,8 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Cordinate\Data\" />
-    <Folder Include="Areas\Cordinate\Models\" />
+    <Folder Include="Areas\Coordinate\Data\" />
+    <Folder Include="Areas\Coordinate\Models\" />
     <Folder Include="Areas\Student\Data\" />
     <Folder Include="Areas\Student\Models\" />
     <Folder Include="Areas\Manager\Data\" />
@@ -18,13 +18,14 @@
     <Folder Include="Areas\Guest\Data\" />
     <Folder Include="Areas\Guest\Models\" />
     <Folder Include="Migrations\" />
+    <Folder Include="wwwroot\img\articleImg\" />
     <Folder Include="wwwroot\img\userAvt\" />
     <Folder Include="wwwroot\img\avtImg\" />
+    <Folder Include="wwwroot\Resource\Article\12\" />
 
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.QuickGrid.EntityFrameworkAdapter" Version="8.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.2">
@@ -40,8 +41,9 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.1" />
+
     <PackageReference Include="System.Net.Mail" Version="1.0.0-rtm-00002" />
+
   </ItemGroup>
 
   <ItemGroup>

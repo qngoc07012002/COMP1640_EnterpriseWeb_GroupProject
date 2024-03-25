@@ -3,6 +3,8 @@ using GreenwichUniversityMagazine.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using GreenwichUniversityMagazine.Models.ViewModels;
+using GreenwichUniversityMagazine.Serivces.IServices;
+using System.Text;
 
 namespace GreenwichUniversityMagazine.Areas.Admin.Controllers
 {
@@ -13,10 +15,12 @@ namespace GreenwichUniversityMagazine.Areas.Admin.Controllers
         private readonly IWebHostEnvironment _webhost;
         public const string Accept = "Accept";
         public const string Denied = "Denied";
-        public UserController(IUnitOfWork db, IWebHostEnvironment webhost)
+        private readonly IEmailService _emailService;
+        public UserController(IUnitOfWork db, IWebHostEnvironment webhost, IEmailService emailService)
         {
             _unitOfWork = db;
             _webhost = webhost;
+            _emailService = emailService;
         }
 
         public IActionResult Index()
@@ -38,37 +42,37 @@ namespace GreenwichUniversityMagazine.Areas.Admin.Controllers
             }; return View(userVM);
         }
         [HttpPost]
-        public IActionResult Create(UserVM userVM, IFormFile? file)
+        public async Task<IActionResult> CreateAsync(UserVM userVM)
         {
-            if (ModelState.IsValid)
+            //if (ModelState.IsValid)
             {
-                string wwwRootPath = _webhost.WebRootPath;
-                string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                string bookPath = Path.Combine(wwwRootPath, "img", "avtImg");
-                using (var fileStream = new FileStream(Path.Combine(bookPath, fileName), FileMode.Create))
-                {
-                    file.CopyTo(fileStream);
-                }
-
-                userVM.User.avtUrl = Url.Content("~/img/avtImg/" + fileName);
-
-                _unitOfWork.UserRepository.Add(userVM.User);
-                _unitOfWork.Save();
 
                 TempData["success"] = "User created successfully";
+                Random random = new Random();
+                string password = GenerateRandomPassword(15);
+                string code = random.Next(100000, 999999).ToString();
+                var subject = "Login Information";
+                var message = $"Your email is: {code}" +
+                    $"Your password is: {password}";
+                await _emailService.SendEmailAsync(userVM.User.Email, subject, message);
+                userVM.User.Password = password;
+                _unitOfWork.UserRepository.Add(userVM.User);
+                _unitOfWork.Save();
+                
                 return RedirectToAction("Index");
+               
             }
-            else
-            {
-                userVM.MyFaculties = _unitOfWork.FacultyRepository.GetAll()
-                    .Select(u => new SelectListItem
-                    {
-                        Text = u.Name,
-                        Value = u.Id.ToString()
-                    });
+            //else
+            //{
+            //    userVM.MyFaculties = _unitOfWork.FacultyRepository.GetAll()
+            //        .Select(u => new SelectListItem
+            //        {
+            //            Text = u.Name,
+            //            Value = u.Id.ToString()
+            //        });
 
-                return View(userVM);
-            }
+            //    return View(userVM);
+            //}
         }
 
         public IActionResult Edit(int? id)
@@ -190,5 +194,24 @@ namespace GreenwichUniversityMagazine.Areas.Admin.Controllers
         }
 
 
+        static string GenerateRandomPassword(int length)
+        {
+            // Chuỗi chứa tất cả các ký tự có thể được sử dụng để tạo mật khẩu
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789$@";
+
+            // StringBuilder để tạo và quản lý mật khẩu
+            StringBuilder password = new StringBuilder();
+
+            // Sử dụng hàm Random để tạo các vị trí ngẫu nhiên trong chuỗi chars
+            Random random = new Random();
+
+            // Thêm ký tự ngẫu nhiên từ chuỗi chars vào mật khẩu cho đến khi đạt độ dài mong muốn
+            for (int i = 0; i < length; i++)
+            {
+                password.Append(chars[random.Next(chars.Length)]);
+            }
+
+            return password.ToString();
+        }
     }
 }
