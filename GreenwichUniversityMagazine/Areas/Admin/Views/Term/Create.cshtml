@@ -1,6 +1,6 @@
 ﻿@model Term
 <link rel="stylesheet" href="~/css/User/Delete.css" />
-<div class="card shadow border-0 mt-4">
+<div class="card shadow border-0 mt-4 modal fade" id="CreateTerm">
     <div class="card-header bg-secondary bg-gradient ml-0 py-3">
         <div class="row">
             <div class="col-12 text-center">
@@ -9,26 +9,23 @@
         </div>
     </div>
     <div class="card-body p-4">
-        <form method="post">
+        <form method="post" asp-action="Create">
             <div class="border p-3 mt-4">
-                <div class="form-group row">
-                    <label asp-for="StartDate" class="col-sm-2 col-form-label p-0"></label>
-                    <div class="col-sm-10">
-                        <div class="form-floating py-2">
-                            <input asp-for="StartDate" class="form-control" />
-                            <span asp-validation-for="StartDate" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label asp-for="EndDate" class="col-sm-2 col-form-label p-0"></label>
-                    <div class="col-sm-10">
-                        <div class="form-floating py-2">
-                            <input asp-for="EndDate" class="form-control"/>
-                            <span asp-validation-for="EndDate" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
+                <select id="year" name="Year">
+                    <option value="">Select Year</option>
+                    @for (int year = DateTime.Now.Year; year <= DateTime.Now.Year + 100; year++)
+                    {
+                        <option value="@year">@year</option>
+                    }
+                </select>
+
+                <select id="season" name="Season">
+                    <option value="">Select Season</option>
+                    <option value="Spring">Spring</option>
+                    <option value="Summer">Summer</option>
+                    <option value="Fall">Fall</option>
+                    <option value="Winter">Winter</option>
+                </select>
                 <div class="row mt-3">
                     <div class="col-6 col-md-3">
                         <button type="submit" class="btn btn-danger form-control">Create</button>
@@ -43,9 +40,5 @@
         </form>
     </div>
 </div>
-<script>
-    @if (TempData["popupScript"] != null)
-    {
-        @Html.Raw(TempData["popupScript"])
-    }
-</script>
+
+
