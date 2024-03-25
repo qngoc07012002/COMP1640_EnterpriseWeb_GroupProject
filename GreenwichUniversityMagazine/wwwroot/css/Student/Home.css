@@ -1,17 +1,31 @@
 ﻿.card-img {
-    display: block;
-    margin: auto;
-    padding: 10px;
+   
     border-radius: 0.7em;
-
+    max-width: 100%;
+    max-height: 100%;
+    
+   
+}
+.card {
+    max-width: 740px;
+    max-height: 100%;
 }
 
 
+
+
+
+
+.homepage {
+    z-index: 1;
+}
 
 .fixed-col-size {
     max-width: 150px; /* Định cỡ chiều rộng tuyệt đối */
     height: 100%; /* Giữ chiều cao tự động */
 }
+
+
 
 
 .fixed-size-img {
@@ -21,10 +35,11 @@
     object-fit: cover; /* Đảm bảo hình ảnh được hiển thị mà không bị vỡ */
 }
 
-.c-item{
-    height : 480px;
+.c-item {
+    height: 480px;
 }
-.c-img{
+
+.c-img {
     height: 100%;
     object-fit: cover;
 }
@@ -41,9 +56,9 @@
 
 
 .card-left {
-   
     transition: transform 0.3s ease;
 }
+
 .card-img-custom {
     width: 100%; /* Đặt chiều rộng của ảnh là 100% của phần tử cha */
     height: 50%; /* Để giữ tỷ lệ khung hình */
@@ -51,5 +66,5 @@
 
 
 .card-left:hover {
-   transform: scale(1.05); 
+    transform: scale(1.05);
 }
