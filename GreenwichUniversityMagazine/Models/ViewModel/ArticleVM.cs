@@ -8,6 +8,8 @@ namespace GreenwichUniversityMagazine.Models.ViewModel
     {
         public Article article { get; set; }
         [ValidateNever]
+        public string? status { get; set; }
+        [ValidateNever]
         public Magazines Magazines { get; set; }
         public List<SelectListItem> MonthYearOptions { get; set; }
         public User? User { get; set; }
