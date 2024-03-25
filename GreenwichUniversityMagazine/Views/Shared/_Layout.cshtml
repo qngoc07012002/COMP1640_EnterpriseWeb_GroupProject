@@ -134,7 +134,7 @@
             if (!dataVisible) {
                 // If data is not visible, fetch and display
                 $.ajax({
-                    url: '/Cordinate/Cordinate/GetNotification',
+                    url: '/Coordinate/Coordinate/GetNotification',
                     type: 'GET',
                     success: function (data) {
                         $('#partialViewContainer').html(data);

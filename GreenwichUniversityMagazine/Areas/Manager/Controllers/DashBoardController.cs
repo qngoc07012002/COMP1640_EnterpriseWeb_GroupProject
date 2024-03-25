@@ -4,7 +4,7 @@ using System.Text.Json;
 using GreenwichUniversityMagazine.Models;
 using GreenwichUniversityMagazine.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
-using NuGet.Protocol;
+
 
 namespace GreenwichUniversityMagazine.Areas.Manager.Controllers
 {
