@@ -45,6 +45,7 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                 {
                     HttpContext.Session.SetString("UserEmail", user.Email);
                     HttpContext.Session.SetString("UserId", user.Id.ToString());
+                    HttpContext.Session.SetString("UserRole", user.Role);
                     if (user.Name != null && user.avtUrl != null)
                     {
                         HttpContext.Session.SetString("UserName", user.Name);
@@ -92,6 +93,7 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
         public IActionResult Logout()
         {
             HttpContext.Session.Remove("UserId");
+            HttpContext.Session.Remove("UserRole");
             HttpContext.Session.Remove("UserName");
             HttpContext.Session.Remove("avtUrl");
             HttpContext.Session.Remove("UserEmail");

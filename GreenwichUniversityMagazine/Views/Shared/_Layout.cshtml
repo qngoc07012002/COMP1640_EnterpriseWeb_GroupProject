@@ -21,10 +21,25 @@
         <div class="nav-container">
             <nav>
                 <a asp-area="Student" asp-controller="Home" asp-action="Index">Home</a>
-                <a asp-area="Student" asp-controller="Home" asp-action="Index">News</a>
-                <a href="#">Events</a>
-                <a asp-area="Student" asp-controller="Home" asp-action="About">About</a>
-                <a href="#">Contact</a>
+                @{
+                    var userRole = Accessor.HttpContext.Session.GetString("UserRole");
+                    if (userRole == "STUDENT")
+                    {
+                        <a asp-area="Student" asp-controller="Article" asp-action="Index">Article Management</a>
+                    } else if (userRole == "COORDINATE")
+                    {
+                        <a asp-area="Student" asp-controller="Home" asp-action="Index">COORDINATE</a>
+              
+                    } else if (userRole == "ADMIN")
+                    {
+                        <a asp-area="Student" asp-controller="Home" asp-action="Index">ADMIN</a>
+
+                    }
+                    <a href="#">Events</a>
+                    <a asp-area="Student" asp-controller="Home" asp-action="About">About</a>
+                    <a href="#">Contact</a>
+                }
+
             </nav>
         </div>
         <div class="nav-container">
