@@ -1,0 +1,158 @@
+﻿.dashboard {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(11, 1fr);
+    column-gap: 20px;
+    row-gap: 20px;
+    height:100%;
+    background-color:#e3e3e3;
+    padding-right:20px;
+    padding-bottom:20px;
+}
+
+    .dashboard > div {
+        border-radius: 15px;
+        padding:10px;
+        align-content:center;
+        background-color:white;
+    }
+
+.dashboard-header {
+    grid-area: 1 / 2 / 3 / 8;
+
+}
+    .dashboard-header > h1{
+        text-align:center;
+    }
+
+    .div2 {
+        grid-area: 3 / 5 / 6 / 8;
+    }
+
+.exception-doughnut-container {
+    grid-area: 3 / 3 / 6 / 5;
+}
+
+.div4 {
+    grid-area: 3 / 2 / 6 / 3;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(3, 1fr);
+    row-gap: 20px;
+    padding: 0px !important;
+    background-color: #e3e3e3 !important;
+}
+    .div4 > div {
+        border-radius: 15px;
+        padding: 10px;
+        align-content: center;
+        background-color: white;
+    }
+
+.div5 {
+    grid-area: 6 / 5 / 9 / 8;
+}
+
+.div6 {
+    grid-area: 6 / 2 / 9 / 5;
+}
+
+/*Side Bar*/
+
+.dashboard-sidebar {
+    padding:0 !important;
+    grid-area: 1 / 1 / 12 / 2;
+}
+    .dashboard-sidebar > a {
+        display: flex;
+        text-decoration:none;
+        color:black;
+    }
+    .dashboard-sidebar a:hover {
+        background-color: #696969;
+    }
+    .dashboard-sidebar > a >img{
+        margin-left:20px;
+    }
+    /*Side Bar*/
+    .div8 {
+        grid-area: 9 / 2 / 12 / 3;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(3, 1fr);
+        row-gap: 20px;
+        padding: 0px !important;
+        background-color: #e3e3e3 !important;
+    }
+.div8 > div {
+    border-radius: 15px;
+    padding: 10px;
+    align-content: center;
+    background-color: white;
+}
+
+.div9 {
+    grid-area: 9 / 3 / 12 / 6;
+}
+
+.div10 {
+    grid-area: 9 / 6 / 12 / 8;
+}
+
+.widget-contributions {
+
+}
+
+
+.child2 {
+}
+
+.child3 {
+}
+.widget-container{
+    display:flex;
+    height:100px;
+}
+.widget-data {
+    display: flex;
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center;
+    width: 70%;
+}
+    .widget-data > h1 {
+        font-size: 30px;
+        color: blue;
+        margin: 0;
+    }
+    .widget-data > h4 {
+        color: grey;
+        font-size: 14px;
+        margin: 0;
+    }
+.widget-icon {
+    display:flex;
+    width: 30%;
+    display:flex;
+    align-items:center;
+}
+.widget-contributions-title {
+    color: #94c12d !important;
+}
+.widget-exceptions-title {
+    color:#ff4c4c !important;
+}
+.widget-students-title{
+    color:#ff0065 !important;
+}
+    .widget-contributors-title{
+        color:#ffa500 !important;
+    }
+.widget-faculties-title {
+    color: #905424 !important;
+}
+
+    .chart-name {
+        text-align: center;
+        color: #464646;
+    }

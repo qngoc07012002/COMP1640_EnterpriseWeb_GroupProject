@@ -9,7 +9,7 @@
         </div>
     </div>
     <div class="card-body p-4">
-        <form method="post" enctype="multipart/form-data">
+        <form method="post" >
             <div class="border p-3 mt-4">
                 <div class="form-group row">
                     <label asp-for="User.Email" class="col-sm-2 col-form-label p-0"></label>
@@ -20,27 +20,6 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="form-group row">
-                    <label asp-for="User.Name" class="col-sm-2 col-form-label p-0"></label>
-                    <div class="col-sm-10">
-                        <div class="form-floating py-2">
-                            <input asp-for="User.Name" class="form-control" />
-                            <span asp-validation-for="User.Name" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label asp-for="User.Password" class="col-sm-2 col-form-label p-0"></label>
-                    <div class="col-sm-10">
-                        <div class="form-floating py-2">
-                            <input asp-for="User.Password" class="form-control" />
-                            <span asp-validation-for="User.Password" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="form-group row">
                     <label asp-for="User.Code" class="col-sm-2 col-form-label p-0"></label>
                     <div class="col-sm-10">
@@ -51,35 +30,15 @@
                     </div>
                 </div>
 
-                <div class="form-group row">
-                    <label asp-for="User.DateOfBirth" class="col-sm-2 col-form-label p-0"></label>
-                    <div class="col-sm-10">
-                        <div class="form-floating py-2">
-                            <input asp-for="User.DateOfBirth" class="form-control" type="date" />
-                            <span asp-validation-for="User.DateOfBirth" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="form-group row">
-                    <label asp-for="User.Status" class="col-sm-2 col-form-label p-0"></label>
-                    <div class="col-sm-10">
-                        <div class="form-floating py-2">
-                            <select asp-for="User.Status" class="form-select form-control">
-                                <option value="True">Verify</option>
-                                <option value="False">Unverify</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
 
                 <div class="form-group row">
                     <label asp-for="User.Role" class="col-sm-2 col-form-label p-0"></label>
                     <div class="col-sm-10">
                         <div class="form-floating py-2">
                             <select asp-for="User.Role" class="form-select form-control">
-                                <option value="Student">Student</option>
+                                <option value="COORDINATE">COORDINATE</option>
+                                <option value="MANAGER">MANAGER</option>
+                                <option value="STUDENT">STUDENT</option>
                             </select>
                         </div>
                     </div>
@@ -89,15 +48,6 @@
                     <div class="col-sm-10">
                         <div class="form-floating py-2">
                             <select asp-for="@Model.User.FacultyId" asp-items="@Model.MyFaculties" class="form-select form-control"></select>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label class="col-sm-2 col-form-label p-0"></label>
-                    <div class="col-sm-10">
-                        <div class="form-floating py-2">
-                            <input type="file" name="file" class="form-control border-0 shadow" />
                         </div>
                     </div>
                 </div>

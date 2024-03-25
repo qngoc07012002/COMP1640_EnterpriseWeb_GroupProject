@@ -36,5 +36,15 @@ tbody tr:hover {
 .btn-danger {
     width: 80px;
 }
+.modal-dialog.modal-dialog-centered.modal-lg {
+    max-width: 80%;
+    margin: 1.75rem auto;
+}
 
+.modal-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
 /* Add your custom styles here */

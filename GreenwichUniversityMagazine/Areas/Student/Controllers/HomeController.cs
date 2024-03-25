@@ -1,7 +1,8 @@
 ﻿using GreenwichUniversityMagazine.Models;
 using GreenwichUniversityMagazine.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
-
+using GreenwichUniversityMagazine.Models.ViewModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
 namespace GreenwichUniversityMagazine.Areas.Student.Controllers
 {
     [Area("student")]
@@ -10,15 +11,22 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _webhost;
 
+
+
         public IActionResult Index()
         {
-            return View("~/Areas/Student/Views/Home/Index.cshtml");
+            IEnumerable<Article> articleList = _unitOfWork.ArticleRepository.GetAll(includeProperty: "Magazines").ToList();
+            return View(articleList);
         }
+
+        
+
         public HomeController(IUnitOfWork db, IWebHostEnvironment webhost)
         {
             _unitOfWork = db;
             _webhost = webhost;
         }
+
         public IActionResult About()
         {
             return View();
@@ -31,18 +39,19 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
         public IActionResult Login(string email, string password)
         {
             User user = _unitOfWork.UserRepository.Login(email, password);
-            if (user != null&& user.Password == password)
+            if (user != null && user.Password == password)
             {
                 if (user.Password == password)
                 {
                     HttpContext.Session.SetString("UserEmail", user.Email);
                     HttpContext.Session.SetString("UserId", user.Id.ToString());
-                    if(user.Name!=null && user.avtUrl != null)
+                    HttpContext.Session.SetString("UserRole", user.Role);
+                    if (user.Name != null && user.avtUrl != null)
                     {
                         HttpContext.Session.SetString("UserName", user.Name);
                         HttpContext.Session.SetString("avtUrl", user.avtUrl);
                     }
-                  
+
                     /*TempData["success"] = "Login successful";*/ // Lưu thông báo đăng nhập thành công vào TempData
                 }
                 return RedirectToAction("Index", "Home", new { area = "student" });
@@ -84,11 +93,12 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
         public IActionResult Logout()
         {
             HttpContext.Session.Remove("UserId");
+            HttpContext.Session.Remove("UserRole");
             HttpContext.Session.Remove("UserName");
             HttpContext.Session.Remove("avtUrl");
             HttpContext.Session.Remove("UserEmail");
-
             return RedirectToAction("Index", "Home", new { area = "student" });
         }
+
     }
 }

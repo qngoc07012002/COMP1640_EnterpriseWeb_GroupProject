@@ -29,13 +29,13 @@ namespace GreenwichUniversityMagazine.Areas.Manager.Controllers
                                 Text = u.Name,
                                 Value = u.Id.ToString()
                             }),
-                MyTerms = _unitOfWork.TermRepository.GetAll().Where(b => b.IsDeleted == false).
-                            Select(u => new SelectListItem
-                            {
-                                Text = $"{u.StartDate.ToString()} - {u.EndDate.ToString()}",
-                                Value = u.Id.ToString()
-                            }),
-            }; return View(magazineVM);
+                    MyTerms = _unitOfWork.TermRepository.GetAll().Where(b => b.IsDeleted == false)
+                .Select(u => new SelectListItem
+                {
+                    Text = $"{u.StartDate.ToString()} - {u.EndDate.ToString()} / {u.Name}",
+                    Value = u.Id.ToString(),
+                }),
+        }; return View(magazineVM);
         }
         [HttpPost]
         public IActionResult Create(MagazineVM magazineVM)
@@ -63,11 +63,11 @@ namespace GreenwichUniversityMagazine.Areas.Manager.Controllers
                     Text = u.Name,
                     Value = u.Id.ToString()
                 });
-            magazineVM.MyTerms = _unitOfWork.TermRepository.GetAll()
+            magazineVM.MyTerms = _unitOfWork.TermRepository.GetAll().Where(b => b.IsDeleted == false)
                 .Select(u => new SelectListItem
                 {
-                    Text = $"{u.StartDate.ToString()} - {u.EndDate.ToString()}",
-                    Value = u.Id.ToString()
+                    Text = $"{u.StartDate.ToString()} - {u.EndDate.ToString()} / {u.Name}",
+                    Value = u.Id.ToString(),
                 });
 
             return View(magazineVM);
@@ -89,14 +89,13 @@ namespace GreenwichUniversityMagazine.Areas.Manager.Controllers
                                 Text = u.Name,
                                 Value = u.Id.ToString()
                             }),
-                MyTerms = _unitOfWork.TermRepository.GetAll().Where(b => b.IsDeleted == false).
-                            Select(u => new SelectListItem
-                            {
-                                Text = $"{u.StartDate.ToString()} - {u.EndDate.ToString()}",
-                                Value = u.Id.ToString()
-                            }),
-
-            };
+                MyTerms = _unitOfWork.TermRepository.GetAll().Where(b => b.IsDeleted == false)
+                .Select(u => new SelectListItem
+                {
+                    Text = $"{u.StartDate.ToString()} - {u.EndDate.ToString()} / {u.Name}",
+                    Value = u.Id.ToString(),
+                }),
+        };
             if (id == null || id == 0)
             {
                 return NotFound();
@@ -133,11 +132,11 @@ namespace GreenwichUniversityMagazine.Areas.Manager.Controllers
       Text = u.Name,
       Value = u.Id.ToString()
   });
-            magazineVM.MyTerms = _unitOfWork.TermRepository.GetAll()
+            magazineVM.MyTerms = _unitOfWork.TermRepository.GetAll().Where(b => b.IsDeleted == false)
                 .Select(u => new SelectListItem
                 {
-                    Text = $"{u.StartDate.ToString()} - {u.EndDate.ToString()}",
-                    Value = u.Id.ToString()
+                    Text = $"{u.StartDate.ToString()} - {u.EndDate.ToString()} / {u.Name}",
+                    Value = u.Id.ToString(),
                 });
             return View(magazineVM);
         }
@@ -157,13 +156,13 @@ namespace GreenwichUniversityMagazine.Areas.Manager.Controllers
                               Text = u.Name,
                               Value = u.Id.ToString()
                           }),
-                MyTerms = _unitOfWork.TermRepository.GetAll().
-                            Select(u => new SelectListItem
-                            {
-                                Text = $"{u.StartDate.ToString()} - {u.EndDate.ToString()}",
-                                Value = u.Id.ToString()
-                            }),
-            };
+                MyTerms = _unitOfWork.TermRepository.GetAll().Where(b => b.IsDeleted == false)
+                .Select(u => new SelectListItem
+                {
+                    Text = $"{u.StartDate.ToString()} - {u.EndDate.ToString()} / {u.Name}",
+                    Value = u.Id.ToString(),
+                }),
+        };
             if (id == null || id == 0)
             {
                 return NotFound();
@@ -183,6 +182,7 @@ namespace GreenwichUniversityMagazine.Areas.Manager.Controllers
             magazineToDelete.IsDeleted = true;
             _unitOfWork.MagazineRepository.Update(magazineToDelete);
             _unitOfWork.Save();
+            TempData["success"] = "Magazine delete successfully";
             return RedirectToAction("Index");
         }
     }

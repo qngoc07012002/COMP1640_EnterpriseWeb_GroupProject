@@ -9,8 +9,8 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Cordinate\Data\" />
-    <Folder Include="Areas\Cordinate\Models\" />
+    <Folder Include="Areas\Coordinate\Data\" />
+    <Folder Include="Areas\Coordinate\Models\" />
     <Folder Include="Areas\Student\Data\" />
     <Folder Include="Areas\Student\Models\" />
     <Folder Include="Areas\Manager\Data\" />
@@ -21,8 +21,6 @@
     <Folder Include="wwwroot\img\articleImg\" />
     <Folder Include="wwwroot\img\userAvt\" />
     <Folder Include="wwwroot\img\avtImg\" />
-    <Folder Include="wwwroot\js\Student\" />
-    <Folder Include="wwwroot\Resource\Article\10\" />
     <Folder Include="wwwroot\Resource\Article\12\" />
 
   </ItemGroup>

@@ -1,4 +1,4 @@
-﻿using GreenwichUniversityMagazine.Models;
+﻿    using GreenwichUniversityMagazine.Models;
 using GreenwichUniversityMagazine.Models.ViewModel;
 using GreenwichUniversityMagazine.Models.ViewModels;
 using GreenwichUniversityMagazine.Repository;
@@ -53,7 +53,9 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                         Text = u.Title,
                         Value = u.Id.ToString()
                     }),
+                    MyComments = _unitOfWork.CommentRepository.GetAll().Where(u => u.ArticleId == id && u.Type == "PRIVATE").ToList(),
                     article = new Article()
+                    
 
                 };
                 var UserIdGet = HttpContext.Session.GetString("UserId");
@@ -67,7 +69,6 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                         Value = u.Id.ToString(),
                         Text = u.Path.ToString(),
                     });
-
                     return View(articleVM);
                 }
                 else
@@ -123,7 +124,7 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
         [HttpPost]
         public IActionResult Create(ArticleVM articleVM, IFormFile? HeadImg, List<IFormFile> files)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && HeadImg != null)
             {
                 string wwwRootPath = _webhost.WebRootPath;
                 if (HeadImg != null)
@@ -140,7 +141,6 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                 {
                     ArticleVM articleVM2 = new();
                     articleVM2.article = _unitOfWork.ArticleRepository.Get(u => u.ArticleId == articleVM.article.ArticleId);
-                    articleVM.article.imgUrl = articleVM2.article.imgUrl;
                 }
                 if (articleVM.article.ArticleId == 0)
                 {
@@ -159,6 +159,7 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
 
                     foreach (var file in files)
                     {
+
                         string basePath = Path.Combine(wwwRootPath, "Resource", "Article", articleId.ToString());
                         if (!Directory.Exists(basePath))
                         {
@@ -174,7 +175,7 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                         Resource resource = new Resource
                         {
                             ArticleId = articleId,
-                            Path = filePath,
+                            Path = $"/Resource/Article/{articleId.ToString()}/{fileName}",
                             Type = Path.GetExtension(fileName)
                         };
                         _unitOfWork.ResourceRepository.Add(resource);
@@ -246,11 +247,13 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                 if (filesDelete !=null)
                 {
                     int[] IdsToDelete = filesDelete.Split(',').Select(int.Parse).ToArray();
+                    var oldImagePath = Path.Combine(wwwRootPath, articleVM.article.imgUrl.TrimStart('/'));
                     foreach (int i in IdsToDelete)
                     {
                         Resource resource = _unitOfWork.ResourceRepository.Get(u=> u.Id == i);
+                        var oldResource = Path.Combine(wwwRootPath, resource.Path.TrimStart('/'));
                         _unitOfWork.ResourceRepository.Remove(resource);
-                        System.IO.File.Delete(resource.Path);
+                        System.IO.File.Delete(oldResource);
                         _unitOfWork.Save();
                     }
                 }
@@ -290,7 +293,7 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                             Resource resource = new Resource
                             {
                                 ArticleId = articleId,
-                                Path = filePath,
+                                Path = $"/Resource/Article/{articleId.ToString()}/{fileName}",
                                 Type = Path.GetExtension(fileName)
                             };
                             _unitOfWork.ResourceRepository.Add(resource);

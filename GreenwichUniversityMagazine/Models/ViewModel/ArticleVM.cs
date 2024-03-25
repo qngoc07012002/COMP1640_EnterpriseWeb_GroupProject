@@ -17,6 +17,9 @@ namespace GreenwichUniversityMagazine.Models.ViewModel
         public IEnumerable<SelectListItem> MyMagazines { get; set; }
         [ValidateNever]
         public IEnumerable<SelectListItem> MyResources { get; set; }
+
         public string FormattedModifyDate { get; set; }
+        [ValidateNever]
+        public IEnumerable<Comment> MyComments { get; set; }
     }
 }
