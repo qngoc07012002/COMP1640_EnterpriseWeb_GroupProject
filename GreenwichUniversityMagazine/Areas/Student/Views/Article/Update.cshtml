@@ -1,9 +1,6 @@
 ﻿@using GreenwichUniversityMagazine.Models.ViewModel
 @model ArticleVM
 @inject IHttpContextAccessor Accessor
-@{
-    ViewData["Title"] = "Update";
-}
 <link rel="stylesheet" href="~/css/Student/Article.css" />
 <script src="https://cdn.ckeditor.com/4.19.1/standard/ckeditor.js"></script>
 <div class="card shadow border-2 my-4">
@@ -21,37 +18,77 @@
                 <input asp-for="@Model.article.ArticleId" hidden />
                 <input asp-for="@Model.article.SubmitDate" hidden />
                 <div class="form-group custom-select" style="width:200px;">
-                    <select asp-for="@Model.article.MagazinedId" class="form-control" asp-items="@Model.MyMagazines">
-                        <option value="">--Choose Magazines--</option>
-                        @foreach (var magazine in Model.MyMagazines)
-                        {
-                            <option value="@magazine.Value">@magazine.Text</option>
-                        }
-                    </select>
+                    @if (Model.status == null)
+                    {
+                        <select asp-for="@Model.article.MagazinedId" class="form-control" >
+                            
+                            @foreach (var magazine in Model.MyMagazines)
+                            {
+                                <option value="@magazine.Value">@magazine.Text</option>
+                            }
+                        </select>
+                    }
+                    else
+                    {
+                        <select asp-for="@Model.article.MagazinedId" class="form-control" disabled>
+                            <option value="">--Choose Magazines--</option>
+                            @foreach (var magazine in Model.MyMagazines)
+                            {
+                                <option value="@magazine.Value">@magazine.Text</option>
+                            }
+                        </select>
+                    }
+                    
                     <span asp-validation-for="@Model.article.MagazinedId" class="text-danger"></span>
                 </div>
                 <div class="input-container">
-                    <input asp-for="@Model.article.Title" type="text" id="input" required="">
-                    <label for="input" class="label">Article Name</label>
-                    <div class="underline"></div>
+                    @if (Model.status == null)
+                    {
+                        <input asp-for="@Model.article.Title" type="text" id="input" required=""/>
+                        <label for="input" class="label">Article Name</label>
+                        <div class="underline"></div>
+                        
+                    }
+                    else
+                    {
+                        <input asp-for="@Model.article.Title" type="text" id="input" required="" disabled />
+                    }
                     <span asp-validation-for="@Model.article.Title" class="text-danger"></span>
                 </div>
                 <div class="input-container">
-                    <input type="text" id="input" asp-for="@Model.article.SubTitle" required="" />
-                    <label for="input" class="label">Subtitle</label>
-                    <div class="underline"></div>
+                    @if (Model.status == null)
+                    {
+                        <input type="text" id="input" asp-for="@Model.article.SubTitle" required="" />
+                        <label for="input" class="label">Subtitle</label>
+                        <div class="underline"></div>
+                    }
+                    else
+                    {
+                        <input type="text" id="input" asp-for="@Model.article.SubTitle" required="" disabled />
+                    }
                     <span asp-validation-for="@Model.article.SubTitle" class="text-danger"></span>
                 </div>
                 <div class="body-container">
                     <label for="input" class="label">Image: </label>
-                    <input type="file" name="HeadImg" class="form-control" accept="image/*" onchange="loadFile(event)" />
-                    <br />
+                    @if (Model.status == null)
+                    {
+                        <input type="file" name="HeadImg" class="form-control" accept="image/*" onchange="loadFile(event)" />
+                        <br />
+                    }                    
                     <img class="img-select" src="@Model.article.imgUrl" id="output" />
                     <span asp-validation-for="@Model.article.imgUrl" class="text-danger"></span>
                 </div>
                 <div class="body-container">
-                    <label for="input" class="label"></label>
-                    <textarea id="content" asp-for="@Model.article.Body" class="form-control">@Model.article.Body</textarea>
+                    @if (Model.status == null)
+                    {
+                        <label for="input" class="label"></label>
+                        <textarea id="content" asp-for="@Model.article.Body" class="form-control">@Model.article.Body</textarea>
+                    }
+                    else
+                    {
+                        <textarea id="content" asp-for="@Model.article.Body" class="form-control" disabled>@Model.article.Body</textarea>
+                    }
+                    
                     <span asp-validation-for="@Model.article.Body" class="text-danger"></span>
                 </div>
                 <div class="body-container separator"><strong>Current Documents</strong> </div>
@@ -62,9 +99,19 @@
                         @foreach (var resource in Model.MyResources)
                         {
                             var fileName = System.IO.Path.GetFileName(resource.Text);
-                            <div class="old-item" id="@resource.Value" onclick="confirmAndRemove('@resource.Value')">
-                                <span>@fileName</span>
-                            </div>
+                            if (Model.status == null)
+                            {
+                                <div class="old-item" id="@resource.Value" onclick="confirmAndRemove('@resource.Value')">
+                                    <span>@fileName</span>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="old-item" id="@resource.Value" >
+                                    <span>@fileName</span>
+                                </div>
+                            }
+                            
                         }
                     }
                     else

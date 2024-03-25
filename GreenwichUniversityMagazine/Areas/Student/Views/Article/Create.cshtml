@@ -18,12 +18,20 @@
         <form method="post" enctype="multipart/form-data">
             <div class="">
                 <div class="form-group custom-select" style="width:200px;">
-                    <select asp-for="@Model.article.MagazinedId" class="form-control" asp-items="@Model.MyMagazines">
-                        <option value="">--Choose Magazines--</option>
-                        @foreach (var magazine in Model.MyMagazines)
+                    <select asp-for="@Model.article.MagazinedId" class="form-control">
+                        @if (Model.MyMagazines.Count() > 0)
                         {
-                            <option value="@magazine.Value">@magazine.Text</option>
+                            <option value="">--Choose Magazines--</option>
+                            @foreach (var magazine in Model.MyMagazines)
+                            {
+                                <option value="@magazine.Value">@magazine.Text</option>
+                            }
                         }
+                        else
+                        {
+                            <option value="">--No Magazines Available--</option>
+                        }
+
                     </select>
                     <span asp-validation-for="@Model.article.MagazinedId" class="text-danger"></span>
                 </div>
