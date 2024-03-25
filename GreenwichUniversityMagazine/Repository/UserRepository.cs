@@ -45,9 +45,5 @@ namespace GreenwichUniversityMagazine.Repository
             _dbContext.Add(user);
             _dbContext.SaveChanges();
         }
-        public User GetById(int id)
-        {
-            return _dbContext.Users.FirstOrDefault(t => t.Id == id);
-        }
     }
 }

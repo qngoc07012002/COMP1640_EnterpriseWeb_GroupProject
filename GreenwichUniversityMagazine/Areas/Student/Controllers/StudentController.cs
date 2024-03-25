@@ -35,66 +35,54 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                 User = user,
                 MyFaculties = new SelectList(faculties, "Id", "Name", user.FacultyId)
             };
+
             return View(userVM);
         }
         [HttpPost]
         public IActionResult EditProfile(IFormFile? file, UserVM userVM)
         {
-            if (ModelState.IsValid)
+            // Retrieve the User object from UserVM
+            User user = userVM.User;
+
+            // Check if the password is correct
+
+            string wwwRoothPath = _webhost.WebRootPath;
+            if (file != null)
             {
-                try
+                string? fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+
+                // Delete Old Image
+                var oldImagePath = user.avtUrl != null ? Path.Combine(wwwRoothPath, user.avtUrl.TrimStart('/')) : null;
+
+                if (System.IO.File.Exists(oldImagePath))
                 {
-
-                    string wwwRootPath = _webhost.WebRootPath;
-
-                    if (file != null)
-                    {
-
-                        string basePath = Path.Combine("img", "avtImg");
-
-                        string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                        string newPath = Path.Combine(basePath, fileName);
-
-
-                        string oldImagePath = Path.Combine(wwwRootPath, userVM.User.avtUrl.TrimStart('/'));
-                        if (System.IO.File.Exists(oldImagePath))
-                        {
-                            System.IO.File.Delete(oldImagePath);
-                        }
-
-                        using (var fileStream = new FileStream(Path.Combine(wwwRootPath, newPath), FileMode.Create))
-                        {
-                            file.CopyTo(fileStream);
-                        }
-
-                        userVM.User.avtUrl = Url.Content("~/img/avtImg/" + fileName);
-                    }
-                    _unitOfWork.UserRepository.Update(userVM.User);
-                    _unitOfWork.Save();
-                    HttpContext.Session.SetString("avtUrl", userVM.User.avtUrl);
-                    TempData["success"] = "Change Successfully";
-                    return RedirectToAction("EditProfile", "Student", new { area = "Student" });
-
+                    System.IO.File.Delete(oldImagePath);
                 }
-
-
-                catch (Exception ex)
+                using (var fileStream = new FileStream(Path.Combine(wwwRoothPath, "img/avtImg/", fileName), FileMode.Create))
                 {
-                    // Xử lý ngoại lệ nếu có
-                    TempData["error"] = "An error occurred while updating profile: " + ex.Message;
-                    var faculties = _unitOfWork.FacultyRepository.GetAll();
-                    userVM.MyFaculties = new SelectList(faculties, "Id", "Name", userVM.User.FacultyId);
-                    return View(userVM);
+                    file.CopyTo(fileStream);
                 }
+                user.avtUrl = @"/img/avtImg/" + fileName;
             }
-            else
-            {
-                var faculties = _unitOfWork.FacultyRepository.GetAll();
-                userVM.MyFaculties = new SelectList(faculties, "Id", "Name", userVM.User.FacultyId);
-                return View(userVM);
-            }
+
+
+
+            // Update User object
+            _unitOfWork.UserRepository.Update(user);
+            HttpContext.Session.SetString("avtUrl", user.avtUrl);
+            _unitOfWork.Save();
+            TempData["success"] = "Change Successfully";
+
+            // Retrieve the updated list of faculties
+            var faculties = _unitOfWork.FacultyRepository.GetAll();
+
+            // Update the MyFaculties property in UserVM
+            userVM.MyFaculties = new SelectList(faculties, "Id", "Name", user.FacultyId);
+
+
+            // Return the view with the updated UserVM model
+            return View(userVM);
         }
-
         public IActionResult ChangePassword()
         {
             return View();
@@ -127,3 +115,4 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
 
     }
 }
+

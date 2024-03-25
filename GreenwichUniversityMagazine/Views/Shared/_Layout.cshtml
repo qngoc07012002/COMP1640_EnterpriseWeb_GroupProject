@@ -1,4 +1,4 @@
-﻿@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Http
 @inject IHttpContextAccessor Accessor
 
 @* <partial name="_Notification" /> *@
@@ -21,25 +21,10 @@
         <div class="nav-container">
             <nav>
                 <a asp-area="Student" asp-controller="Home" asp-action="Index">Home</a>
-                @{
-                    var userRole = Accessor.HttpContext.Session.GetString("UserRole");
-                    if (userRole == "STUDENT")
-                    {
-                        <a asp-area="Student" asp-controller="Article" asp-action="Index">Article Management</a>
-                    } else if (userRole == "COORDINATE")
-                    {
-                        <a asp-area="Student" asp-controller="Home" asp-action="Index">COORDINATE</a>
-              
-                    } else if (userRole == "ADMIN")
-                    {
-                        <a asp-area="Student" asp-controller="Home" asp-action="Index">ADMIN</a>
-
-                    }
-                    <a href="#">Events</a>
-                    <a asp-area="Student" asp-controller="Home" asp-action="About">About</a>
-                    <a href="#">Contact</a>
-                }
-
+                <a asp-area="Student" asp-controller="Home" asp-action="Index">News</a>
+                <a href="#">Events</a>
+                <a asp-area="Student" asp-controller="Home" asp-action="About">About</a>
+                <a href="#">Contact</a>
             </nav>
         </div>
         <div class="nav-container">
@@ -101,7 +86,7 @@
                                     <h4>Edit Profile</h4>
                                 </a>
                                 <a class="dropdown-content-child" asp-area="Student" asp-controller="Student" asp-action="ChangePassword">
-                                    <img src="~/css/Navigation/username.png" />
+                                    <img src="~/css/Navigation/changepassword.png" />
 
                                     <h4>Change Password</h4>
                                 </a>
@@ -122,7 +107,7 @@
 
     </header>
     <div class="container">
-        <main role="main">
+        <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
@@ -136,9 +121,6 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="/_framework/aspnetcore-browser-refresh.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-
 <script>
     $(document).ready(function () {
         // Variable to track if data is visible
@@ -149,7 +131,7 @@
             if (!dataVisible) {
                 // If data is not visible, fetch and display
                 $.ajax({
-                    url: '/Coordinate/Coordinate/GetNotification',
+                    url: '/Cordinate/Cordinate/GetNotification',
                     type: 'GET',
                     success: function (data) {
                         $('#partialViewContainer').html(data);
