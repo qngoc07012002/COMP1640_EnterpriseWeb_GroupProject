@@ -541,3 +541,7 @@ footer {
     .login-button:hover {
         background-color: #16c988;
     }
+
+.dropdown-content{
+    z-index:2;
+}
