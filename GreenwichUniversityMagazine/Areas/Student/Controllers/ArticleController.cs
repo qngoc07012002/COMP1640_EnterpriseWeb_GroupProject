@@ -6,8 +6,8 @@ using GreenwichUniversityMagazine.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
-using System.Globalization;
 
+using System.Globalization;
 
 namespace GreenwichUniversityMagazine.Areas.Student.Controllers
 {
@@ -31,7 +31,7 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
         {
             ArticleVM articleVM = new ArticleVM()
             {
-                MyMagazines = _unitOfWork.MagazineRepository.GetAll().Where(u=> u.EndDate > DateTime.Now).Select(
+                MyMagazines = _unitOfWork.MagazineRepository.GetAll().Where(u => u.EndDate > DateTime.Now).Select(
                     u => new SelectListItem
                     {
                         Text = u.Title,
@@ -69,6 +69,7 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                         Value = u.Id.ToString(),
                         Text = u.Path.ToString(),
                     });
+
                     return View(articleVM);
                 }
                 else
@@ -181,10 +182,10 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                         _unitOfWork.ResourceRepository.Add(resource);
                         _unitOfWork.Save();
                     }
-                    
+
                 }
 
-         
+
                 return RedirectToAction("Index");
             }
             else
@@ -208,8 +209,8 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
             string wwwRootPath = _webhost.WebRootPath;
             ArticleVM articleVM2 = new();
             articleVM2.article = _unitOfWork.ArticleRepository.Get(u => u.ArticleId == articleVM.article.ArticleId);
-            Magazines magazines = _unitOfWork.MagazineRepository.Get(u=>u.Id == articleVM2.article.MagazinedId);
-            Term term = _unitOfWork.TermRepository.Get(u=>u.Id == magazines.TermId);
+            Magazines magazines = _unitOfWork.MagazineRepository.Get(u => u.Id == articleVM2.article.MagazinedId);
+            Term term = _unitOfWork.TermRepository.Get(u => u.Id == magazines.TermId);
             if (magazines.EndDate < DateTime.Now)
             {
                 if (files.Count > 0)
@@ -277,13 +278,13 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                         {
                             System.IO.File.Delete(oldImagePath);
                         }
-                        catch (DirectoryNotFoundException) 
+                        catch (DirectoryNotFoundException)
                         {
                             Console.WriteLine("Not Found this file !!");
                         }
-                        
+
                     }
-                        using (var fileStream = new FileStream(Path.Combine(wwwRootPath, newPath), FileMode.Create))
+                    using (var fileStream = new FileStream(Path.Combine(wwwRootPath, newPath), FileMode.Create))
                     {
                         HeadImg.CopyTo(fileStream);
                     }
@@ -294,13 +295,13 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                 articleVM.article.Status = false;
 
                 //Delete Old Files
-                if (filesDelete !=null)
+                if (filesDelete != null)
                 {
                     int[] IdsToDelete = filesDelete.Split(',').Select(int.Parse).ToArray();
                     var oldImagePath = Path.Combine(wwwRootPath, articleVM.article.imgUrl.TrimStart('/'));
                     foreach (int i in IdsToDelete)
                     {
-                        Resource resource = _unitOfWork.ResourceRepository.Get(u=> u.Id == i);
+                        Resource resource = _unitOfWork.ResourceRepository.Get(u => u.Id == i);
                         var oldResource = Path.Combine(wwwRootPath, resource.Path.TrimStart('/'));
                         _unitOfWork.ResourceRepository.Remove(resource);
                         System.IO.File.Delete(oldResource);
@@ -350,7 +351,7 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                             _unitOfWork.Save();
                         }
                     }
-                    
+
                 }
 
                 _unitOfWork.ArticleRepository.Update(articleVM.article);

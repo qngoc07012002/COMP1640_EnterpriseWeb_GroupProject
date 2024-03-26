@@ -15,14 +15,14 @@
                     <h3>@Model.article.SubTitle</h3>
                 </div>
                 <div class="userImg">
-                     <img src="~/img/articleImg/" alt="User Image">
+                     <img src="@Model.User.avtUrl" alt="User Image">
                 </div>
                 <div class="userName">
                     <i>@Model.User.Name</i>
                 </div>
                 
                 <div class="post">
-                    <img class="post-image" src="/img/articleImg/b52c5a02-a75d-44c8-9053-6a9d5f194927.jpg" alt="Thumbnail">
+                <img class="post-image" src="@Model.article.imgUrl" alt="Thumbnail">
                     <div class="post-content">
                         <!-- Hiển thị nội dung của bài báo -->
                         @Html.Raw(Model.article.Body)

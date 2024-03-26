@@ -193,7 +193,7 @@
                                     </div>
                                     <div class="col-md-8">
                                         <div class="card-body">
-                                            <div class="pd-1"> <a asp-area="Admin" asp-controller="User" asp-action="Index" class="card-title h6 text-primary opacity-75 text-uppercase text-center">@article.Title</a> </div>
+                                            <div class="pd-1"> <a asp-area="Student" asp-controller="Article" asp-action="SelectArticle" asp-route-id="@article.ArticleId" class="card-title h6 text-primary opacity-75 text-uppercase text-center">@article.Title</a> </div>
                                             <p class="card-text" style="max-width: 100%;">@article.SubTitle</p>
                                             <p class="card-title"><small class="text-muted">Magazine @article.Magazines.Title</small></p>
                                         </div>
