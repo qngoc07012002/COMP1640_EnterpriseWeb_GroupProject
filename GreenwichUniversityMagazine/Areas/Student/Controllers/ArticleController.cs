@@ -204,7 +204,7 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
 
 
         [HttpPost]
-        public IActionResult Update(ArticleVM articleVM, IFormFile? HeadImg, List<IFormFile> files, string? filesDelete)
+        public IActionResult Update(ArticleVM articleVM, IFormFile? HeadImg, List<IFormFile> files, string? filesDelete, string? body2)
         {
             string wwwRootPath = _webhost.WebRootPath;
             ArticleVM articleVM2 = new();
@@ -213,10 +213,16 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
             Term term = _unitOfWork.TermRepository.Get(u => u.Id == magazines.TermId);
             if (magazines.EndDate < DateTime.Now)
             {
+                if (body2 != null)
+                {
+                    articleVM2.article.Body = articleVM2.article.Body + body2;
+                    _unitOfWork.ArticleRepository.Update(articleVM2.article);
+                    _unitOfWork.Save(); 
+
+                }
                 if (files.Count > 0)
                 {
                     int articleId = articleVM.article.ArticleId;
-
                     foreach (var file in files)
                     {
                         string basePath = Path.Combine(wwwRootPath, "Resource", "Article", articleId.ToString());
@@ -256,6 +262,7 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                     }
 
                 }
+                
                 TempData["success"] = "Article update file succesfully!";
                 return RedirectToAction("Index");
 
