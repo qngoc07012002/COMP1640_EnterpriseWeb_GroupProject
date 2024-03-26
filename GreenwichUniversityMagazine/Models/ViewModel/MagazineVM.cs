@@ -8,7 +8,6 @@ namespace GreenwichUniversityMagazine.Models.ViewModels
     public class MagazineVM
     {
         public Magazines? Magazines { get; set; }
-
         public Faculty? Faculty { get; set; }
 
         public Term? Term { get; set; }

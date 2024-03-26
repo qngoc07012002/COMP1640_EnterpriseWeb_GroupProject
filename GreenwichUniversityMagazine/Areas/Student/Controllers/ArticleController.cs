@@ -5,6 +5,9 @@ using GreenwichUniversityMagazine.Repository;
 using GreenwichUniversityMagazine.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+
+using System.Globalization;
 
 namespace GreenwichUniversityMagazine.Areas.Student.Controllers
 {
@@ -22,15 +25,13 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
 
         public IActionResult Index()
         {
-            int.TryParse(HttpContext.Session.GetString("UserId"), out int StudentId);
-            List <Article> articles = _unitOfWork.ArticleRepository.GetAll(includeProperty: "Magazines").Where(u=> u.UserId == StudentId).ToList();
-            return View(articles);
+            return View();
         }
         public IActionResult Create()
         {
             ArticleVM articleVM = new ArticleVM()
             {
-                MyMagazines = _unitOfWork.MagazineRepository.GetAll().Select(
+                MyMagazines = _unitOfWork.MagazineRepository.GetAll().Where(u => u.EndDate > DateTime.Now).Select(
                     u => new SelectListItem
                     {
                         Text = u.Title,
@@ -40,7 +41,7 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
             return View(articleVM);
         }
 
-        public IActionResult Update(int id)
+        public IActionResult Update(int id, string? status)
         {
             try
             {
@@ -53,8 +54,8 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                         Value = u.Id.ToString()
                     }),
                     MyComments = _unitOfWork.CommentRepository.GetAll().Where(u => u.ArticleId == id && u.Type == "PRIVATE").ToList(),
-                    article = new Article()
-                    
+                    article = new Article(),
+                    status = status
 
                 };
                 var UserIdGet = HttpContext.Session.GetString("UserId");
@@ -81,6 +82,43 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                 return RedirectToAction("Error", "Home");
             }
 
+        }
+        public IActionResult SelectArticle(int id)
+        {
+            Article article = _unitOfWork.ArticleRepository.Get(
+                includeProperty: "Magazines,User",
+                filter: a => a.ArticleId == id 
+            );
+            if (article == null)
+            {
+                return RedirectToAction("Index", "Home"); 
+            }
+            ArticleVM articleVM = new ArticleVM
+            {
+                article = article,
+                User = article.User,
+                Magazines = article.Magazines,
+                FormattedModifyDate = article.ModifyDate?.ToString("dd/MM/yyyy") 
+            };
+            articleVM.MonthYearOptions = GetMonthYearOptions();
+            return View(articleVM); 
+        }
+        private List<SelectListItem> GetMonthYearOptions()
+        {
+            var options = new List<SelectListItem>();
+            // Lặp qua các tháng và năm để tạo các tùy chọn
+            for (int year = 2024; year >= 2019; year--)
+            {
+                for (int month = 1; month <= 12; month++)
+                {
+                    options.Add(new SelectListItem
+                    {
+                        Value = $"{month:00}/{year}",
+                        Text = $"{CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month)} {year}"
+                    });
+                }
+            }
+            return options;
         }
 
         #region API CALLs
@@ -144,10 +182,10 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                         _unitOfWork.ResourceRepository.Add(resource);
                         _unitOfWork.Save();
                     }
-                    
+
                 }
 
-         
+
                 return RedirectToAction("Index");
             }
             else
@@ -168,13 +206,63 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
         [HttpPost]
         public IActionResult Update(ArticleVM articleVM, IFormFile? HeadImg, List<IFormFile> files, string? filesDelete)
         {
+            string wwwRootPath = _webhost.WebRootPath;
+            ArticleVM articleVM2 = new();
+            articleVM2.article = _unitOfWork.ArticleRepository.Get(u => u.ArticleId == articleVM.article.ArticleId);
+            Magazines magazines = _unitOfWork.MagazineRepository.Get(u => u.Id == articleVM2.article.MagazinedId);
+            Term term = _unitOfWork.TermRepository.Get(u => u.Id == magazines.TermId);
+            if (magazines.EndDate < DateTime.Now)
+            {
+                if (files.Count > 0)
+                {
+                    int articleId = articleVM.article.ArticleId;
 
+                    foreach (var file in files)
+                    {
+                        string basePath = Path.Combine(wwwRootPath, "Resource", "Article", articleId.ToString());
+                        if (!Directory.Exists(basePath))
+                        {
+                            Directory.CreateDirectory(basePath);
+                        }
+                        string fileName = Path.GetFileName(file.FileName);
+                        string filePath = Path.Combine(basePath, fileName);
+
+                        if (!string.IsNullOrEmpty(filePath))
+                        {
+                            System.IO.File.Delete(filePath);
+                            using (FileStream stream = new FileStream(filePath, FileMode.Create))
+                            {
+                                file.CopyTo(stream);
+                            }
+                        }
+                        else
+                        {
+                            using (FileStream stream = new FileStream(filePath, FileMode.Create))
+                            {
+                                file.CopyTo(stream);
+                            }
+                        }
+                        if (System.IO.File.Exists(filePath))
+                        {
+                            Resource resource = new Resource
+                            {
+                                ArticleId = articleId,
+                                Path = $"/Resource/Article/{articleId.ToString()}/{fileName}",
+                                Type = Path.GetExtension(fileName)
+                            };
+                            _unitOfWork.ResourceRepository.Add(resource);
+                            _unitOfWork.Save();
+                        }
+                    }
+
+                }
+                TempData["success"] = "Article update file succesfully!";
+                return RedirectToAction("Index");
+
+            }
             if (ModelState.IsValid)
             {
-                ArticleVM articleVM2 = new();
-                articleVM2.article = _unitOfWork.ArticleRepository.Get(u => u.ArticleId == articleVM.article.ArticleId);
                 articleVM.article.imgUrl = articleVM2.article.imgUrl;
-                string wwwRootPath = _webhost.WebRootPath;
                 //Check file Img
                 if (HeadImg != null)
                 {
@@ -190,13 +278,13 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                         {
                             System.IO.File.Delete(oldImagePath);
                         }
-                        catch (DirectoryNotFoundException) 
+                        catch (DirectoryNotFoundException)
                         {
                             Console.WriteLine("Not Found this file !!");
                         }
-                        
+
                     }
-                        using (var fileStream = new FileStream(Path.Combine(wwwRootPath, newPath), FileMode.Create))
+                    using (var fileStream = new FileStream(Path.Combine(wwwRootPath, newPath), FileMode.Create))
                     {
                         HeadImg.CopyTo(fileStream);
                     }
@@ -207,13 +295,13 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                 articleVM.article.Status = false;
 
                 //Delete Old Files
-                if (filesDelete !=null)
+                if (filesDelete != null)
                 {
                     int[] IdsToDelete = filesDelete.Split(',').Select(int.Parse).ToArray();
                     var oldImagePath = Path.Combine(wwwRootPath, articleVM.article.imgUrl.TrimStart('/'));
                     foreach (int i in IdsToDelete)
                     {
-                        Resource resource = _unitOfWork.ResourceRepository.Get(u=> u.Id == i);
+                        Resource resource = _unitOfWork.ResourceRepository.Get(u => u.Id == i);
                         var oldResource = Path.Combine(wwwRootPath, resource.Path.TrimStart('/'));
                         _unitOfWork.ResourceRepository.Remove(resource);
                         System.IO.File.Delete(oldResource);
@@ -263,7 +351,7 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                             _unitOfWork.Save();
                         }
                     }
-                    
+
                 }
 
                 _unitOfWork.ArticleRepository.Update(articleVM.article);
@@ -303,6 +391,32 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
             _unitOfWork.ArticleRepository.Remove(article);
             _unitOfWork.Save();
             return Json(new { success = true, message = "Delete Successful" });
+        }
+
+        [HttpGet]
+        public IActionResult GetByStatus(string status, int page = 1, int pageSize = 6)
+        {
+
+            int.TryParse(HttpContext.Session.GetString("UserId"), out int StudentId);
+            IEnumerable<Term> allTerms = _unitOfWork.TermRepository.GetAll();
+            IEnumerable<Article> query = _unitOfWork.ArticleRepository.GetAll(includeProperty: "Magazines").Where(u => u.UserId == StudentId);
+            int allArticleCount = query.Count();
+            if (status.ToLower() == "pending")
+            {
+                query = query.Where(u => u.Status == false);
+            }
+            else if (status.ToLower() == "success")
+            {
+                query = query.Where(u => u.Status == true);
+            }
+            List<Article> articles = query.ToList();
+            articles.Reverse();
+            int skipCount = (page - 1) * pageSize;
+            articles = articles.Skip(skipCount).Take(pageSize).ToList();
+            List<object> articlesWithTerm = new List<object>();
+
+            return Json(new { allArticleCount, articles });
+
         }
         #endregion
 

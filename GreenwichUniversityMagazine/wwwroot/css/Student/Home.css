@@ -11,7 +11,9 @@
     max-height: 100%;
 }
 
-
+.homepage {
+    z-index: 1;
+}
 
 
 
