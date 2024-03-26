@@ -1,6 +1,5 @@
 
-![92c94390-74d1-4230-8bbd-3e59ad3713a7](https://github.com/qngoc07012002/COMP1640_EnterpriseWeb_GroupProject/assets/116235732/c22613ba-a78a-4586-ad3e-e4934e95f5b0)
-
+![211670a7-14c0-4de4-8520-afe120da212c](https://github.com/qngoc07012002/COMP1640_EnterpriseWeb_GroupProject/assets/116235732/bdc76c57-35bc-462e-9996-14bd2cab8fda)
 
 
 
