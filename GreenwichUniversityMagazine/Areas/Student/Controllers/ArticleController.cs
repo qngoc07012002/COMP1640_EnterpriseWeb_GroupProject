@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
+using System.Globalization;
+
 namespace GreenwichUniversityMagazine.Areas.Student.Controllers
 {
     [Area("Student")]
@@ -29,7 +31,7 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
         {
             ArticleVM articleVM = new ArticleVM()
             {
-                MyMagazines = _unitOfWork.MagazineRepository.GetAll().Where(u=> u.EndDate > DateTime.Now).Select(
+                MyMagazines = _unitOfWork.MagazineRepository.GetAll().Where(u => u.EndDate > DateTime.Now).Select(
                     u => new SelectListItem
                     {
                         Text = u.Title,
@@ -80,6 +82,43 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                 return RedirectToAction("Error", "Home");
             }
 
+        }
+        public IActionResult SelectArticle(int id)
+        {
+            Article article = _unitOfWork.ArticleRepository.Get(
+                includeProperty: "Magazines,User",
+                filter: a => a.ArticleId == id 
+            );
+            if (article == null)
+            {
+                return RedirectToAction("Index", "Home"); 
+            }
+            ArticleVM articleVM = new ArticleVM
+            {
+                article = article,
+                User = article.User,
+                Magazines = article.Magazines,
+                FormattedModifyDate = article.ModifyDate?.ToString("dd/MM/yyyy") 
+            };
+            articleVM.MonthYearOptions = GetMonthYearOptions();
+            return View(articleVM); 
+        }
+        private List<SelectListItem> GetMonthYearOptions()
+        {
+            var options = new List<SelectListItem>();
+            // Lặp qua các tháng và năm để tạo các tùy chọn
+            for (int year = 2024; year >= 2019; year--)
+            {
+                for (int month = 1; month <= 12; month++)
+                {
+                    options.Add(new SelectListItem
+                    {
+                        Value = $"{month:00}/{year}",
+                        Text = $"{CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month)} {year}"
+                    });
+                }
+            }
+            return options;
         }
 
         #region API CALLs
@@ -143,10 +182,10 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                         _unitOfWork.ResourceRepository.Add(resource);
                         _unitOfWork.Save();
                     }
-                    
+
                 }
 
-         
+
                 return RedirectToAction("Index");
             }
             else
@@ -170,8 +209,8 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
             string wwwRootPath = _webhost.WebRootPath;
             ArticleVM articleVM2 = new();
             articleVM2.article = _unitOfWork.ArticleRepository.Get(u => u.ArticleId == articleVM.article.ArticleId);
-            Magazines magazines = _unitOfWork.MagazineRepository.Get(u=>u.Id == articleVM2.article.MagazinedId);
-            Term term = _unitOfWork.TermRepository.Get(u=>u.Id == magazines.TermId);
+            Magazines magazines = _unitOfWork.MagazineRepository.Get(u => u.Id == articleVM2.article.MagazinedId);
+            Term term = _unitOfWork.TermRepository.Get(u => u.Id == magazines.TermId);
             if (magazines.EndDate < DateTime.Now)
             {
                 if (files.Count > 0)
@@ -239,13 +278,13 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                         {
                             System.IO.File.Delete(oldImagePath);
                         }
-                        catch (DirectoryNotFoundException) 
+                        catch (DirectoryNotFoundException)
                         {
                             Console.WriteLine("Not Found this file !!");
                         }
-                        
+
                     }
-                        using (var fileStream = new FileStream(Path.Combine(wwwRootPath, newPath), FileMode.Create))
+                    using (var fileStream = new FileStream(Path.Combine(wwwRootPath, newPath), FileMode.Create))
                     {
                         HeadImg.CopyTo(fileStream);
                     }
@@ -256,13 +295,13 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                 articleVM.article.Status = false;
 
                 //Delete Old Files
-                if (filesDelete !=null)
+                if (filesDelete != null)
                 {
                     int[] IdsToDelete = filesDelete.Split(',').Select(int.Parse).ToArray();
                     var oldImagePath = Path.Combine(wwwRootPath, articleVM.article.imgUrl.TrimStart('/'));
                     foreach (int i in IdsToDelete)
                     {
-                        Resource resource = _unitOfWork.ResourceRepository.Get(u=> u.Id == i);
+                        Resource resource = _unitOfWork.ResourceRepository.Get(u => u.Id == i);
                         var oldResource = Path.Combine(wwwRootPath, resource.Path.TrimStart('/'));
                         _unitOfWork.ResourceRepository.Remove(resource);
                         System.IO.File.Delete(oldResource);
@@ -312,7 +351,7 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                             _unitOfWork.Save();
                         }
                     }
-                    
+
                 }
 
                 _unitOfWork.ArticleRepository.Update(articleVM.article);

@@ -65,7 +65,7 @@ function updateArticleList(articles) {
                 } else {
                     articleCard += `<a href="/student/article/Update?id=${article.articleId}&status=outMagazine" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i> Modify</a>`;
                 }
-                
+
             } else {
                 if (article.status === true) {
                     articleCard += `<a href="/student/article/Update?id=${article.articleId}" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i>View</a>`;
@@ -73,9 +73,9 @@ function updateArticleList(articles) {
                 else {
                     articleCard += `<span class="text-danger mx-2">Expired Term</span>`;
                 }
-                
+
             }
-            
+
             articleCard += `</div></div></div>`;
             document.getElementById('bookList').innerHTML += articleCard;
         });

@@ -11,10 +11,16 @@ namespace GreenwichUniversityMagazine.Models.ViewModel
         public string? status { get; set; }
         [ValidateNever]
         public Magazines Magazines { get; set; }
+        public List<SelectListItem>? MonthYearOptions { get; set; }
+        public User? User { get; set; }
+        [ValidateNever]
+        public IEnumerable<SelectListItem> MyUsers { get; set; }
         [ValidateNever]
         public IEnumerable<SelectListItem> MyMagazines { get; set; }
         [ValidateNever]
         public IEnumerable<SelectListItem> MyResources { get; set; }
+
+        public string? FormattedModifyDate { get; set; }
         [ValidateNever]
         public IEnumerable<Comment> MyComments { get; set; }
     }
