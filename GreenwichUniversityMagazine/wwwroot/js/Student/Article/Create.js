@@ -1,4 +1,5 @@
 ﻿CKEDITOR.replace('content');
+CKEDITOR.replace('content2');
 let files = [];
 let filesDelete = [];
 function openFileUploader() {

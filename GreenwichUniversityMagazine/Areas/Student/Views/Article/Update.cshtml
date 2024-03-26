@@ -83,13 +83,15 @@
                     {
                         <label for="input" class="label"></label>
                         <textarea id="content" asp-for="@Model.article.Body" class="form-control">@Model.article.Body</textarea>
+                        <span asp-validation-for="@Model.article.Body" class="text-danger"></span>
                     }
                     else
                     {
                         <textarea id="content" asp-for="@Model.article.Body" class="form-control" disabled>@Model.article.Body</textarea>
+                        <textarea id="content2" name="body2" class="form-control" ></textarea>
                     }
                     
-                    <span asp-validation-for="@Model.article.Body" class="text-danger"></span>
+                    
                 </div>
                 <div class="body-container separator"><strong>Current Documents</strong> </div>
                 <input class="input-container file-container" id="filesDeleteInput" name="filesDelete" multiple style="display:none" />
