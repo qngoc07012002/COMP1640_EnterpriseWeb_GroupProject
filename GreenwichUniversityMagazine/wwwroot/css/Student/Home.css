@@ -1,20 +1,52 @@
 ﻿.card-img {
-   
-    border-radius: 0.7em;
-    max-width: 100%;
-    max-height: 100%;
-    
-   
+    with: 100%;
+    min-height: 100%;
 }
-.card {
-    max-width: 740px;
-    max-height: 100%;
+
+#imgcard1 {
+    width: 50%;
+}
+
+#imgcard2 {
+    width: 50%;
+}
+
+#imgcardpage1 {
+    width: 40%;
+}
+
+#imgcardpage2 {
+    width: 60%;
 }
 
 .homepage {
     z-index: 1;
 }
+/* CSS for smaller screens */
+@media (max-width: 1200px) {
+    #articleContainer .card {
+        flex-direction: column;
+    }
 
+        #articleContainer .card .row {
+            flex-direction: row;
+        }
+
+        #articleContainer .card .col-md-4,
+        #articleContainer .card .col-md-8 {
+            width: 100%;
+        }
+
+            #articleContainer .card .col-md-4 img {
+                width: 100%;
+                height: auto;
+            }
+
+        #articleContainer .card .card-body {
+            max-height: none;
+            overflow: visible;
+        }
+}
 
 
 
@@ -22,20 +54,6 @@
     z-index: 1;
 }
 
-.fixed-col-size {
-    max-width: 150px; /* Định cỡ chiều rộng tuyệt đối */
-    height: 100%; /* Giữ chiều cao tự động */
-}
-
-
-
-
-.fixed-size-img {
-    width: 100%; /* Đảm bảo rằng hình ảnh sẽ điền vào phần đầu tiên của cha */
-    height: auto; /* Đảm bảo tỷ lệ khung hình bị thay đổi tùy thuộc vào chiều rộng */
-    max-width: 100%; /* Đảm bảo hình ảnh không vượt quá kích thước của container cha */
-    object-fit: cover; /* Đảm bảo hình ảnh được hiển thị mà không bị vỡ */
-}
 
 .c-item {
     height: 480px;
@@ -45,17 +63,6 @@
     height: 100%;
     object-fit: cover;
 }
-
-.pagination {
-    display: flex;
-    justify-content: center;
-}
-
-    .pagination .page-item {
-        margin: 0 5px;
-    }
-
-
 
 .card-left {
     transition: transform 0.3s ease;
@@ -69,4 +76,11 @@
 
 .card-left:hover {
     transform: scale(1.05);
+}
+
+.card-faculty {
+    transition: transform 0.3s ease;
+}
+.card-faculty:hover {
+        transform: scale(1.05);
 }
