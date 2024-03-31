@@ -95,20 +95,16 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-
-            // Lấy danh sách comment cho bài viết
-            var comments = _unitOfWork.CommentRepository.GetAll()
-                .Where(c => c.ArticleId == id && c.Type == "PUBLIC")
-                .ToList();
-
             ArticleVM articleVM = new ArticleVM
             {
                 article = article,
                 User = article.User,
                 Magazines = article.Magazines,
                 FormattedModifyDate = article.ModifyDate?.ToString("dd/MM/yyyy"),
-                MyComments = comments // Thêm danh sách comment vào ViewModel
-            };
+                MyComments = _unitOfWork.CommentRepository.GetAll()
+                .Where(c => c.ArticleId == id && c.Type.ToUpper() == "PUBLIC")
+                .ToList() // Thêm danh sách comment vào ViewModel
+        };
 
             articleVM.MonthYearOptions = GetMonthYearOptions();
             return View(articleVM);

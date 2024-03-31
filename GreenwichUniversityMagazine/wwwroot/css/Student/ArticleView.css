@@ -1,4 +1,4 @@
-body {
+﻿body {
     margin: 0;
     padding:0;
     font-family: 'Lato', sans-serif;
@@ -169,60 +169,75 @@ form > #myInput {
         clear: both;
     }
 
-
-
-.container-comment {
-    width: min(90%, 1140px);
-    margin: 3rem auto;
-    border:1px dashed red;
-}
-
-.comment__container {
-    display: none;
+.body-container {
+    margin: 50px;
     position: relative;
+    border-radius: 5px;
 }
 
-    .comment__container.opened {
-        display: flex;
-    }
-
-    .comment__container::before {
-        content: "";
-        background-color: rgb(170, 170, 170);
-        min-height: 100%;
-        width: 1px;
-        left: -10px;
-    }
-
-    .comment__container:not(:first-child) {
-        margin-left: 3rem;
-        margin-top: 1rem;
-    }
-
-.comment__card {
-    padding: 20px;
-    background-color: white;
-    border: 1px solid rgba(0, 0, 0, 0.3);
-    border-radius: 0.5rem;
-    min-width: 100%;
-    box-shadow: 0 0 50px rgba(0, 0, 0, 0.1);
-    margin:50px;
+.comment {
+    margin-bottom: 20px;
 }
 
-    .comment__card h3,
-    .comment__card p {
-        margin-bottom: 1rem;
+.comment-header {
+    font-weight: bold;
+}
+
+.comment-body {
+    margin-top: 5px;
+}
+
+.comment-private {
+    width: 500px;
+    height: auto;
+    border-radius: 8px;
+    z-index: 1;
+    overflow: hidden; /* Đảm bảo avt không bị tràn ra ngoài */
+    display: flex; /* Dùng flexbox để sắp xếp các thành phần */
+}
+
+.avatar-coordinate {
+    margin-top: 10px;
+    width: 50px; /* Điều chỉnh kích thước của avatar */
+    height: 50px;
+    border-radius: 50%; /* Làm cho hình ảnh tròn */
+    overflow: hidden; /* Đảm bảo hình ảnh không bị tràn ra ngoài vùng chứa */
+}
+
+.avatar-coordinate-img {
+    width: 100%; /* Đảm bảo hình ảnh lấp đầy vùng chứa */
+    height: 100%;
+    object-fit: cover; /* Đảm bảo hình ảnh không bị méo khi thu nhỏ */
+}
+
+.comment-content {
+    flex: 1; /* Chia phần còn lại của ô comment */
+    padding: 10px; /* Thêm padding cho nội dung comment */
+}
+/* Comment Reply */
+.comment-input {
+    margin-bottom: 20px;
+}
+
+    .comment-input textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        resize: vertical; /* Cho phép điều chỉnh kích thước theo chiều dọc */
+        box-sizing: border-box; /* Đảm bảo kích thước của textarea không bị thay đổi khi thêm border và padding */
     }
 
-.comment__card-footer {
-    display: flex;
-    font-size: 0.85rem;
-    opacity: 0.6;
-    gap: 30px;
-    justify-content: flex-end;
-    align-items: center;
-}
+    .comment-input button {
+        padding: 10px 20px;
+        background-color: #007bff; /* Màu nút */
+        color: #fff; /* Màu chữ */
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s; /* Hiệu ứng chuyển đổi màu nền nút */
+    }
 
-.show-replies {
-    cursor: pointer;
-}
+        .comment-input button:hover {
+            background-color: #0056b3; /* Màu nền khi di chuột qua */
+        }

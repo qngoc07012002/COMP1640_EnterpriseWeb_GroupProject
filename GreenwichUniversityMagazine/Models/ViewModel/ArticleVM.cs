@@ -23,5 +23,6 @@ namespace GreenwichUniversityMagazine.Models.ViewModel
         public string? FormattedModifyDate { get; set; }
         [ValidateNever]
         public IEnumerable<Comment> MyComments { get; set; }
+        
     }
 }

@@ -1,98 +1,105 @@
 ﻿@model ArticleVM
+@inject IHttpContextAccessor Accessor
 
-    <link rel="stylesheet" href="~/css/Student/ArticleView.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <div class="content clearfix">
-        <div class="main-content">
-            <div class="article">
-                <i class="far fa-user"> @Model.Magazines.Title</i>
-                &nbsp;
-                <i class="far calendar">@Model.FormattedModifyDate</i>
-                <div class="recent-post-title">
-                    <h1>@Model.article.Title</h1>
-                </div>
-                <div class="subTitle">
-                    <h3>@Model.article.SubTitle</h3>
-                </div>
-                <div class="userImg">
-                     <img src="@Model.User.avtUrl" alt="User Image">
-                </div>
-                <div class="userName">
-                    <i>@Model.User.Name</i>
-                </div>
-                
-                <div class="post">
-                <img class="post-image" src="@Model.article.imgUrl" alt="Thumbnail">
-                    <div class="post-content">
-                        <!-- Hiển thị nội dung của bài báo -->
-                        @Html.Raw(Model.article.Body)
-                    </div>
-                </div>
+<link rel="stylesheet" href="~/css/Student/ArticleView.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<div class="content clearfix">
+    <div class="main-content">
+        <div class="article">
+            <i class="far fa-user"> @Model.Magazines.Title</i>
+            &nbsp;
+            <i class="far calendar">@Model.FormattedModifyDate</i>
+            <div class="recent-post-title">
+                <h1>@Model.article.Title</h1>
             </div>
-        </div>
-        <div class="sidebar">
-            <img class="sidebar-image" src="~/css/Student/logo_greenwich.png" alt="Italian Trulli">
+            <div class="subTitle">
+                <h3>@Model.article.SubTitle</h3>
+            </div>
+            <div class="userImg">
+                <img src="@Model.User.avtUrl" alt="User Image">
+            </div>
+            <div class="userName">
+                <i>@Model.User.Name</i>
+            </div>
 
-            <form method="post">
-            <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
-            
-            </form>
-            <div>
-                <h1 class="sidebar-title">Term</h1>
-                <div class="select-article">
-                    <select asp-for="@Model.article.ModifyDate" asp-items="@Model.MonthYearOptions"></select>
-                </div>
-                <h1 class="sidebar-title">Faculty</h1>
-                <div class="select-article">
-                    <select asp-for="@Model.article.ModifyDate" asp-items="@Model.MonthYearOptions"></select>
-                </div>
-                <h1 class="sidebar-title">Magazine</h1>
-                <div class="select-article">
-                    <select asp-for="@Model.article.ModifyDate" asp-items="@Model.MonthYearOptions"></select>
+            <div class="post">
+                <img class="post-image" src="@Model.article.imgUrl" alt="Thumbnail">
+                <div class="post-content">
+                    <!-- Hiển thị nội dung của bài báo -->
+                    @Html.Raw(Model.article.Body)
                 </div>
             </div>
         </div>
     </div>
-<div class="container-comment">
+    <div class="sidebar">
+        <img class="sidebar-image" src="~/css/Student/logo_greenwich.png" alt="Italian Trulli">
+
+        <form method="post">
+            <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
+        </form>
+        <div>
+            <h1 class="sidebar-title">Term</h1>
+            <div class="select-article">
+                <select asp-for="@Model.article.ModifyDate" asp-items="@Model.MonthYearOptions"></select>
+            </div>
+            <h1 class="sidebar-title">Faculty</h1>
+            <div class="select-article">
+                <select asp-for="@Model.article.ModifyDate" asp-items="@Model.MonthYearOptions"></select>
+            </div>
+            <h1 class="sidebar-title">Magazine</h1>
+            <div class="select-article">
+                <select asp-for="@Model.article.ModifyDate" asp-items="@Model.MonthYearOptions"></select>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="body-container">
+    <div class="separator"><strong>Comment</strong> </div>
+
+
     @foreach (var comment in Model.MyComments)
     {
-        <div class="comment__container opened" id="comment-@comment.Id">
-            <div class="comment__card">
-                
-                <p>@comment.Description</p>
-                <div class="comment__card-footer">
-                    
-                    @* Button to show/hide replies *@
-                    <div class="show-replies" onclick="toggleReplies('comment-@comment.Id')">Toggle Replies (@comment.Replies.Count())</div>
+        <div class="comment-private">
+            <div class="avatar-coordinate">
+                @{
+                    var avtUrl = Accessor.HttpContext.Session.GetString("avtUrl");
+                    @if (comment.UserId.ToString() == Accessor.HttpContext.Session.GetString("UserId"))
+                    {
+                        <img src="@avtUrl" alt="Avatar" class="avatar-coordinate-img">
+                    }
+                    else
+                    {
+                        <img src="~/css/Student/logo_greenwich.png" alt="Avatar" class="avatar-coordinate-img">
+                    }
+                }
 
+            </div>
+            <div class="comment-content">
+                <a class="box">
+                    <strong>
+                        @if (comment.UserId.ToString() == Accessor.HttpContext.Session.GetString("UserId"))
+                        {
+                            var userName = Accessor.HttpContext.Session.GetString("UserName");
+                            <span class="comment-value">@userName</span>
+                        }
+                        else
+                        {
+                            <span class="comment-value"></span>
+                        }
+                    </strong> - <span class="comment-value">@comment.Date</span>
+                </a>
+                <hr>
+                <div class="card__content">
+                    @comment.Description
                 </div>
             </div>
-            @* Render replies *@
-            @foreach (var reply in comment.Replies)
-            {
-                <div class="comment__container" dataset="comment-@comment.Id">
-                    <div class="comment__card">
-                        <h3 class="comment__title">@reply.Title</h3>
-                        <p>@reply.Body</p>
-                        <div class="comment__card-footer">
-                            <div>Likes @reply.Likes</div>
-                            <div>Dislikes @reply.Dislikes</div>
-                        </div>
-                    </div>
-                </div>
-            }
         </div>
+
     }
+    <div class="comment-input">
+        <textarea placeholder="Enter your comment..." rows="4"></textarea>
+        <button class="pushable" onclick="submitComment()">Send Comment</button>
+    </div>
 </div>
 
-<script>
-    function toggleReplies(commentId) {
-        const commentContainer = document.getElementById(commentId);
-        if (commentContainer) {
-            const repliesContainer = commentContainer.querySelectorAll(`[dataset=${commentId}]`);
-            repliesContainer.forEach(reply => {
-                reply.classList.toggle("opened");
-            });
-        }
-    }
-</script>
+
