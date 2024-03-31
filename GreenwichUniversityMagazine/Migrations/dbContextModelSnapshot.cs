@@ -34,7 +34,7 @@ namespace GreenwichUniversityMagazine.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("MagazinedId")
+                    b.Property<int>("MagazinedId")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("ModifyDate")
@@ -86,6 +86,9 @@ namespace GreenwichUniversityMagazine.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsNotification")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Type")
                         .IsRequired()
@@ -287,7 +290,9 @@ namespace GreenwichUniversityMagazine.Migrations
                 {
                     b.HasOne("GreenwichUniversityMagazine.Models.Magazines", "Magazines")
                         .WithMany()
-                        .HasForeignKey("MagazinedId");
+                        .HasForeignKey("MagazinedId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("GreenwichUniversityMagazine.Models.User", "User")
                         .WithMany()

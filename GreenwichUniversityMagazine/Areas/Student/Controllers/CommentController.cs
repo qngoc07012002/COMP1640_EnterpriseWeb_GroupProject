@@ -1,8 +1,10 @@
 ﻿using GreenwichUniversityMagazine.Models;
 using GreenwichUniversityMagazine.Models.ViewModel;
 using GreenwichUniversityMagazine.Repository;
+using GreenwichUniversityMagazine.Serivces.IServices;
 using GreenwichUniversityMagazine.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
+using GreenwichUniversityMagazine.Serivces;
 
 namespace GreenwichUniversityMagazine.Areas.Student.Controllers
 {
@@ -11,14 +13,13 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _webhost;
-        public IActionResult Index()
-        {
-            return View();
-        }
+        private readonly IEmailService _emailService;
+        private readonly string domain = "";
 
-        public CommentController(IUnitOfWork db, IWebHostEnvironment webhost)
+        public CommentController(IUnitOfWork db, IWebHostEnvironment webhost, IEmailService emailService)
         {
             _unitOfWork = db;
+            _emailService = emailService;
             _webhost = webhost;
         }
 
@@ -39,6 +40,19 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                     newComment.Description = CommentInput;
                     newComment.Type = "PRIVATE";
                     newComment.Date = DateTime.Now;
+                    newComment.IsNotification = true;
+                    //Sending email 
+                    Article article = _unitOfWork.ArticleRepository.GetById(articleId);
+                    User student = _unitOfWork.UserRepository.GetById(studentId);  
+                    List<User> coordinates = _unitOfWork.UserRepository.GetAll().Where(u=> u.FacultyId == student.FacultyId && u.Role.ToUpper() == "COORDINATE").ToList();
+                    var subject = "New Comment From Student";
+                    var message = $"The Student just add new comment to article '{article.Title}'.\n Let check it: {domain}/Coordinate/Coordinate/{articleId}";
+                    foreach (var coor in coordinates)
+                    {
+                        _emailService.SendEmailAsync(coor.Email.ToString(), subject, message);
+                    }
+
+                    //Done
                     _unitOfWork.CommentRepository.Add(newComment);
                     _unitOfWork.Save();
                     return Ok("Comment uploaded successfully.");

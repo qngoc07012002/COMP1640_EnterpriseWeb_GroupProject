@@ -68,7 +68,7 @@ function updateArticleList(articles) {
 
             } else {
                 if (article.status === true) {
-                    articleCard += `<a href="/student/article/Update?id=${article.articleId}" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i>View</a>`;
+                    articleCard += `<a href="/student/article/SelectArticle?id=${article.articleId}" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i>View</a>`;
                 }
                 else {
                     articleCard += `<span class="text-danger mx-2">Expired Term</span>`;

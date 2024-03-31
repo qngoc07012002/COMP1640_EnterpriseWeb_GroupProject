@@ -1,34 +1,39 @@
-@model List<Notification>
+﻿@model List<Comment>
+@inject IHttpContextAccessor Accessor
     @if (Model != null)
     {
         <div class="notification_list_container">
         <h3 class="notification_heading">Notification</h3>
-        @foreach (var notification in Model)
-        {
-
-            <a class="notification_list_child" asp-action="action">
-                <div class="notification_detail_container">
-                    <h4 class="notification_title">Hoang Tran</h4>
-                    <div class="notification_detail_wrapper">
-                        <div class="user-logo">
-                            <img src="./user-logo.png" alt="User Logo" />
-                        </div>
-                        <div class="notification-detail_description">
-                            <h4 class="notification_description">
-                                I update my articles could you make a review of it
-                            </h4>
-                            <h4 class="notification_timeUpdate">Time Update:</h4>
+        <div class="notificationbody">
+            @foreach (var comment in Model)
+            {
+                <a  class="notification_list_child" asp-area="Student" asp-controller="Home" asp-action="RedectNotification" asp-route-id="@comment.Id">
+                    <div  class="notification_detail_container">
+                        <h5 class="notification_title">@comment.Article.Title</h5>
+                        <div class="notification_detail_wrapper">
+                            <div class="user-logo">
+                                @{
+                                    var userId = Accessor.HttpContext.Session.GetString("userId");
+                                    if (comment.User.Role == "STUDENT")
+                                    {
+                                        <img src="@comment.User.avtUrl" alt="User Logo" />
+                                    }
+                                    else
+                                    {
+                                        <img src="~/css/Student/logo_greenwich.png" alt="User Logo" />
+                                    }
+                                }
+                            </div>
+                            <div class="notification-detail_description">
+                                <h4 class="notification_description">
+                                    New Comment: @comment.Description
+                                </h4>
+                                <h4 class="notification_timeUpdate">Time Update: @comment.Date</h4>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </a>
-
-        }
-        <a class="notification_viewMore">
-            <h4 class="notification_viewMore_heading">View All Notifications</h4>
-        </a>
+                </a>
+            }
         </div>
-    
+        </div>
     }
-@* 
- *@

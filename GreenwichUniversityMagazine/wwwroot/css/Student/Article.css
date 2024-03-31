@@ -189,6 +189,7 @@ body {
     border-radius: 5px;
     color: #fff;
     position: relative;
+    width: 200px;
 }
 
     /* Style the arrow inside the select element: */
