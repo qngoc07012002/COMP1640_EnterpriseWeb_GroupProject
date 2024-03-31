@@ -34,7 +34,7 @@
     <div class="sidebar">
         <img class="sidebar-image" src="~/css/Student/logo_greenwich.png" alt="Italian Trulli">
 
-        <form method="post">
+        <form method="post" class="search-form">
             <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
         </form>
         <div>
@@ -59,34 +59,25 @@
 
     @foreach (var comment in Model.MyComments)
     {
+        var user = Model.CommentUsers.FirstOrDefault(u => u.Id == comment.UserId);
+        var avtUrl = user != null ? user.avtUrl : "~/css/Student/logo_greenwich.png";
+
         <div class="comment-private">
             <div class="avatar-coordinate">
-                @{
-                    var avtUrl = Accessor.HttpContext.Session.GetString("avtUrl");
-                    @if (comment.UserId.ToString() == Accessor.HttpContext.Session.GetString("UserId"))
-                    {
-                        <img src="@avtUrl" alt="Avatar" class="avatar-coordinate-img">
-                    }
-                    else
-                    {
-                        <img src="~/css/Student/logo_greenwich.png" alt="Avatar" class="avatar-coordinate-img">
-                    }
-                }
-
+                <img src="@avtUrl" alt="Avatar" class="avatar-coordinate-img">
             </div>
             <div class="comment-content">
                 <a class="box">
                     <strong>
-                        @if (comment.UserId.ToString() == Accessor.HttpContext.Session.GetString("UserId"))
+                        @if (user != null)
                         {
-                            var userName = Accessor.HttpContext.Session.GetString("UserName");
-                            <span class="comment-value">@userName</span>
+                            <span class="comment-value">@user.Name</span>
                         }
                         else
                         {
                             <span class="comment-value"></span>
                         }
-                    </strong> - <span class="comment-value">@comment.Date</span>
+                    </strong><span class="comment-value">@comment.Date</span>
                 </a>
                 <hr>
                 <div class="card__content">
@@ -94,11 +85,13 @@
                 </div>
             </div>
         </div>
-
     }
     <div class="comment-input">
-        <textarea placeholder="Enter your comment..." rows="4"></textarea>
-        <button class="pushable" onclick="submitComment()">Send Comment</button>
+        <form class="comment-form" method="post" action="/Student/Comment/UploadPublic">
+            <textarea name="CommentInput" placeholder="Enter your comment..." rows="4"></textarea>
+            <input type="hidden" name="articleId" value="@Model.article.ArticleId" />
+            <button type="submit" class="pushable">Send Comment</button>
+        </form>
     </div>
 </div>
 

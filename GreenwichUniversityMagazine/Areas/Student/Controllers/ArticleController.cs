@@ -90,10 +90,19 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                 includeProperty: "Magazines,User",
                 filter: a => a.ArticleId == id
             );
-
             if (article == null)
             {
                 return RedirectToAction("Index", "Home");
+            }
+            List<Comment> comments = _unitOfWork.CommentRepository.GetAll()
+            .Where(c => c.ArticleId == id && c.Type.ToUpper() == "PUBLIC")
+            .ToList();
+
+            List<User> commentUsers = new List<User>();
+            foreach (var comment in comments)
+            {
+                User user = _unitOfWork.UserRepository.Get(u => u.Id == comment.UserId);
+                commentUsers.Add(user);
             }
             ArticleVM articleVM = new ArticleVM
             {
@@ -101,10 +110,9 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                 User = article.User,
                 Magazines = article.Magazines,
                 FormattedModifyDate = article.ModifyDate?.ToString("dd/MM/yyyy"),
-                MyComments = _unitOfWork.CommentRepository.GetAll()
-                .Where(c => c.ArticleId == id && c.Type.ToUpper() == "PUBLIC")
-                .ToList() // Thêm danh sách comment vào ViewModel
-        };
+                MyComments = comments,
+                CommentUsers = commentUsers
+            };
 
             articleVM.MonthYearOptions = GetMonthYearOptions();
             return View(articleVM);
