@@ -1,11 +1,11 @@
 ﻿@model ArticleVM
 
     <link rel="stylesheet" href="~/css/Student/ArticleView.css">
-    <link rel="stylesheet" href="fontAwesome/css/font-awesome.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <div class="content clearfix">
         <div class="main-content">
             <div class="article">
-                <i class="far fa-user">@Model.Magazines.Title</i>
+                <i class="far fa-user"> @Model.Magazines.Title</i>
                 &nbsp;
                 <i class="far calendar">@Model.FormattedModifyDate</i>
                 <div class="recent-post-title">
@@ -52,38 +52,47 @@
                 </div>
             </div>
         </div>
-        
     </div>
+<div class="container-comment">
+    @foreach (var comment in Model.MyComments)
+    {
+        <div class="comment__container opened" id="comment-@comment.Id">
+            <div class="comment__card">
+                
+                <p>@comment.Description</p>
+                <div class="comment__card-footer">
+                    
+                    @* Button to show/hide replies *@
+                    <div class="show-replies" onclick="toggleReplies('comment-@comment.Id')">Toggle Replies (@comment.Replies.Count())</div>
 
-<div class="comment-sesion">
-    <div class="post-comment">
-        <div class="comment-list">
-            <div class="flex">
-                <div class="user">
-                    <div class="user-image">
-                        <div class="user-meta">
-                            <div class="name"></div>
-                            <div class="day"></div>
-                        </div>
-                    </div>
-                    <div class="reply">
-                        <div class="lick icon"><i class="fa fa-thumbs-o-up"></i></div>
-                        <div class="dislick icon"><i class="fa fa-thumbs-o-down"></i></div>
-                        <div class="re-comment">Reply</div>
-                    </div>
                 </div>
             </div>
-            <div class="comment">
-                asdhjkdhjkasdhjkadjas
-            </div>
+            @* Render replies *@
+            @foreach (var reply in comment.Replies)
+            {
+                <div class="comment__container" dataset="comment-@comment.Id">
+                    <div class="comment__card">
+                        <h3 class="comment__title">@reply.Title</h3>
+                        <p>@reply.Body</p>
+                        <div class="comment__card-footer">
+                            <div>Likes @reply.Likes</div>
+                            <div>Dislikes @reply.Dislikes</div>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
-        <form action="" class="comment-box">
-            <div class="user">
-                <div class="image"><img src="" alt=""></div>
-                <div class="name"></div>
-            </div>
-            <textarea name="comment"></textarea>
-            <button class="comment-submit">Comment</button>
-        </form>
-    </div>
+    }
 </div>
+
+<script>
+    function toggleReplies(commentId) {
+        const commentContainer = document.getElementById(commentId);
+        if (commentContainer) {
+            const repliesContainer = commentContainer.querySelectorAll(`[dataset=${commentId}]`);
+            repliesContainer.forEach(reply => {
+                reply.classList.toggle("opened");
+            });
+        }
+    }
+</script>

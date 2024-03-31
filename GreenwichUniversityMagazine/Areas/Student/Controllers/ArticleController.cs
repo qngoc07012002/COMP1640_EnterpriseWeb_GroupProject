@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 using System.Globalization;
+using System.Xml.Linq;
 
 namespace GreenwichUniversityMagazine.Areas.Student.Controllers
 {
@@ -87,21 +88,30 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
         {
             Article article = _unitOfWork.ArticleRepository.Get(
                 includeProperty: "Magazines,User",
-                filter: a => a.ArticleId == id 
+                filter: a => a.ArticleId == id
             );
+
             if (article == null)
             {
-                return RedirectToAction("Index", "Home"); 
+                return RedirectToAction("Index", "Home");
             }
+
+            // Lấy danh sách comment cho bài viết
+            var comments = _unitOfWork.CommentRepository.GetAll()
+                .Where(c => c.ArticleId == id && c.Type == "PUBLIC")
+                .ToList();
+
             ArticleVM articleVM = new ArticleVM
             {
                 article = article,
                 User = article.User,
                 Magazines = article.Magazines,
-                FormattedModifyDate = article.ModifyDate?.ToString("dd/MM/yyyy") 
+                FormattedModifyDate = article.ModifyDate?.ToString("dd/MM/yyyy"),
+                MyComments = comments // Thêm danh sách comment vào ViewModel
             };
+
             articleVM.MonthYearOptions = GetMonthYearOptions();
-            return View(articleVM); 
+            return View(articleVM);
         }
         private List<SelectListItem> GetMonthYearOptions()
         {
