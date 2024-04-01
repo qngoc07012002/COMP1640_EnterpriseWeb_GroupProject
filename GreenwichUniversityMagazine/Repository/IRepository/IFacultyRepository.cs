@@ -7,8 +7,9 @@ namespace GreenwichUniversityMagazine.Repository.IRepository
 
         public int GetNumbersOfItems(int userId);
         public List<Faculty> GetFacultyByUser(int userId);
+       
         void Update(Faculty faculty);
 
-
+        List<Faculty> GetAllFaculty();
     }
 }

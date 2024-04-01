@@ -30,7 +30,11 @@ namespace GreenwichUniversityMagazine.Repository
         {
             _dbContext.Update(faculty);
         }
-
+        public List<Faculty> GetAllFaculty()
+        {
+            var query = _dbContext.Faculties.Where(c => c.Id != 0);
+            return query.ToList();
+        }
 
     }
 }

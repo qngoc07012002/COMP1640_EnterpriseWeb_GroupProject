@@ -51,7 +51,6 @@ namespace GreenwichUniversityMagazine.Areas.Coordinate.Controllers
             var user = _unitOfWork.UserRepository.GetById(userId);
             int facultyId = user.FacultyId.Value;
             CoordinateVM model = new CoordinateVM();
-
             var magazines = _unitOfWork.MagazineRepository.GetAll()
                                     .Where(u => u.FacultyId == facultyId &&
                                            u.Term.StartDate <= currentDateTime &&
@@ -80,7 +79,7 @@ namespace GreenwichUniversityMagazine.Areas.Coordinate.Controllers
 
                 foreach (var term in termlist)
                 {
-                    if (currentDateTime >= term.StartDate && currentDateTime <= term.EndDate)
+                    if (currentDateTime >= term.StartDate && currentDateTime <= term.EndDate)                                                                                                                                           
                     {
                         var articles = _unitOfWork.ArticleRepository.GetAll()
                                                     .Where(article => article.Magazines.TermId == term.Id)

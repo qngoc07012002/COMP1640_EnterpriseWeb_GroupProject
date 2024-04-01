@@ -21,6 +21,7 @@
 
 .homepage {
     z-index: 1;
+    padding-bottom: 30px;
 }
 /* CSS for smaller screens */
 @media (max-width: 1200px) {

@@ -10,6 +10,26 @@ namespace GreenwichUniversityMagazine.Repository
         public ArticleRepository(dbContext dbContext): base(dbContext) {
             _dbContext = dbContext;
         }
+        public IEnumerable<Article> Search(string searchString)
+        {
+            return _dbContext.Articles.Where(a => a.Title.Contains(searchString) || a.Title.Contains(searchString)).ToList();
+        }
+
+        public List<Article> GetArticlesbyMagazine(int? id)
+        {
+            var query = _dbContext.Articles.Where(c => c.MagazinedId == id);
+            return query.ToList();
+        }
+        public List<Article> GetArticlesbyTerm(int? id)
+        {
+            var query = _dbContext.Articles.Where(c => c.Magazines.TermId == id);
+            return query.ToList();
+        }
+        public List<Article> GetArticlesbyFaculty(int? id)
+        {
+            var query = _dbContext.Articles.Where(c => c.Magazines.FacultyId == id);
+            return query.ToList();
+        }
 
         public Article GetById(int id)
         {

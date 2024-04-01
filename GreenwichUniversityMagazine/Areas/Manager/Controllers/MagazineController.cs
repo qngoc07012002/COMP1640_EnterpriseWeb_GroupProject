@@ -29,13 +29,13 @@ namespace GreenwichUniversityMagazine.Areas.Manager.Controllers
                                 Text = u.Name,
                                 Value = u.Id.ToString()
                             }),
-                    MyTerms = _unitOfWork.TermRepository.GetAll().Where(b => b.IsDeleted == false)
+                MyTerms = _unitOfWork.TermRepository.GetAll()
                 .Select(u => new SelectListItem
                 {
                     Text = $"{u.StartDate.ToString()} - {u.EndDate.ToString()} / {u.Name}",
                     Value = u.Id.ToString(),
                 }),
-        }; return View(magazineVM);
+            }; return View(magazineVM);
         }
         [HttpPost]
         public IActionResult Create(MagazineVM magazineVM)
@@ -63,7 +63,7 @@ namespace GreenwichUniversityMagazine.Areas.Manager.Controllers
                     Text = u.Name,
                     Value = u.Id.ToString()
                 });
-            magazineVM.MyTerms = _unitOfWork.TermRepository.GetAll().Where(b => b.IsDeleted == false)
+            magazineVM.MyTerms = _unitOfWork.TermRepository.GetAll()
                 .Select(u => new SelectListItem
                 {
                     Text = $"{u.StartDate.ToString()} - {u.EndDate.ToString()} / {u.Name}",
@@ -89,22 +89,18 @@ namespace GreenwichUniversityMagazine.Areas.Manager.Controllers
                                 Text = u.Name,
                                 Value = u.Id.ToString()
                             }),
-                MyTerms = _unitOfWork.TermRepository.GetAll().Where(b => b.IsDeleted == false)
+                MyTerms = _unitOfWork.TermRepository.GetAll()
                 .Select(u => new SelectListItem
                 {
                     Text = $"{u.StartDate.ToString()} - {u.EndDate.ToString()} / {u.Name}",
                     Value = u.Id.ToString(),
                 }),
-        };
+            };
             if (id == null || id == 0)
             {
                 return NotFound();
             }
             magazineVM.Magazines = _unitOfWork.MagazineRepository.Get(u => u.Id == id);
-            if(magazineVM.Magazines.IsDeleted == true)
-            {
-                return RedirectToAction("Index");
-            }
             return View(magazineVM);
         }
         [HttpPost]
@@ -132,7 +128,7 @@ namespace GreenwichUniversityMagazine.Areas.Manager.Controllers
       Text = u.Name,
       Value = u.Id.ToString()
   });
-            magazineVM.MyTerms = _unitOfWork.TermRepository.GetAll().Where(b => b.IsDeleted == false)
+            magazineVM.MyTerms = _unitOfWork.TermRepository.GetAll()
                 .Select(u => new SelectListItem
                 {
                     Text = $"{u.StartDate.ToString()} - {u.EndDate.ToString()} / {u.Name}",
@@ -156,13 +152,13 @@ namespace GreenwichUniversityMagazine.Areas.Manager.Controllers
                               Text = u.Name,
                               Value = u.Id.ToString()
                           }),
-                MyTerms = _unitOfWork.TermRepository.GetAll().Where(b => b.IsDeleted == false)
+                MyTerms = _unitOfWork.TermRepository.GetAll()
                 .Select(u => new SelectListItem
                 {
                     Text = $"{u.StartDate.ToString()} - {u.EndDate.ToString()} / {u.Name}",
                     Value = u.Id.ToString(),
                 }),
-        };
+            };
             if (id == null || id == 0)
             {
                 return NotFound();
@@ -174,13 +170,20 @@ namespace GreenwichUniversityMagazine.Areas.Manager.Controllers
         public IActionResult Delete(int id)
         {
             var magazineToDelete = _unitOfWork.MagazineRepository.Get(u => u.Id == id);
+            var articlelist = _unitOfWork.ArticleRepository.GetAll().ToList();
 
             if (magazineToDelete == null)
             {
                 return NotFound();
             }
-            magazineToDelete.IsDeleted = true;
-            _unitOfWork.MagazineRepository.Update(magazineToDelete);
+            foreach (var article in articlelist)
+            {
+                if (article.MagazinedId == id)
+                {
+                    _unitOfWork.ArticleRepository.Remove(article);
+                }
+            }
+            _unitOfWork.MagazineRepository.Remove(magazineToDelete);
             _unitOfWork.Save();
             TempData["success"] = "Magazine delete successfully";
             return RedirectToAction("Index");

@@ -61,7 +61,7 @@ namespace GreenwichUniversityMagazine.Areas.Admin.Controllers
             bool termExists = false;
             foreach (var term in termList)
             {
-                if (term.Name == obj.Name && term.IsDeleted == false)
+                if (term.Name == obj.Name )
                 {
                     termExists = true;
                     break;

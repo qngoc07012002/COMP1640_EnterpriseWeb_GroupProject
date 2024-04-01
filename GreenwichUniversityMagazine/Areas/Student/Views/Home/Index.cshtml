@@ -1,5 +1,6 @@
-﻿@model IEnumerable<Article>
-
+﻿@* @model IEnumerable<Article> *@
+    
+   @model HomeVM
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -55,7 +56,7 @@
     <div class="container-homepage">
         <div class="row p-3">
             <div class="col-md-6">
-                <div class="card card-left" style="height: 580px;">
+                <div class="card card-left" style="height: 525px;">
                     <img src="~/img/Home/1.png" class="card-img-top card-img-custom" alt="...">
                     <div class="card-body">
                         <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
@@ -65,7 +66,7 @@
 
 
             <div class="col-md-6">
-                <h1 class="text-center"> Faculty</h1>
+               
                 <div class="row row-cols-1 row-cols-md-2 g-4">
                     <div class="col">
                         <a asp-area="Admin" asp-controller="User" asp-action="Index" style="text-decoration: none;">
@@ -133,46 +134,53 @@
     @* ///////////////////////////////////////////////////////////////////// *@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
+        <div class="col-md-3">
+            <div class="d-flex align-items-center mb-3">
+                <h6 class="m-1 mr-2">Falcuty</h6>
+                <select id="facultySelect" class="form-select" aria-label="Default select example">
+                    <option value="">Select a Magazine</option>
+                    @foreach (var faculty in Model.Magazines)
+                    {
+                        <option value="@faculty.FacultyId">@faculty.Faculty.Name</option>
+                    }
+                </select>
+            </div>
+        </div>
+
         <div class="row p-3 ">
             <div class="col-md-3">
-                <div class="d-flex  align-items-center mb-3">
-                    <h6 class="m-1 mr-2">ARTICLES</h6>
-                    <select class="form-select" style="width:230px;" aria-label="Articles">
-                        <option selected>Open this select menu</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                <div class="d-flex align-items-center mb-3">
+                    <h6 class="m-1 mr-2">Term</h6>
+                    <select id="termSelect" class="form-select" aria-label="Default select example">
+                        <option value="">Select a Magazine</option>
+                        @foreach (var term in Model.Magazines)
+                        {
+                            <option value="@term.TermId"> @term.StartDate.ToShortDateString(), @term.EndDate.ToShortDateString(),@term.Term.Name</option>
+                        }
                     </select>
                 </div>
+
             </div>
-            <div class="col-md-3">
-                <div class="d-flex  align-items-center mb-3">
+        <div class="col-md-3">
+            <div class="d-flex align-items-center mb-3">
                     <h6 class="m-1 mr-2">Magazine</h6>
-                    <select class="form-select" style="width:230px;" aria-label="Magazine">
-                        <option selected>Open this select menu</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                    <select id="magazineSelect" class="form-select" aria-label="Default select example">
+                        <option value="">Select a Magazine</option>
+                        @foreach (var magazine in Model.Magazines)
+                        {
+                            <option value="@magazine.Id">@magazine.Title</option>
+                        }
                     </select>
-                </div>
             </div>
+        </div>
+           
+
+
+          
 
             <div class="col-md-3">
-                <div class="d-flex  align-items-center mb-3">
-                    <h6 class="m-1 mr-2">DSSSDASa</h6>
-                    <select class="form-select" style="width:230px;" aria-label="Magazine">
-                        <option selected>Open this select menu</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="col-md-3 ">
-
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <form asp-controller="Home" asp-action="Index" method="get" class="d-flex">
+                    <input class="form-control me-2" type="search" name="searchString" placeholder="Search" style="width: 550px" aria-label="Search">
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
             </div>
@@ -182,7 +190,7 @@
 
 
     <div class="row pb-3" id="articleContainer">
-        @foreach (var article in Model.Take(4))
+        @foreach (var article in Model.Articles.Take(6))
         {
             <div class="clo-lg-2 col-sm-6">
                 <div class="row p-2">
@@ -235,7 +243,86 @@
         });
     });
 
+    $(document).ready(function () {
+        // Kiểm tra xem đã lưu giá trị tạp chí trước đó trong Local Storage chưa
+        var selectedMagazineId = localStorage.getItem('selectedMagazineId');
 
+        // Nếu đã có giá trị tạp chí trong Local Storage, thiết lập lại giá trị của dropdown menu
+        if (selectedMagazineId) {
+            $('#magazineSelect').val(selectedMagazineId);
+        }
+
+        // Lắng nghe sự kiện thay đổi của dropdown menu tạp chí
+        $('#magazineSelect').change(function () {
+            // Lấy giá trị của tạp chí được chọn
+            var selectedMagazineId = $(this).val();
+
+            // Lưu giá trị tạp chí vào Local Storage
+            localStorage.setItem('selectedMagazineId', selectedMagazineId);
+
+            // Chuyển hướng đến action "Index" với tham số id tương ứng
+            if (selectedMagazineId) {
+                window.location.href = '/?id=' + selectedMagazineId;
+            } else {
+                window.location.href = '/';
+            }
+        });
+
+        // Kiểm tra xem đã lưu giá trị term trước đó trong Local Storage chưa
+        var selectedTermId = localStorage.getItem('selectedTermId');
+
+        // Nếu đã có giá trị term trong Local Storage, thiết lập lại giá trị của dropdown menu term
+        if (selectedTermId) {
+            $('#termSelect').val(selectedTermId);
+        }
+
+        // Lắng nghe sự kiện thay đổi của dropdown menu term
+        $('#termSelect').change(function () {
+            // Lấy giá trị của term được chọn
+            var selectedTermId = $(this).val();
+
+            // Lưu giá trị term vào Local Storage
+            localStorage.setItem('selectedTermId', selectedTermId);
+
+            // Chuyển hướng đến action "Index" với tham số id tương ứng
+            if (selectedTermId) {
+                window.location.href = '/?id=' + selectedTermId;
+            } else {
+                window.location.href = '/';
+            }
+        });
+
+        // Kiểm tra xem đã lưu giá trị faculty trước đó trong Local Storage chưa
+        var selectedFacultyId = localStorage.getItem('selectedFacultyId');
+
+        // Nếu đã có giá trị faculty trong Local Storage, thiết lập lại giá trị của dropdown menu faculty
+        if (selectedFacultyId) {
+            $('#facultySelect').val(selectedFacultyId);
+        }
+
+        // Lắng nghe sự kiện thay đổi của dropdown menu faculty
+        $('#facultySelect').change(function () {
+            // Lấy giá trị của faculty được chọn
+            var selectedFacultyId = $(this).val();
+
+            // Lưu giá trị faculty vào Local Storage
+            localStorage.setItem('selectedFacultyId', selectedFacultyId);
+
+            // Chuyển hướng đến action "Index" với tham số id tương ứng
+            if (selectedFacultyId) {
+                window.location.href = '/?id=' + selectedFacultyId;
+            } else {
+                window.location.href = '/';
+            }
+        });
+    });
+
+
+
+    
+    
+
+    
 
 
 </script>
