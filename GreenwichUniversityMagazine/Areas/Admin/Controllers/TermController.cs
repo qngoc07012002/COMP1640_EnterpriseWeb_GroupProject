@@ -61,7 +61,7 @@ namespace GreenwichUniversityMagazine.Areas.Admin.Controllers
             bool termExists = false;
             foreach (var term in termList)
             {
-                if (term.Name == obj.Name && term.IsDeleted == false)
+                if (term.Name == obj.Name)
                 {
                     termExists = true;
                     break;
@@ -167,21 +167,32 @@ namespace GreenwichUniversityMagazine.Areas.Admin.Controllers
             var termToDelete = _unitOfWork.TermRepository.Get(u => u.Id == id);
             var magazineList = _unitOfWork.MagazineRepository.GetAll().ToList();
             var articleList = _unitOfWork.ArticleRepository.GetAll().ToList();
+
             if (termToDelete == null)
             {
                 return NotFound();
             }
-                foreach (var magazine in magazineList)
+
+            foreach (var magazine in magazineList)
+            {
+                if (magazine.TermId == id)
                 {
-                    if (magazine.TermId == id)
+                    foreach (var article in articleList)
                     {
-                        _unitOfWork.MagazineRepository.Remove(magazine);
+                        if (article.MagazinedId == magazine.Id)
+                        {
+                            _unitOfWork.ArticleRepository.Remove(article);
+                        }
                     }
+                    _unitOfWork.MagazineRepository.Remove(magazine);
                 }
+            }
             _unitOfWork.TermRepository.Remove(termToDelete);
             _unitOfWork.Save();
+
             TempData["success"] = "Term delete successfully";
             return RedirectToAction("Index");
         }
+
     }
 }
