@@ -57,13 +57,44 @@
 <script>
     CKEDITOR.replace('content');
 </script>
- *@
+                   @*  @if (Model.ListResource != null)
+                    {
+                        @foreach (var resource in Model.ListResource)
+                        {
+                            var fileName = System.IO.Path.GetFileName(resource.Path);
+                            var articleId = resource.ArticleId;
+                            var absoluteDocxPath = $"{ViewContext.HttpContext.Request.Scheme}://{ViewContext.HttpContext.Request.Host}/Resource/Article/{articleId}/{fileName}";
+                            <div class="resource-item">
+                                <a href="@absoluteDocxPath" class="old-item" target="_blank" type="application/pdf">@fileName</a>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <p>No files attached</p>
+                    } *@
 @model CoordinateVM
 @inject IHttpContextAccessor Accessor
 @{
     ViewData["Title"] = "Update";
 }
-<link rel="stylesheet" href="~/css/Student/Article.css" />
+@* <style>
+    .button-approved:link, .button-approved:visited {
+        background-color: white;
+        color: black;
+        border: 2px solid green;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .button-approved:hover, .button-approved:active {
+        background-color: green;
+        color: white;
+    }
+</style> *@
+<link rel="stylesheet" href="~/css/Coordinate/Article.css" />
 <script src="https://cdn.ckeditor.com/4.19.1/standard/ckeditor.js"></script>
 <div class="card shadow border-2 my-4">
     <div class="card-header bg-secondary bg-gradient ml-0 py-3">
@@ -116,7 +147,7 @@
                         @foreach (var resource in Model.ListResource)
                         {
                             var fileName = System.IO.Path.GetFileName(resource.Path);
-                            var relativePath = Url.Content($"~/Resource/Article/{resource.ArticleId}/{fileName}"); // Đường dẫn tương đối đến tệp PDF
+                            var relativePath = Url.Content($"~/Resource/Article/{resource.ArticleId}/{fileName}");
                             <div class="resource-item">
                                 <a href="@relativePath" class="old-item"  target="_blank" type="application/pdf">@fileName</a>
                             </div>
@@ -126,8 +157,11 @@
                     {
                         <p>No files attached</p>
                     }
-                </div>
+
+
             </div>
+
+
         </form>
         <div class="body-container">
             <div class="separator"><strong>Comment</strong> </div>
@@ -176,7 +210,14 @@
                 <textarea id="commentTextArea" placeholder="Enter your comment..." rows="4"></textarea>
                 <button class="pushable" onclick="coordinateComment()">Send Comment</button>
             </div>
+            <a asp-controller="Coordinate" asp-action="ChangeStatus" asp-route-id="@Model.articles.ArticleId" class="button-approved">
+                @if (Model.articles.Status == false)
+                {
+                    <i class="bi bi-pencil-square"></i>
 
+                    <span style="align-items: center;">Approve</span>
+                }
+            </a>
         </div>
     </div>
 </div>
@@ -184,7 +225,8 @@
 
 @section Scripts
 {
-    <script src="@Url.Content("~/js/Student/Article/Create.js")"></script>
+    <script src="@Url.Content("~/js/Coordinate/Article/Comment.js")"></script>
+
 }
 
 

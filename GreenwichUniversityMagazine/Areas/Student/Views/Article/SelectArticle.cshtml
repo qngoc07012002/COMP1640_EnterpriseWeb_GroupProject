@@ -1,57 +1,98 @@
 ﻿@model ArticleVM
+@inject IHttpContextAccessor Accessor
 
-    <link rel="stylesheet" href="~/css/Student/ArticleView.css">
+<link rel="stylesheet" href="~/css/Student/ArticleView.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<div class="content clearfix">
+    <div class="main-content">
+        <div class="article">
+            <i class="far fa-user"> @Model.Magazines.Title</i>
+            &nbsp;
+            <i class="far calendar">@Model.FormattedModifyDate</i>
+            <div class="recent-post-title">
+                <h1>@Model.article.Title</h1>
+            </div>
+            <div class="subTitle">
+                <h3>@Model.article.SubTitle</h3>
+            </div>
+            <div class="userImg">
+                <img src="@Model.User.avtUrl" alt="User Image">
+            </div>
+            <div class="userName">
+                <i>@Model.User.Name</i>
+            </div>
 
-    <div class="content clearfix">
-        <div class="main-content">
-            <div class="article">
-                <i class="far fa-user">@Model.Magazines.Title</i>
-                &nbsp;
-                <i class="far calendar">@Model.FormattedModifyDate</i>
-                <div class="recent-post-title">
-                    <h1>@Model.article.Title</h1>
-                </div>
-                <div class="subTitle">
-                    <h3>@Model.article.SubTitle</h3>
-                </div>
-                <div class="userImg">
-                     <img src="@Model.User.avtUrl" alt="User Image">
-                </div>
-                <div class="userName">
-                    <i>@Model.User.Name</i>
-                </div>
-                
-                <div class="post">
+            <div class="post">
                 <img class="post-image" src="@Model.article.imgUrl" alt="Thumbnail">
-                    <div class="post-content">
-                        <!-- Hiển thị nội dung của bài báo -->
-                        @Html.Raw(Model.article.Body)
-                    </div>
+                <div class="post-content">
+                    <!-- Hiển thị nội dung của bài báo -->
+                    @Html.Raw(Model.article.Body)
                 </div>
             </div>
         </div>
-        <div class="sidebar">
-            <img class="sidebar-image" src="~/css/Student/logo_greenwich.png" alt="Italian Trulli">
-
-            <form method="post">
-            <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
-            
-            </form>
-            <div>
-                <h1 class="sidebar-title">Term</h1>
-                <div class="select-article">
-                    <select asp-for="@Model.article.ModifyDate" asp-items="@Model.MonthYearOptions"></select>
-                </div>
-                <h1 class="sidebar-title">Faculty</h1>
-                <div class="select-article">
-                    <select asp-for="@Model.article.ModifyDate" asp-items="@Model.MonthYearOptions"></select>
-                </div>
-                <h1 class="sidebar-title">Magazine</h1>
-                <div class="select-article">
-                    <select asp-for="@Model.article.ModifyDate" asp-items="@Model.MonthYearOptions"></select>
-                </div>
-            </div>
-        </div>
-        
     </div>
+    <div class="sidebar">
+        <img class="sidebar-image" src="~/css/Student/logo_greenwich.png" alt="Italian Trulli">
+
+        <form method="post" class="search-form">
+            <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
+        </form>
+        <div>
+            <h1 class="sidebar-title">Term</h1>
+            <div class="select-article">
+                <select asp-for="@Model.article.ModifyDate" asp-items="@Model.MonthYearOptions"></select>
+            </div>
+            <h1 class="sidebar-title">Faculty</h1>
+            <div class="select-article">
+                <select asp-for="@Model.article.ModifyDate" asp-items="@Model.MonthYearOptions"></select>
+            </div>
+            <h1 class="sidebar-title">Magazine</h1>
+            <div class="select-article">
+                <select asp-for="@Model.article.ModifyDate" asp-items="@Model.MonthYearOptions"></select>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="body-container">
+    <div class="separator"><strong>Comment</strong> </div>
+
+
+    @foreach (var comment in Model.MyComments)
+    {
+        var user = Model.CommentUsers.FirstOrDefault(u => u.Id == comment.UserId);
+        var avtUrl = user != null ? user.avtUrl : "~/css/Student/logo_greenwich.png";
+
+        <div class="comment-private">
+            <div class="avatar-coordinate">
+                <img src="@avtUrl" alt="Avatar" class="avatar-coordinate-img">
+            </div>
+            <div class="comment-content">
+                <a class="box">
+                    <strong>
+                        @if (user != null)
+                        {
+                            <span class="comment-value">@user.Name</span>
+                        }
+                        else
+                        {
+                            <span class="comment-value"></span>
+                        }
+                    </strong><span class="comment-value">@comment.Date</span>
+                </a>
+                <hr>
+                <div class="card__content">
+                    @comment.Description
+                </div>
+            </div>
+        </div>
+    }
+    <div class="comment-input">
+        <form class="comment-form" method="post" action="/Student/Comment/UploadPublic">
+            <textarea name="CommentInput" placeholder="Enter your comment..." rows="4"></textarea>
+            <input type="hidden" name="articleId" value="@Model.article.ArticleId" />
+            <button type="submit" class="pushable">Send Comment</button>
+        </form>
+    </div>
+</div>
+
 

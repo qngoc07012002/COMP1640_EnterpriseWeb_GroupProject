@@ -4,5 +4,6 @@ namespace GreenwichUniversityMagazine.Repository.IRepository
 {
     public interface ICommentRepository : IRepository<Comment>
     {
+        
     }
 }

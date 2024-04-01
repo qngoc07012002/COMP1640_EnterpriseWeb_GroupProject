@@ -26,11 +26,12 @@
                     if (userRole == "STUDENT")
                     {
                         <a asp-area="Student" asp-controller="Article" asp-action="Index">Article Management</a>
-                    } else if (userRole == "COORDINATE")
+                    }
+                    else if (userRole == "COORDINATE")
                     {
-                        <a asp-area="Student" asp-controller="Home" asp-action="Index">COORDINATE</a>
-              
-                    } else if (userRole == "ADMIN")
+                        <a asp-area="Coordinate" asp-controller="Coordinate" asp-action="Index">COORDINATE</a>
+                    }
+                    else if (userRole == "ADMIN")
                     {
                         <a asp-area="Student" asp-controller="Home" asp-action="Index">ADMIN</a>
 

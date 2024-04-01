@@ -21,5 +21,6 @@ namespace GreenwichUniversityMagazine.Models
         public string Description { get; set; }
         public string Type { get; set; }
         public DateTime Date {  get; set; }
+        public bool? IsNotification { get; set; }
     }
 }

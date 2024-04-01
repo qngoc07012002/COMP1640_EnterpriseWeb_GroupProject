@@ -88,8 +88,6 @@ namespace GreenwichUniversityMagazine.Repository
                     });
                 }
 
-
-
                 return listOfArrays;
 
 

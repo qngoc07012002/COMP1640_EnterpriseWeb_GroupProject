@@ -1,5 +1,7 @@
 
-![160563282](https://github.com/qngoc07012002/COMP1640_EnterpriseWeb_GroupProject/assets/116235732/ff036047-c8ad-4015-82b8-e81dac948804)
+![211670a7-14c0-4de4-8520-afe120da212c](https://github.com/qngoc07012002/COMP1640_EnterpriseWeb_GroupProject/assets/116235732/bdc76c57-35bc-462e-9996-14bd2cab8fda)
+
+
 
 # COMP1640_EnterpriseWeb_GroupProject
 
