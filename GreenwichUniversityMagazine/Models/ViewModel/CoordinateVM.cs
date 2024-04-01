@@ -11,6 +11,7 @@ namespace GreenwichUniversityMagazine.Models.ViewModel
         public Article articles { get; set; }
         public User user { get; set; }
         public string CurrentMagazineId { get; set; }
+        public string SelectedStatus { get; set; }
 
         public Resource resource { get; set; }
 
@@ -20,6 +21,7 @@ namespace GreenwichUniversityMagazine.Models.ViewModel
         public IEnumerable<SelectListItem> AvailableFaculties { get; set; }
         [ValidateNever]
         public IEnumerable<SelectListItem> AvailableArticles { get; set; }
+
         public List<Article> ListArticle {  get; set; }
         public List<Magazines> ListMagazines { get; set; }
         public List<Faculty> ListFaculty { get; set; }

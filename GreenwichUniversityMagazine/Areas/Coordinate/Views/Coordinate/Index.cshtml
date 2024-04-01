@@ -161,7 +161,88 @@
     int totalPages = (int)Math.Ceiling((double)totalItems / itemsPerPage);
     int currentPage = Context.Request.Query["page"].Count > 0 ? Convert.ToInt32(Context.Request.Query["page"]) : 1;
     int startIndex = (currentPage - 1) * itemsPerPage;
+    var sortedArticles = Model.ListArticle.Skip(startIndex).Take(itemsPerPage);
+    // string filterStatus = Context.Request.Query["status"].Count > 0 ? Context.Request.Query["status"].ToString() : "all";
+    // var filteredArticles = sortedArticles.Where(a => filterStatus == "all" || (filterStatus == "pending" && !a.Status) || (filterStatus == "approved" && a.Status));
 }
+<style>
+    .approve-text {
+        background-color: #28a745; /* Màu xanh lá cây */
+        color: #ffffff; /* Màu chữ trắng */
+        padding: 8px 12px; /* Thêm padding để tạo khoảng cách giữa văn bản và viền */
+        border-radius: 5px; /* Bo góc */
+    }
+
+    :root {
+        --background-gradient: linear-gradient(178deg, #ffff33 10%, #3333ff);
+        --gray: #34495e;
+        --darkgray: #2c3e50;
+    }
+
+    select {
+        /* Reset Select */
+        appearance: none;
+        outline: 10px red;
+        border: 0;
+        box-shadow: none;
+        /* Personalize */
+        flex: 1;
+        padding: 0 1em;
+        color: #fff;
+        background-color: var(--darkgray);
+        background-image: none;
+        cursor: pointer;
+    }
+        /* Remove IE arrow */
+        select::-ms-expand {
+            display: none;
+        }
+    /* Custom Select wrapper */
+    .select {
+        position: relative;
+        display: flex;
+        width: 20em;
+        height: 3em;
+        border-radius: .25em;
+        overflow: hidden;
+    }
+        /* Arrow */
+        .select::after {
+            content: '\25BC';
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 1em;
+            background-color: #34495e;
+            transition: .25s all ease;
+            pointer-events: none;
+        }
+        /* Transition */
+        .select:hover::after {
+            color: #f39c12;
+        }
+
+
+    .down_note {
+        display: flex;
+        justify-content: center;
+    }
+
+    .select-container {
+        display: flex;
+    }
+
+    .select-wrapper {
+        margin-right: 10px; /* Adjust spacing between selects as needed */
+    }
+
+    .select {
+        width: 100px; /* Adjust width as needed */
+        height: 30px; /* Adjust height as needed */
+    }
+
+
+</style>
 <link rel="stylesheet" href="~/css/Student/Article.css" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" />
 
@@ -178,8 +259,8 @@
             <div class="col-6"></div>
             <div class="col-6 text-end">
                 <div class="form-group row">
-                    <label class="col-sm-2 col-form-label p-0">Magazine:</label>
-                    <div class="col-sm-10">
+
+                  @*   <div class="col-sm-10">
                         <div class="form-floating py-2">
                             <select id="magazineSelect" class="form-select form-control" name="id">
                                 <option value="all">All</option>
@@ -189,41 +270,103 @@
                                 }
                             </select>
                         </div>
+                        <select id="statusSelect" name="status">
+                            <option value="all">All</option>
+                            <option value="pending">Pending</option>
+                            <option value="approved">Approved</option>
+                        </select>
+                    </div> *@
+                    <div class="select-container">
+                        <div class="select-wrapper">
+                            <label for="magazineSelect">Magazine:</label>
+                            <select id="magazineSelect" name="id" class="select">
+                                <option value="all">All</option>
+                                @foreach (var magazine in Model.AvailableMagazines)
+                                {
+                                    <option value="@magazine.Value">@magazine.Text</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="select-wrapper">
+                            <label for="statusSelect">Status:</label>
+                            <select id="statusSelect" name="status" class="select">
+                                <option value="all">All</option>
+                                <option value="pending">Pending</option>
+                                <option value="approved">Approved</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="container">
             <div class="row" id="bookList">
-                @foreach (var article in Model.ListArticle.Skip(startIndex).Take(itemsPerPage))
-                {
-                    <div class="article-card" data-magazine-id="@article.MagazinedId">
-                        <img class="article-card-img" src="@article.imgUrl" alt="Top Image">
-                        <div class="article-information">
-                            <label class="article-card-text">Magazine: @article.Magazines.Title</label>
-                            <h2 class="article-card-text">
-                                @if (article.Status == false)
-                                {
-                                }
-                                else
-                                {
-                                }
-                                @article.Title
-                            </h2>
-                            <p class="article-card-text text-ellipsis">@article.SubTitle</p>
-                        </div>
-                        <div class="card-button">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <a asp-controller="Coordinate" asp-action="Detail" asp-route-Id="@article.ArticleId" class="btn btn-primary mx-2">
-                                    <i class="bi bi-pencil-square"></i> Detail
-                                </a>
-                                <a asp-controller="Coordinate" asp-action="ChangeStatus" asp-route-id="@article.ArticleId" class="btn @((article.Status ? "btn-danger" : "btn-success")) mx-2">
-                                    <i class="bi bi-pencil-square"></i> @((article.Status ? "Pending" : "Approve"))
-                                </a>
+                <div class="col text-center">
+                    @if (Model.ListArticle == null || !Model.ListArticle.Any())
+                    {
+                        <p class="display-4">There are no active magazines at your time or There are no more pending articles </p>
+                    }
+                    else
+                    {
+                        @foreach (var article in sortedArticles)
+                        {
+                            <div class="article-card" data-magazine-id="@article.MagazinedId">
+                                <img class="article-card-img" src="@article.imgUrl" alt="Top Image">
+                                <div class="article-information">
+                                    <label class="article-card-text">Magazine: @article.Magazines.Title</label>
+                                    <h2 class="article-card-text">
+                                       @*  @if (article.Status == false)
+                                        {
+                                        }
+                                        else
+                                        {
+                                        } *@
+                                        @article.Title
+                                    </h2>
+                                    <p class="article-card-text text-ellipsis">@article.SubTitle</p>
+                                </div>
+                                <div class="card-button">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        @if(article.Status == false)
+                                        {
+                                            <a asp-controller="Coordinate" asp-action="Detail" asp-route-Id="@article.ArticleId" class="btn btn-primary mx-2">
+                                                <i class="bi bi-pencil-square"></i> Detail
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a asp-area="Student" asp-controller="Article" asp-action="SelectArticle" asp-route-Id="@article.ArticleId" class="btn btn-primary mx-2">
+                                                <i class="bi bi-pencil-square"></i> View
+                                            </a>
+                                            @* <div class="pd-1"> <a asp-area="Student" asp-controller="Article" asp-action="SelectArticle" asp-route-id="@article.ArticleId" class="card-title h6 text-primary opacity-75 text-uppercase text-center">@article.Title</a> </div> *@
+                                        }
+                                       @*  <a asp-controller="Coordinate" asp-action="ChangeStatus" asp-route-id="@article.ArticleId" class="btn @(article.Status == false ? "btn-danger" : "btn-success") mx-2">
+                                            @if(article.Status == false)
+                                            {
+                                                <i class="bi bi-pencil-square">Pending</i>
+                                            }
+                                            else
+                                            {
+                                                <span class="approve-text">Approved</span>
+                                            }
+                                        </a> *@
+                                        <div class="btn @(article.Status == false ? "btn-danger" : "btn-success") mx-2">
+                                            @if (article.Status == false)
+                                            {
+                                                <i class="bi bi-pencil-square">Pending</i>
+                                            }
+                                            else
+                                            {
+                                                <span class="approve-text">Approved</span>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                }
+                        }
+                    }
+                </div>
             </div>
             <ul class="pagination home-product-pagination text-center">
                 @for (int i = 1; i <= totalPages; i++)
@@ -235,9 +378,7 @@
             </ul>
         </div>
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
+    @* <script>
         // Lưu giá trị của select box vào sessionStorage và chuyển trang khi thay đổi magazine
         document.getElementById('magazineSelect').addEventListener('change', function () {
             var selectedMagazineId = this.value;
@@ -265,8 +406,66 @@
                 document.getElementById('magazineSelect').value = 'all';
             }
         });
+        document.getElementById('statusSelect').addEventListener('change', function () {
+            var selectedStatus = this.value;
+            var selectedMagazineId = document.getElementById('magazineSelect').value; // Lấy giá trị của select magazine
+
+            // Tạo URL mới dựa trên giá trị được chọn
+            var newUrl = '@Url.Action("Index", "Coordinate")' + '?id=' + selectedMagazineId + '&status=' + selectedStatus;
+
+            // Chuyển hướng trang
+            window.location.href = newUrl;
+        });
+    </script> *@
+    <script>
+        // Lưu giá trị của select box vào sessionStorage và chuyển trang khi thay đổi magazine
+        document.getElementById('magazineSelect').addEventListener('change', function () {
+            var selectedMagazineId = this.value;
+            sessionStorage.setItem('selectedMagazineId', selectedMagazineId);
+            updateUrl();
+        });
+
+        // Sự kiện onchange cho phân trang
+        document.querySelectorAll('.pagination-item-link').forEach(link => {
+            link.addEventListener('click', function (event) {
+                event.preventDefault();
+                var selectedPage = this.getAttribute('data-page');
+                updateUrl(selectedPage);
+            });
+        });
+
+        // Sự kiện onchange cho select box status
+        document.getElementById('statusSelect').addEventListener('change', function () {
+            var selectedStatus = this.value;
+            sessionStorage.setItem('selectedStatus', selectedStatus);
+            updateUrl();
+        });
+
+        // Hàm cập nhật URL dựa trên các giá trị được chọn
+        function updateUrl(selectedPage = null) {
+            var selectedMagazineId = sessionStorage.getItem('selectedMagazineId');
+            var selectedStatus = sessionStorage.getItem('selectedStatus');
+            var pageQuery = selectedPage ? '&page=' + selectedPage : '';
+            var newUrl = '@Url.Action("Index", "Coordinate")' + '?id=' + selectedMagazineId + '&status=' + selectedStatus + pageQuery;
+            window.location.href = newUrl;
+        }
+
+        // Kiểm tra nếu có giá trị đã lưu trong sessionStorage, chọn lại select box với giá trị này
+        document.addEventListener("DOMContentLoaded", function () {
+            var selectedMagazineId = sessionStorage.getItem('selectedMagazineId');
+            var selectedStatus = sessionStorage.getItem('selectedStatus');
+            var currentPath = window.location.pathname.toLowerCase();
+
+            if (selectedMagazineId && !currentPath.endsWith('/coordinate/index')) {
+                document.getElementById('magazineSelect').value = selectedMagazineId;
+            } else if (!selectedMagazineId && currentPath !== '/coordinate/index') {
+                document.getElementById('magazineSelect').value = 'all';
+            }
+
+            if (selectedStatus && !currentPath.endsWith('/coordinate/index')) {
+                document.getElementById('statusSelect').value = selectedStatus;
+            } else if (!selectedStatus && currentPath !== '/coordinate/index') {
+                document.getElementById('statusSelect').value = 'all';
+            }
+        });
     </script>
-
-
-
-

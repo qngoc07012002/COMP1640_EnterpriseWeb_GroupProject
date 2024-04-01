@@ -127,7 +127,6 @@ namespace GreenwichUniversityMagazine.Areas.Admin.Controllers
 
                     userVM.User.avtUrl = Url.Content("~/img/avtImg/" + fileName);
                 }
-
                 _unitOfWork.UserRepository.Update(userVM.User);
                 TempData["success"] = "User updated successfully";
                 _unitOfWork.Save();
@@ -180,18 +179,23 @@ namespace GreenwichUniversityMagazine.Areas.Admin.Controllers
 
             string imagePathRelative = userToDelete.avtUrl;
 
-            string wwwRootPath = _webhost.WebRootPath;
-            string imagePath = Path.Combine(wwwRootPath, imagePathRelative.TrimStart('/'));
-
-            if (System.IO.File.Exists(imagePath))
+            if (!string.IsNullOrEmpty(imagePathRelative))
             {
-                System.IO.File.Delete(imagePath);
+                string wwwRootPath = _webhost.WebRootPath;
+                string imagePath = Path.Combine(wwwRootPath, imagePathRelative.TrimStart('/'));
+
+                if (System.IO.File.Exists(imagePath))
+                {
+                    System.IO.File.Delete(imagePath);
+                }
             }
 
             _unitOfWork.UserRepository.Remove(userToDelete);
+            TempData["success"] = "User delete successfully";
             _unitOfWork.Save();
             return RedirectToAction("Index");
         }
+
 
 
         static string GenerateRandomPassword(int length)
