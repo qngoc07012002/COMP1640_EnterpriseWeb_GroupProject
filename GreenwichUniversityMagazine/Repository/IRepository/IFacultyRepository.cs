@@ -10,6 +10,6 @@ namespace GreenwichUniversityMagazine.Repository.IRepository
        
         void Update(Faculty faculty);
 
-        List<Faculty> GetAllFaculty();
+        List<Magazines> GetAllFaculty();
     }
 }

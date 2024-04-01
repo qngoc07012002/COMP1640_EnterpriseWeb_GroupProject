@@ -16,5 +16,10 @@ namespace GreenwichUniversityMagazine.Repository
             var query = _dbContext.Magazines.Where(c => c.Id != 0);
             return query.ToList();
         }
+        /* public List<Article> GetAllMagazine()
+         {
+             var query = _dbContext.Articles.Where(c => c.MagazinedId != 0);
+             return query.ToList();
+         }*/
     }
 }

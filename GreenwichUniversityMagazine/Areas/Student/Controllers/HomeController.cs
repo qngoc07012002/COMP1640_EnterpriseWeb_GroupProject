@@ -15,7 +15,7 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
 
 
 
-        public IActionResult Index(string searchString, int? id)
+        /*public IActionResult Index(string searchString, int? id)
         {
             HomeVM homeVM = new HomeVM();
 
@@ -23,8 +23,8 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
             {
                 homeVM.Articles = _unitOfWork.ArticleRepository.GetArticlesbyMagazine(id).ToList();
                 homeVM.Articles = _unitOfWork.ArticleRepository.GetArticlesbyTerm(id).ToList();
-/*                homeVM.Articles = _unitOfWork.ArticleRepository.GetArticlesbyFaculty(id).ToList();
-*/
+                homeVM.Articles = _unitOfWork.ArticleRepository.GetArticlesbyFaculty(id).ToList();
+
 
                 homeVM.Magazines = _unitOfWork.MagazineRepository.GetAllMagazine().ToList();
                 homeVM.Terms = _unitOfWork.TermRepository.GetAllTerm().ToList();
@@ -47,24 +47,72 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
             }
 
             return View(homeVM);
+        }*/
+
+        public IActionResult Index(string? searchString)
+        {
+            HomeVM homeVM = new HomeVM();
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                homeVM.Articles = _unitOfWork.ArticleRepository.Search(searchString).ToList();
+            }
+            else
+            {
+                homeVM.Articles = _unitOfWork.ArticleRepository.GetAll().ToList();
+            }
+
+            homeVM.Terms = _unitOfWork.TermRepository.GetAll().ToList();
+            homeVM.Facultys = _unitOfWork.FacultyRepository.GetAll().ToList();
+            homeVM.Magazines = _unitOfWork.MagazineRepository.GetAll().ToList();
+            
+            return View(homeVM);
         }
 
 
 
 
-        /*public IActionResult SelectMagazine(int? id)
+        public IActionResult SelectMagazine(int? id)
         {
             if (id == null || id == 0)
             {
                 return NotFound();
             }
             HomeVM homeVM = new HomeVM();
+           
             homeVM.Magazines = _unitOfWork.MagazineRepository.GetAllMagazine().ToList();
-
             homeVM.Articles = _unitOfWork.ArticleRepository.GetArticlesbyMagazine(id).ToList();
+            
+            return View("Index", homeVM);
+        }
+
+        public IActionResult SelectTerm(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            HomeVM homeVM = new HomeVM();
+           
+            homeVM.Magazines = _unitOfWork.TermRepository.GetAllTerm().ToList();
+            homeVM.Articles = _unitOfWork.ArticleRepository.GetArticlesbyTerm(id).ToList();
+            
+            return View("Index", homeVM);
+        }
+
+        public IActionResult SelectFaculty(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            HomeVM homeVM = new HomeVM();
+            
+            homeVM.Magazines = _unitOfWork.FacultyRepository.GetAllFaculty().ToList();
+            homeVM.Articles = _unitOfWork.ArticleRepository.GetArticlesbyFaculty(id).ToList();
 
             return View("Index", homeVM);
-        }*/
+        }
 
 
         public HomeController(IUnitOfWork db, IWebHostEnvironment webhost)

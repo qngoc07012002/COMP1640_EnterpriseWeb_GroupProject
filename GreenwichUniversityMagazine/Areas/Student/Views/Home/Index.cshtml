@@ -138,10 +138,10 @@
             <div class="d-flex align-items-center mb-3">
                 <h6 class="m-1 mr-2">Falcuty</h6>
                 <select id="facultySelect" class="form-select" aria-label="Default select example">
-                    <option value="">Select a Magazine</option>
+                    <option value="">Select a Faculty</option>
                     @foreach (var faculty in Model.Magazines)
                     {
-                        <option value="@faculty.FacultyId">@faculty.Faculty.Name</option>
+                        <option value="@faculty.FacultyId">@faculty.FacultyId</option>
                     }
                 </select>
             </div>
@@ -152,10 +152,10 @@
                 <div class="d-flex align-items-center mb-3">
                     <h6 class="m-1 mr-2">Term</h6>
                     <select id="termSelect" class="form-select" aria-label="Default select example">
-                        <option value="">Select a Magazine</option>
+                        <option value="">Select a Term</option>
                         @foreach (var term in Model.Magazines)
                         {
-                            <option value="@term.TermId"> @term.StartDate.ToShortDateString(), @term.EndDate.ToShortDateString(),@term.Term.Name</option>
+                            <option value="@term.TermId"> @term.StartDate.ToShortDateString() - @term.EndDate.ToShortDateString() @* @term.Term.Name *@</option>
                         }
                     </select>
                 </div>
@@ -174,7 +174,7 @@
             </div>
         </div>
            
-
+        
 
           
 
@@ -243,6 +243,7 @@
         });
     });
 
+    @*
     $(document).ready(function () {
         // Kiểm tra xem đã lưu giá trị tạp chí trước đó trong Local Storage chưa
         var selectedMagazineId = localStorage.getItem('selectedMagazineId');
@@ -317,7 +318,51 @@
         });
     });
 
+    *@
 
+    document.addEventListener("DOMContentLoaded", function () {
+        var selectBox = document.getElementById("magazineSelect");
+        selectBox.addEventListener("change", function () {
+            var selectedMagazineId = selectBox.value;
+            if (selectedMagazineId) {
+                // Nếu đã chọn một tạp chí, gửi yêu cầu đến server để lấy danh sách bài báo
+                window.location.href = "/student/Home/SelectMagazine?id=" + selectedMagazineId;
+            } else {
+                window.location.href = "/student/Home/Index";
+            }
+        });
+    });
+
+
+   document.addEventListener("DOMContentLoaded", function () {
+        var termSelectBox = document.getElementById("termSelect");
+
+        termSelectBox.addEventListener("change", function () {
+            var selectedTermId = termSelectBox.value;
+            if (selectedTermId) {
+                // Nếu đã chọn một term, gửi yêu cầu đến server để lấy danh sách bài báo theo term
+                window.location.href = "/student/Home/SelectTerm?id=" + selectedTermId;
+            } else {
+                // Nếu chọn "Select a Term", chuyển hướng về trang chính ("home")
+                window.location.href = "/student/Home/Index";
+            }
+        });
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        var termSelectBox = document.getElementById("facultySelect");
+
+        termSelectBox.addEventListener("change", function () {
+            var selectedFacultyId = termSelectBox.value;
+             if (selectedFacultyId) {
+                // Nếu đã chọn một term, gửi yêu cầu đến server để lấy danh sách bài báo theo term
+                window.location.href = "/student/Home/SelectFaculty?id=" + selectedFacultyId;
+            } else {
+                // Nếu chọn "Select a Term", chuyển hướng về trang chính ("home")
+                window.location.href = "/student/Home/Index";
+            }
+        });
+    });
 
     
     

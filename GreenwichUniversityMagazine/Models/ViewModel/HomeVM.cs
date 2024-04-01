@@ -12,11 +12,6 @@ namespace GreenwichUniversityMagazine.Models.ViewModel
        
         public List<Faculty> Facultys { get; set;}
 
-        public HomeVM() { 
-            Terms = new List<Term>();
-            Articles = new List<Article>();
-            Magazines = new List<Magazines>();
-            Facultys = new List<Faculty>();
-        }
+       
     }
 }
