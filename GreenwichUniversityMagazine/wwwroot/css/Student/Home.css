@@ -1,0 +1,87 @@
+﻿.card-img {
+    with: 100%;
+    min-height: 100%;
+}
+
+#imgcard1 {
+    width: 50%;
+}
+
+#imgcard2 {
+    width: 50%;
+}
+
+#imgcardpage1 {
+    width: 40%;
+}
+
+#imgcardpage2 {
+    width: 60%;
+}
+
+.homepage {
+    z-index: 1;
+    padding-bottom: 30px;
+}
+/* CSS for smaller screens */
+@media (max-width: 1200px) {
+    #articleContainer .card {
+        flex-direction: column;
+    }
+
+        #articleContainer .card .row {
+            flex-direction: row;
+        }
+
+        #articleContainer .card .col-md-4,
+        #articleContainer .card .col-md-8 {
+            width: 100%;
+        }
+
+            #articleContainer .card .col-md-4 img {
+                width: 100%;
+                height: auto;
+            }
+
+        #articleContainer .card .card-body {
+            max-height: none;
+            overflow: visible;
+        }
+}
+
+
+
+.homepage {
+    z-index: 1;
+}
+
+
+.c-item {
+    height: 480px;
+}
+
+.c-img {
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-left {
+    transition: transform 0.3s ease;
+}
+
+.card-img-custom {
+    width: 100%; /* Đặt chiều rộng của ảnh là 100% của phần tử cha */
+    height: 50%; /* Để giữ tỷ lệ khung hình */
+}
+
+
+.card-left:hover {
+    transform: scale(1.05);
+}
+
+.card-faculty {
+    transition: transform 0.3s ease;
+}
+.card-faculty:hover {
+        transform: scale(1.05);
+}

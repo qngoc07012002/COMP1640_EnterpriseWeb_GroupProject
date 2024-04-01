@@ -1,8 +1,8 @@
-﻿@model IEnumerable<Article>
+﻿@model ViewVM
 @{
     ViewData["Title"] = "Article Management";
     int itemsPerPage = 6;
-    int totalItems = Model.Count();
+    int totalItems = Model.ListArticle.Count();
     int totalPages = (int)Math.Ceiling((double)totalItems / itemsPerPage);
     int currentPage = Context.Request.Query["page"].Count > 0 ? Convert.ToInt32(Context.Request.Query["page"]) : 1;
     int startIndex = (currentPage - 1) * itemsPerPage;
@@ -17,7 +17,7 @@
 <div class="main-container">
     <div class="content">
         <div class="card-container" id="cardContainer">
-            @foreach (var article in Model.Skip(startIndex).Take(itemsPerPage))
+            @foreach (var article in Model.ListArticle.Skip(startIndex).Take(itemsPerPage))
             {
                 <div class="card-1">
                     <div class="card-image-1">
@@ -96,20 +96,12 @@
     }
 </ul>
 
-
-
-
-
-
-
-<h4>123</h4>
-
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         var maxTitleWords = 15; // Số từ tối đa cho Title
         var maxSubtitleWords = 20; // Số từ tối đa cho SubTitle
 
-        limitWords('.card-text-1 h2', maxTitleWords);
+        limitWords('.card-text-1 h3', maxTitleWords);
         limitWords('.card-text-1 p', maxSubtitleWords);
 
         function limitWords(selector, maxWords) {

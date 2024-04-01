@@ -29,13 +29,13 @@ namespace GreenwichUniversityMagazine.Areas.Manager.Controllers
                                 Text = u.Name,
                                 Value = u.Id.ToString()
                             }),
-                    MyTerms = _unitOfWork.TermRepository.GetAll()
+                MyTerms = _unitOfWork.TermRepository.GetAll()
                 .Select(u => new SelectListItem
                 {
                     Text = $"{u.StartDate.ToString()} - {u.EndDate.ToString()} / {u.Name}",
                     Value = u.Id.ToString(),
                 }),
-        }; return View(magazineVM);
+            }; return View(magazineVM);
         }
         [HttpPost]
         public IActionResult Create(MagazineVM magazineVM)
@@ -95,7 +95,7 @@ namespace GreenwichUniversityMagazine.Areas.Manager.Controllers
                     Text = $"{u.StartDate.ToString()} - {u.EndDate.ToString()} / {u.Name}",
                     Value = u.Id.ToString(),
                 }),
-        };
+            };
             if (id == null || id == 0)
             {
                 return NotFound();
@@ -158,7 +158,7 @@ namespace GreenwichUniversityMagazine.Areas.Manager.Controllers
                     Text = $"{u.StartDate.ToString()} - {u.EndDate.ToString()} / {u.Name}",
                     Value = u.Id.ToString(),
                 }),
-        };
+            };
             if (id == null || id == 0)
             {
                 return NotFound();
