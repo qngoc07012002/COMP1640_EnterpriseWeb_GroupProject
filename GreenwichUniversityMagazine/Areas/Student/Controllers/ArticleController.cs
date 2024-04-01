@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 using System.Globalization;
+using System.Xml.Linq;
 
 namespace GreenwichUniversityMagazine.Areas.Student.Controllers
 {
@@ -87,21 +88,34 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
         {
             Article article = _unitOfWork.ArticleRepository.Get(
                 includeProperty: "Magazines,User",
-                filter: a => a.ArticleId == id 
+                filter: a => a.ArticleId == id
             );
             if (article == null)
             {
-                return RedirectToAction("Index", "Home"); 
+                return RedirectToAction("Index", "Home");
+            }
+            List<Comment> comments = _unitOfWork.CommentRepository.GetAll()
+            .Where(c => c.ArticleId == id && c.Type.ToUpper() == "PUBLIC")
+            .ToList();
+
+            List<User> commentUsers = new List<User>();
+            foreach (var comment in comments)
+            {
+                User user = _unitOfWork.UserRepository.Get(u => u.Id == comment.UserId);
+                commentUsers.Add(user);
             }
             ArticleVM articleVM = new ArticleVM
             {
                 article = article,
                 User = article.User,
                 Magazines = article.Magazines,
-                FormattedModifyDate = article.ModifyDate?.ToString("dd/MM/yyyy") 
+                FormattedModifyDate = article.ModifyDate?.ToString("dd/MM/yyyy"),
+                MyComments = comments,
+                CommentUsers = commentUsers
             };
+
             articleVM.MonthYearOptions = GetMonthYearOptions();
-            return View(articleVM); 
+            return View(articleVM);
         }
         private List<SelectListItem> GetMonthYearOptions()
         {
