@@ -1,4 +1,4 @@
-﻿    using GreenwichUniversityMagazine.Models;
+﻿using GreenwichUniversityMagazine.Models;
 using GreenwichUniversityMagazine.Models.ViewModel;
 using GreenwichUniversityMagazine.Models.ViewModels;
 using GreenwichUniversityMagazine.Repository;
@@ -157,8 +157,8 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                     var UserIdGet = HttpContext.Session.GetString("UserId");
                     int.TryParse(UserIdGet, out int studentId);
                     articleVM.article.UserId = studentId;
-                    articleVM.article.SubmitDate = DateTime.Today;
-                    articleVM.article.ModifyDate = DateTime.Today;
+                    articleVM.article.SubmitDate = DateTime.Now;
+                    articleVM.article.ModifyDate = DateTime.Now;
                     User student = _unitOfWork.UserRepository.GetById(studentId);
 
                     //Sending email 
@@ -319,7 +319,7 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                     articleVM.article.imgUrl = Url.Content("~/img/articleImg/" + fileName);
                 }
                 articleVM.article.UserId = articleVM2.article.UserId;
-                articleVM.article.ModifyDate = DateTime.Today;
+                articleVM.article.ModifyDate = DateTime.Now;
                 articleVM.article.Status = false;
 
                 //Delete Old Files
