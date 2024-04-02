@@ -24,7 +24,7 @@
                         <img src="@article.imgUrl" alt="image" />
                     </div>
                     <div class="card-text-1">
-                        <h3 >@article.Title</h3>
+                        <a asp-area="Student" asp-controller="Article" asp-action="SelectArticle" asp-route-id="@article.ArticleId"><h3 >@article.Title</h3></a>
                         <p>@article.SubTitle</p>
                         <p style="color: #00BFFF"> Magazine @article.Magazines.Title</p>
                     </div>
