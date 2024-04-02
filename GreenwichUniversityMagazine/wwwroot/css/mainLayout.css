@@ -12,7 +12,6 @@ header {
     align-items: center;
     justify-content: space-between;
     flex-grow: 1;
-
 }
 
 .nav-container {
@@ -64,7 +63,7 @@ footer {
     color: #ffffff;
     text-align: center;
     padding: 10px 0;
-    position: fixed;
+    /*position: fixed;*/
     bottom: 0;
     width: 100%;
 }
@@ -79,7 +78,6 @@ footer {
     margin: auto 0;
     overflow: hidden;
     padding-right: 20px;
- 
 }
 
 .notification_icon {
@@ -542,6 +540,6 @@ footer {
         background-color: #16c988;
     }
 
-.dropdown-content{
-    z-index:2;
+.dropdown-content {
+    z-index: 2;
 }
