@@ -4,18 +4,16 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GreenwichUniversityMagazine.Models.ViewModel
 {
-    public class ViewVM : Controller
+    public class ViewVM 
     {
-        
-        
-        public List<Article> ListArticle { get; set; }
-        [ValidateNever]
-        public IEnumerable<SelectListItem> MyMagazines { get; set; }
-        [ValidateNever]
-        public IEnumerable<SelectListItem> MyFaculties { get; set; }
-        [ValidateNever]
-        public IEnumerable<SelectListItem> MyTerms { get; set; }
 
-        
+
+        public List<Term> Terms { get; set; }
+        public List<Article> Articles { get; set; }
+        public List<Magazines> Magazines { get; set; }
+
+        public List<Faculty> Facultys { get; set; }
+
+
     }
 }

@@ -17,17 +17,17 @@ namespace GreenwichUniversityMagazine.Repository
 
         public List<Article> GetArticlesbyMagazine(int? id)
         {
-            var query = _dbContext.Articles.Where(c => c.MagazinedId == id);
+            var query = _dbContext.Articles.Where(c => c.MagazinedId == id && c.Status == true);
             return query.ToList();
         }
         public List<Article> GetArticlesbyTerm(int? id)
         {
-            var query = _dbContext.Articles.Where(c => c.Magazines.TermId == id);
+            var query = _dbContext.Articles.Where(c => c.Magazines.TermId == id && c.Status == true);
             return query.ToList();
         }
         public List<Article> GetArticlesbyFaculty(int? id)
         {
-            var query = _dbContext.Articles.Where(c => c.Magazines.FacultyId == id);
+            var query = _dbContext.Articles.Where(c => c.Magazines.FacultyId == id && c.Status == true);
             return query.ToList();
         }
 

@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "Article Management";
     int itemsPerPage = 6;
-    int totalItems = Model.ListArticle.Count();
+    int totalItems = Model.Articles.Count();
     int totalPages = (int)Math.Ceiling((double)totalItems / itemsPerPage);
     int currentPage = Context.Request.Query["page"].Count > 0 ? Convert.ToInt32(Context.Request.Query["page"]) : 1;
     int startIndex = (currentPage - 1) * itemsPerPage;
@@ -13,11 +13,24 @@
 <link rel="stylesheet" href="~/css/Student/ViewArticle.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-
+<div>
+    @if (ViewBag.MagazineName != null)
+    {
+        <h2>Magazine: @ViewBag.MagazineName</h2>
+    }
+    @if (ViewBag.TermName != null)
+    {
+        <h2>Term: @ViewBag.TermName</h2>
+    }
+    @if (ViewBag.FacultyName != null)
+    {
+        <h2>Faculty: @ViewBag.FacultyName</h2>
+    }
+</div>
 <div class="main-container">
     <div class="content">
         <div class="card-container" id="cardContainer">
-            @foreach (var article in Model.ListArticle.Skip(startIndex).Take(itemsPerPage))
+            @foreach (var article in Model.Articles.Skip(startIndex).Take(itemsPerPage))
             {
                 <div class="card-1">
                     <div class="card-image-1">
@@ -96,6 +109,7 @@
     }
 </ul>
 
+
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         var maxTitleWords = 15; // Số từ tối đa cho Title
@@ -115,21 +129,43 @@
         }
     });
 
-  
-    document.addEventListener("DOMContentLoaded", function () {
+
+        document.addEventListener("DOMContentLoaded", function () {
         const pagination = document.getElementById("pagination");
         pagination.addEventListener("click", function (event) {
             event.preventDefault();
             const target = event.target;
             if (target.classList.contains("pagination-item-link")) {
                 const page = target.getAttribute("data-page");
-                if (page) {
-                    const url = `${window.location.pathname}?page=${page}`;
-                    window.location.href = url;
+                let url;
+                const currentUrl = new URL(window.location.href);
+                const magazineId = currentUrl.searchParams.get("magazineid");
+                const termId = currentUrl.searchParams.get("termid");
+                const facultyId = currentUrl.searchParams.get("facultyid");
+                if (magazineId) {
+                    url = `${window.location.pathname}?magazineid=${magazineId}&page=${page}`;
+                    if (termId) {
+                        url += `&termid=${termId}`;
+                    }
+                    if (facultyId) {
+                        url += `&facultyid=${facultyId}`;
+                    }
+                } else if (termId) {
+                    url = `${window.location.pathname}?termid=${termId}&page=${page}`;
+                    if (facultyId) {
+                        url += `&facultyid=${facultyId}`;
+                    }
+                } else if (facultyId) {
+                    url = `${window.location.pathname}?facultyid=${facultyId}&page=${page}`;
+                } else {
+                    url = `${window.location.pathname}?page=${page}`;
                 }
+                window.location.href = url;
             }
         });
     });
+
+
 
 
  

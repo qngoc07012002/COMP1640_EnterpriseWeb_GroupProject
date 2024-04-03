@@ -12,7 +12,9 @@ header {
     align-items: center;
     justify-content: space-between;
     flex-grow: 1;
-
+   /* position: fixed;  
+    width: 100%;  
+    z-index: 1000; */ 
 }
 
 .nav-container {
@@ -212,6 +214,7 @@ header {
     align-items: center;
     justify-content: space-between;
     flex-grow: 1;
+
 }
 
 .nav-container {
@@ -222,6 +225,7 @@ header {
 header img.logo {
     width: 250px; /* Điều chỉnh kích thước của logo */
     height: auto; /* Đảm bảo tỷ lệ khung hình đúng */
+
 }
 
 nav {
@@ -545,3 +549,4 @@ footer {
 .dropdown-content{
     z-index:2;
 }
+

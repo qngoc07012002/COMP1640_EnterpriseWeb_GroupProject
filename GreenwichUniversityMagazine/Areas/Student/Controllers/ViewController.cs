@@ -1,5 +1,6 @@
 ﻿using GreenwichUniversityMagazine.Models;
 using GreenwichUniversityMagazine.Models.ViewModel;
+using GreenwichUniversityMagazine.Models.ViewModels;
 using GreenwichUniversityMagazine.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -17,34 +18,41 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
             _unitOfWork = db;
             _webhost = webhost;
         }
-        public IActionResult Index(int? id)
+        public IActionResult Index(string? searchString, int? magazineid, int? termid, int? facultyid)
         {
-
+           
             ViewVM model = new ViewVM();
-            var magazines = _unitOfWork.MagazineRepository.GetAll()
-                                    .Select(m => new SelectListItem { Value = m.Id.ToString(), Text = m.Title })
-                                    .ToList();
-            model.MyMagazines = magazines;
+            model.Articles = _unitOfWork.ArticleRepository.GetAll().ToList();
+            model.Terms = _unitOfWork.TermRepository.GetAll().ToList();
+            model.Facultys = _unitOfWork.FacultyRepository.GetAll().ToList();
+            model.Magazines = _unitOfWork.MagazineRepository.GetAll().ToList();
 
-            var terms = _unitOfWork.TermRepository.GetAll()
-                            .Select(t => new SelectListItem { Value = t.Id.ToString(), Text = $"{t.Name} ({t.StartDate.ToShortDateString()} - {t.EndDate.ToShortDateString()})" })
-                            .ToList();
-            model.MyTerms = terms;
-
-            if (id.HasValue)
+            if (!string.IsNullOrEmpty(searchString))
             {
-                var selectedMagazineId = id.Value;
-                var articles = _unitOfWork.ArticleRepository.GetAll()
-                                            .Where(article => article.MagazinedId == selectedMagazineId)
-                                            .ToList();
-                model.ListArticle = articles;
+                model.Articles = _unitOfWork.ArticleRepository.Search(searchString).ToList();
+            }
+            else if (magazineid.HasValue)
+            {
+                model.Articles = _unitOfWork.ArticleRepository.GetArticlesbyMagazine(magazineid.Value).ToList();
+                ViewBag.MagazineName = _unitOfWork.MagazineRepository.Get(u => u.Id == magazineid.Value).Title;
+
+               
+            }
+            else if (termid.HasValue)
+            {
+                model.Articles = _unitOfWork.ArticleRepository.GetArticlesbyTerm(termid.Value).ToList();
+                ViewBag.TermName = _unitOfWork.TermRepository.Get(u => u.Id == termid.Value).Name;
+            }
+            else if (facultyid.HasValue)
+            {
+                model.Articles = _unitOfWork.ArticleRepository.GetArticlesbyFaculty(facultyid.Value).ToList();
+                ViewBag.FacultyName = _unitOfWork.FacultyRepository.Get(u => u.Id == facultyid.Value).Name;
             }
             else
             {
-                
-                var articles = _unitOfWork.ArticleRepository.GetAll().ToList();
-                model.ListArticle = articles;
+                model.Articles = _unitOfWork.ArticleRepository.GetAll().ToList();
             }
+            
             return View(model);
            
         }

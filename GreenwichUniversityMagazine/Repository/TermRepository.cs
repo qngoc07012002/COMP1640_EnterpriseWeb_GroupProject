@@ -19,17 +19,17 @@ namespace GreenwichUniversityMagazine.Repository
             return _dbContext.Terms.FirstOrDefault(t => t.Id == id);
         }
 
-        /* public List<Term> GetAllTerm()
-         {
-             var query = _dbContext.Terms.Where(c => c.Id != 0);
-             return query.ToList();
-         }
- */
-        public List<Magazines> GetAllTerm()
+        public List<Term> GetAllTerm()
+        {
+            var query = _dbContext.Terms.Where(c => c.Id != 0);
+            return query.ToList();
+        }
+
+       /* public List<Magazines> GetAllTerm()
         {
             var query = _dbContext.Magazines.Where(c => c.TermId != 0);
             return query.ToList();
-        }
+        }*/
 
     }
 }
