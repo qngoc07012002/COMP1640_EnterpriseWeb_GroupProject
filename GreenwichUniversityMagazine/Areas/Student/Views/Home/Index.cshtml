@@ -174,13 +174,15 @@
                         </select>
                 </div>
             </div>
-             
-            <div class="col-md-3">
-                <form asp-area="Student" asp-controller="Home" asp-action="Index" class="d-flex">
-                    <input class="form-control me-2" type="search" name="searchString" placeholder="Search"  aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
-            </div>
+                 @using (Html.BeginForm("Index", "View", FormMethod.Get, new { @class = "form-inline", id = "searchForm" }))
+                    {
+                        <div class="input-group mb-3">
+                            @Html.TextBox("searchString", ViewBag.CurrentFilter as string, new { @class = "form-control", id = "searchInput", placeholder = "Search" })
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-primary" id="searchButton">Search</button>
+                            </div>
+                        </div>
+                    }
         </div>
     </nav>
 
@@ -219,6 +221,8 @@
 </div>
 
 <script>
+
+        
     $(document).ready(function () {
         // Giới hạn số từ trong card title
         $("#articleContainer .card-title").each(function () {
@@ -240,6 +244,7 @@
             }
         });
     });
+
     // ham load magazine ( doi du lieu onchange="redirectToMagazine() tren select duoc load thi thuc hien ham nay)
     function redirectToMagazine() {
     // lấy dữ liệu từ select box
@@ -275,6 +280,22 @@
             window.location.href = baseUrl;
         }
     }
+    document.getElementById("searchForm").addEventListener("submit", function (event) {
+    // Lấy giá trị của ô tìm kiếm
+    var searchString = document.getElementById("searchInput").value;
+    // Kiểm tra xem ô tìm kiếm có rỗng không
+    if (!searchString.trim()) {
+        // Nếu rỗng, hủy việc gửi form
+        event.preventDefault();
+    } else {
+        // Nếu có giá trị, tạo URL tìm kiếm và chuyển hướng đến trang kết quả tìm kiếm
+        var baseUrl = "/student/view/index";
+        var searchUrl = baseUrl + "?searchString=" + searchString;
+        window.location.href = searchUrl;
+    }
+});
+
+
 
 
     @*
