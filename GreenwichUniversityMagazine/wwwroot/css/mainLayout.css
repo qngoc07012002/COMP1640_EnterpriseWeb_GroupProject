@@ -47,6 +47,7 @@ nav {
     overflow: hidden; /* Đảm bảo hình ảnh bị cắt theo hình tròn */
     border: 2px solid #ffffff;
     cursor: pointer;
+    background: white;
 }
 
     .user-logo img {
@@ -197,7 +198,28 @@ footer {
 .notification_heading {
     margin: 5px;
 }
+.notificationbody {
+    max-height: 500px;
+    overflow-y: auto;
+}
 
+    .notificationbody::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .notificationbody::-webkit-scrollbar-track {
+        background-color: #4444c3;
+        border-radius: 4px;
+    }
+
+    .notificationbody::-webkit-scrollbar-thumb {
+        background: #5a5ad6;
+        border-radius: 4px;
+    }
+
+        .notificationbody::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
 body {
     margin: 0;
     padding: 0;

@@ -14,7 +14,7 @@ function handleFileSelect(event) {
         const file = selectedFiles[i];
         const fileName = file.name;
         const fileType = fileName.split('.').pop().toUpperCase();
-        if (['DOC', 'DOCX', 'PDF', 'CSV'].includes(fileType)) {
+        if (['DOC', 'DOCX', 'PDF', 'CSV', 'JPE', 'IMG', 'PNG'].includes(fileType)) {
             files.push(file);
             addUploadItem(file);
         }
@@ -149,7 +149,14 @@ function submitComment(event) {
     var comment = document.querySelector('.comment-input textarea').value;
     var urlParams = new URLSearchParams(window.location.search);
     var articleId = parseInt(urlParams.get('id'));
-
+    // Kiểm tra xem articleId có tồn tại không, nếu không thì thử lấy từ URL Update/id
+    if (!articleId) {
+        var pathArray = window.location.pathname.split('/');
+        var potentialIdIndex = pathArray.indexOf('Update');
+        if (potentialIdIndex !== -1 && potentialIdIndex < pathArray.length - 1) {
+            articleId = parseInt(pathArray[potentialIdIndex + 1]);
+        }
+    }
     // Chuyển đổi đối tượng JSON sang chuỗi query string
     var formData = `CommentInput=${encodeURIComponent(comment)}&articleId=${encodeURIComponent(articleId)}`;
 
@@ -163,7 +170,7 @@ function submitComment(event) {
     })
         .then(response => {
             if (response.ok) {
-               
+
                 window.location.reload();
             }
         })
