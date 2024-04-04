@@ -14,105 +14,35 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
 
 
 
-
-        /*public IActionResult Index(string searchString, int? id)
+        public IActionResult Index(string? searchString, int? magazineid, int? termid, int? facultyid)
         {
             HomeVM homeVM = new HomeVM();
-
-            if (id != null && id != 0)
-            {
-                homeVM.Articles = _unitOfWork.ArticleRepository.GetArticlesbyMagazine(id).ToList();
-                homeVM.Articles = _unitOfWork.ArticleRepository.GetArticlesbyTerm(id).ToList();
-                homeVM.Articles = _unitOfWork.ArticleRepository.GetArticlesbyFaculty(id).ToList();
-
-
-                homeVM.Magazines = _unitOfWork.MagazineRepository.GetAllMagazine().ToList();
-                homeVM.Terms = _unitOfWork.TermRepository.GetAllTerm().ToList();
-                homeVM.Facultys = _unitOfWork.FacultyRepository.GetAllFaculty().ToList();
-            }
-            else
-            {
-                homeVM.Magazines = _unitOfWork.MagazineRepository.GetAllMagazine().ToList();
-                homeVM.Terms = _unitOfWork.TermRepository.GetAllTerm().ToList();
-                homeVM.Facultys = _unitOfWork.FacultyRepository.GetAllFaculty().ToList();
-
-                if (!string.IsNullOrEmpty(searchString))
-                {
-                    homeVM.Articles = _unitOfWork.ArticleRepository.Search(searchString).ToList();
-                }
-                else
-                {
-                    homeVM.Articles = _unitOfWork.ArticleRepository.GetAll().ToList();
-                }
-            }
-
-            return View(homeVM);
-        }*/
-
-        public IActionResult Index(string? searchString)
-        {
-            HomeVM homeVM = new HomeVM();
-
-            if (!string.IsNullOrEmpty(searchString))
-            {
-                homeVM.Articles = _unitOfWork.ArticleRepository.Search(searchString).ToList();
-            }
-            else
-            {
-                homeVM.Articles = _unitOfWork.ArticleRepository.GetAll().ToList();
-            }
-
             homeVM.Terms = _unitOfWork.TermRepository.GetAll().ToList();
             homeVM.Facultys = _unitOfWork.FacultyRepository.GetAll().ToList();
             homeVM.Magazines = _unitOfWork.MagazineRepository.GetAll().ToList();
-            
+            homeVM.Articles = _unitOfWork.ArticleRepository.GetAll().ToList();
+            //Get information
+            var UserIdGet = HttpContext.Session.GetString("UserId");
+            int.TryParse(UserIdGet, out int userIdCurrent);
+            if (userIdCurrent != 0)
+            {
+                List<User> users = _unitOfWork.UserRepository.GetAll().ToList();
+
+                User user = _unitOfWork.UserRepository.GetById(userIdCurrent);
+                int commentsCount;
+                if (user.Role.ToLower() == "student")
+                {
+                    commentsCount = _unitOfWork.CommentRepository.GetAll().Where(u => u.IsNotification == true && u.Article.UserId == userIdCurrent && u.UserId != userIdCurrent).ToList().Count();
+                }
+                else
+                {
+                    commentsCount = _unitOfWork.CommentRepository.GetAll().Where(u => u.IsNotification == true && u.UserId != userIdCurrent && u.User.Role.ToLower() != "coordinate" && u.Type.ToLower() == "private" && u.Article.User.FacultyId == user.FacultyId).ToList().Count();
+                }
+                ViewBag.CommentsCount = commentsCount;
+            }
             return View(homeVM);
         }
 
-
-
-
-        public IActionResult SelectMagazine(int? id)
-        {
-            if (id == null || id == 0)
-            {
-                return NotFound();
-            }
-            HomeVM homeVM = new HomeVM();
-           
-            homeVM.Magazines = _unitOfWork.MagazineRepository.GetAllMagazine().ToList();
-            homeVM.Articles = _unitOfWork.ArticleRepository.GetArticlesbyMagazine(id).ToList();
-            
-            return View("Index", homeVM);
-        }
-
-        public IActionResult SelectTerm(int? id)
-        {
-            if (id == null || id == 0)
-            {
-                return NotFound();
-            }
-            HomeVM homeVM = new HomeVM();
-           
-            homeVM.Magazines = _unitOfWork.TermRepository.GetAllTerm().ToList();
-            homeVM.Articles = _unitOfWork.ArticleRepository.GetArticlesbyTerm(id).ToList();
-            
-            return View("Index", homeVM);
-        }
-
-        public IActionResult SelectFaculty(int? id)
-        {
-            if (id == null || id == 0)
-            {
-                return NotFound();
-            }
-            HomeVM homeVM = new HomeVM();
-            
-            homeVM.Magazines = _unitOfWork.FacultyRepository.GetAllFaculty().ToList();
-            homeVM.Articles = _unitOfWork.ArticleRepository.GetArticlesbyFaculty(id).ToList();
-
-            return View("Index", homeVM);
-        }
 
 
         public HomeController(IUnitOfWork db, IWebHostEnvironment webhost)
@@ -194,8 +124,40 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
             return RedirectToAction("Index", "Home", new { area = "student" });
         }
 
+        public IActionResult RedectNotification(int id)
+        {
+            //get current UserID
+            //get all notification from DB
+            //  List<Notification> notifications = _unitOfWork.NotificationRepository.GetAll().ToList();
+            var UserIdGet = HttpContext.Session.GetString("UserId");
+            int.TryParse(UserIdGet, out int userIdCurrent);
+            User user = _unitOfWork.UserRepository.GetById(userIdCurrent);
+            Comment comment = _unitOfWork.CommentRepository.Get(u => u.Id == id);
+            if (comment != null)
+            {
+                comment.IsNotification = false;
+                _unitOfWork.CommentRepository.Update(comment);
+                _unitOfWork.Save();
+                if (comment.Type.ToLower() == "private" && user.Role.ToLower() == "coordinate")
+                {
+                    return RedirectToAction("Detail", "Coordinate", new { area = "Coordinate", id = comment.ArticleId });
+                }
+                else if (comment.Type.ToLower() == "public" && user.Role.ToLower() == "coordinate")
+                {
+                    return RedirectToAction("SelectArticle", "Article", new { area = "Student", id = comment.ArticleId });
+                }
+                else if (comment.Type.ToLower() == "private" && user.Role.ToLower() == "student")
+                {
+                    return RedirectToAction("Update", "Article", new { area = "Student", id = comment.ArticleId });
+                }
+                else if (comment.Type.ToLower() == "public" && user.Role.ToLower() == "student")
+                {
+                    return RedirectToAction("SelectArticle", "Article", new { area = "Student", id = comment.ArticleId });
+                }
+            }
+            return View();
+        }
 
-       
 
     }
 }

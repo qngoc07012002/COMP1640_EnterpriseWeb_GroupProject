@@ -13,22 +13,28 @@ namespace GreenwichUniversityMagazine.Repository
         }
         public IEnumerable<Article> Search(string searchString)
         {
-            return _dbContext.Articles.Where(a => a.Title.Contains(searchString) || a.Title.Contains(searchString)).ToList();
+            return _dbContext.Articles
+                .Include(a => a.User) // Bao gồm thông tin về người dùng trong kết quả truy vấn
+                .Where(a => a.Title.Contains(searchString)
+                         || a.User.Name.Contains(searchString)) // Thêm điều kiện tìm kiếm theo tên người dùng
+                .ToList();
         }
+
+
 
         public List<Article> GetArticlesbyMagazine(int? id)
         {
-            var query = _dbContext.Articles.Where(c => c.MagazinedId == id);
+            var query = _dbContext.Articles.Where(c => c.MagazinedId == id && c.Status == true);
             return query.ToList();
         }
         public List<Article> GetArticlesbyTerm(int? id)
         {
-            var query = _dbContext.Articles.Where(c => c.Magazines.TermId == id);
+            var query = _dbContext.Articles.Where(c => c.Magazines.TermId == id && c.Status == true);
             return query.ToList();
         }
         public List<Article> GetArticlesbyFaculty(int? id)
         {
-            var query = _dbContext.Articles.Where(c => c.Magazines.FacultyId == id);
+            var query = _dbContext.Articles.Where(c => c.Magazines.FacultyId == id && c.Status == true);
             return query.ToList();
         }
 

@@ -15,7 +15,7 @@ namespace GreenwichUniversityMagazine.Repository.IRepository
         Task<int> CountNumberOfUnapproved(int rangeSort);
 
         IEnumerable<Article> Search(string searchString);
-
+      
         List<Article> GetArticlesbyMagazine(int? id);
         List<Article> GetArticlesbyTerm(int? id);
         List<Article> GetArticlesbyFaculty(int? id);

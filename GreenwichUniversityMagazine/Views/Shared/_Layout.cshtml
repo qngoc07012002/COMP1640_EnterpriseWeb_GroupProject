@@ -58,10 +58,23 @@
             }
             else
             {
-                <div class="logned_bar">
+                    <div class="logned_bar">
                         <div class="notification_container">
                             <button id="fetchDataButton" class="notification_button">
-                                <span class="notification_count">1</span>
+                                @{
+                                    if (ViewBag.CommentsCount == 0)
+                                    {
+
+                                    }
+                                    else if (ViewBag.CommentsCount < 5 && ViewBag.CommentsCount > 0)
+                                    {
+                                        <span class="notification_count">@ViewBag.CommentsCount</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="notification_count">5+</span>
+                                    }
+                                }
                                 <img src="~/css/Navigation/notification.png" class="notification_icon" />
                             </button>
                         </div>
@@ -69,7 +82,8 @@
                         <div class="dropdown">
                             <button class="dropbtn">
                                 <div class="user-logo">
-                                @if(avtUrl==null){
+                                    @if (avtUrl == null)
+                                    {
                                         <img src="~/css/Navigation/gw.png" alt="User image">
                                     }
                                     else
@@ -80,9 +94,10 @@
                                 </div>
                             </button>
                             <div class="dropdown-content">
-                            <div class="black-header">
+                                <div class="black-header">
                                     <div class="user-image">
-                                        @if(avtUrl==null){
+                                        @if (avtUrl == null)
+                                        {
                                             <img src="~/css/Navigation/gw.png" alt="User image" class="user-logo-details">
                                         }
                                         else
@@ -90,12 +105,12 @@
                                             <img src="@avtUrl" alt="User image" class="user-logo-details">
                                         }
                                     </div>
-                            </div>
+                                </div>
                                 <div class="dropdown-content-header">
-                            
-                            
-                                        <h4 class="dropdown-content-fullname">@userName</h4>
-                                        <h4 class="dropdown-content-email">@userEmail</h4>
+
+
+                                    <h4 class="dropdown-content-fullname">@userName</h4>
+                                    <h4 class="dropdown-content-email">@userEmail</h4>
                                 </div>
                                 <a class="dropdown-content-child" asp-area="Student" asp-controller="Student" asp-action="EditProfile">
                                     <img src="~/css/Navigation/editprofile.png" />
@@ -127,7 +142,8 @@
             @RenderBody()
         </main>
     </div>
-
+   
+   
     <footer>
         <p>&copy; 2024 Greenwich University Forum. All rights reserved.</p>
     </footer>
