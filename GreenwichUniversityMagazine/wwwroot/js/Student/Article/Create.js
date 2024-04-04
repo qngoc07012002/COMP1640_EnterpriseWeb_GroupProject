@@ -14,7 +14,7 @@ function handleFileSelect(event) {
         const file = selectedFiles[i];
         const fileName = file.name;
         const fileType = fileName.split('.').pop().toUpperCase();
-        if (['DOC', 'DOCX', 'PDF', 'CSV'].includes(fileType)) {
+        if (['DOC', 'DOCX', 'PDF', 'CSV', 'JPE', 'IMG', 'PNG'].includes(fileType)) {
             files.push(file);
             addUploadItem(file);
         }
@@ -163,7 +163,7 @@ function submitComment(event) {
     })
         .then(response => {
             if (response.ok) {
-               
+
                 window.location.reload();
             }
         })

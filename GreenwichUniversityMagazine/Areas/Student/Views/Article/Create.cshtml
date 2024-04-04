@@ -18,6 +18,7 @@
         <form method="post" enctype="multipart/form-data">
             <div class="">
                 <div class="form-group custom-select" style="width:200px;">
+                    Magazine:
                     <select asp-for="@Model.article.MagazinedId" class="form-control">
                         @if (Model.MyMagazines.Count() > 0)
                         {
@@ -42,7 +43,7 @@
                     <span asp-validation-for="@Model.article.Title" class="text-danger"></span>
                 </div>
                 <div class="input-container">
-                    <input type="text" id="input" asp-for="@Model.article.SubTitle" required=""/>
+                    <input type="text" id="input" asp-for="@Model.article.SubTitle" required="" />
                     <label for="input" class="label">Subtitle</label>
                     <div class="underline"></div>
                     <span asp-validation-for="@Model.article.SubTitle" class="text-danger"></span>
@@ -85,4 +86,3 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-

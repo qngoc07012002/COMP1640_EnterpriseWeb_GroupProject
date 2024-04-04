@@ -49,24 +49,30 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
             return View(homeVM);
         }*/
 
-        public IActionResult Index(string? searchString)
+        public IActionResult Index()
         {
-            HomeVM homeVM = new HomeVM();
-
-            if (!string.IsNullOrEmpty(searchString))
+            IEnumerable<Article> articleList = _unitOfWork.ArticleRepository.GetAll(includeProperty: "Magazines").ToList();
+            //Get information
+            var UserIdGet = HttpContext.Session.GetString("UserId");
+            int.TryParse(UserIdGet, out int userIdCurrent);
+            if (userIdCurrent != 0)
             {
-                homeVM.Articles = _unitOfWork.ArticleRepository.Search(searchString).ToList();
-            }
-            else
-            {
-                homeVM.Articles = _unitOfWork.ArticleRepository.GetAll().ToList();
+                List<User> users = _unitOfWork.UserRepository.GetAll().ToList();
+
+                User user = _unitOfWork.UserRepository.GetById(userIdCurrent);
+                int commentsCount;
+                if (user.Role.ToLower() == "student")
+                {
+                    commentsCount = _unitOfWork.CommentRepository.GetAll().Where(u => u.IsNotification == true && u.Article.UserId == userIdCurrent && u.UserId != userIdCurrent).ToList().Count();
+                }
+                else
+                {
+                    commentsCount = _unitOfWork.CommentRepository.GetAll().Where(u => u.IsNotification == true && u.UserId != userIdCurrent && u.User.Role.ToLower() != "coordinate" && u.Type.ToLower() == "private" && u.Article.User.FacultyId == user.FacultyId).ToList().Count();
+                }
+                ViewBag.CommentsCount = commentsCount;
             }
 
-            homeVM.Terms = _unitOfWork.TermRepository.GetAll().ToList();
-            homeVM.Facultys = _unitOfWork.FacultyRepository.GetAll().ToList();
-            homeVM.Magazines = _unitOfWork.MagazineRepository.GetAll().ToList();
-            
-            return View(homeVM);
+            return View(articleList);
         }
 
 
@@ -194,8 +200,40 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
             return RedirectToAction("Index", "Home", new { area = "student" });
         }
 
+        public IActionResult RedectNotification(int id)
+        {
+            //get current UserID
+            //get all notification from DB
+            //  List<Notification> notifications = _unitOfWork.NotificationRepository.GetAll().ToList();
+            var UserIdGet = HttpContext.Session.GetString("UserId");
+            int.TryParse(UserIdGet, out int userIdCurrent);
+            User user = _unitOfWork.UserRepository.GetById(userIdCurrent);
+            Comment comment = _unitOfWork.CommentRepository.Get(u => u.Id == id);
+            if (comment != null)
+            {
+                comment.IsNotification = false;
+                _unitOfWork.CommentRepository.Update(comment);
+                _unitOfWork.Save();
+                if (comment.Type.ToLower() == "private" && user.Role.ToLower() == "coordinate")
+                {
+                    return RedirectToAction("Detail", "Coordinate", new { area = "Coordinate", id = comment.ArticleId });
+                }
+                else if (comment.Type.ToLower() == "public" && user.Role.ToLower() == "coordinate")
+                {
+                    return RedirectToAction("SelectArticle", "Article", new { area = "Student", id = comment.ArticleId });
+                }
+                else if (comment.Type.ToLower() == "private" && user.Role.ToLower() == "student")
+                {
+                    return RedirectToAction("Update", "Article", new { area = "Student", id = comment.ArticleId });
+                }
+                else if (comment.Type.ToLower() == "public" && user.Role.ToLower() == "student")
+                {
+                    return RedirectToAction("SelectArticle", "Article", new { area = "Student", id = comment.ArticleId });
+                }
+            }
+            return View();
+        }
 
-       
 
     }
 }
