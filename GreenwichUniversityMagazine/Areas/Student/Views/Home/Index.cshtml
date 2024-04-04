@@ -116,7 +116,7 @@ Greenwich University, located in the UK, is renowned for its quality education a
     </div>
 
 
-
+  
     @* ///////////////////////////////////////////////////////////////////// *@
 
     <div class="border-bottom border-dark">
@@ -134,64 +134,64 @@ Greenwich University, located in the UK, is renowned for its quality education a
 
     @* ///////////////////////////////////////////////////////////////////// *@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-
+       
         <div class="col-md-3">
             <div class="d-flex align-items-center mb-3">
                 <h6 class="m-1 mr-2">Falcuty</h6>
-                <select id="facultySelect" class="form-select" aria-label="Default select example">
+                <select id="facultyselect" name="facultySelect" class="form-select" aria-label="Default select example" onchange="redirectToFaculty()">
                     <option value="">Select a Faculty</option>
-                    @foreach (var faculty in Model.Magazines)
+                    @foreach (var faculty in Model.Facultys)
                     {
-                        <option value="@faculty.FacultyId">@faculty.FacultyId</option>
+                        <option value="@faculty.Id">@faculty.Name</option>
                     }
                 </select>
             </div>
         </div>
 
-        <div class="row p-3 ">
+       
+            
             <div class="col-md-3">
                 <div class="d-flex align-items-center mb-3">
                     <h6 class="m-1 mr-2">Term</h6>
-                    <select id="termSelect" class="form-select" aria-label="Default select example">
+                    <select id="termselect" name="termSelect" class="form-select" aria-label="Default select example" onchange="redirectToTerm()">
                         <option value="">Select a Term</option>
-                        @foreach (var term in Model.Magazines)
+                        @foreach (var term in Model.Terms)
                         {
-                            <option value="@term.TermId"> @term.StartDate.ToShortDateString() - @term.EndDate.ToShortDateString() @* @term.Term.Name *@</option>
+                            <option value="@term.Id"> @term.StartDate.ToShortDateString() - @term.EndDate.ToShortDateString() @term.Name</option>
                         }
                     </select>
                 </div>
 
             </div>
-        <div class="col-md-3">
-            <div class="d-flex align-items-center mb-3">
-                    <h6 class="m-1 mr-2">Magazine</h6>
-                    <select id="magazineSelect" class="form-select" aria-label="Default select example">
-                        <option value="">Select a Magazine</option>
-                        @foreach (var magazine in Model.Magazines)
-                        {
-                            <option value="@magazine.Id">@magazine.Title</option>
-                        }
-                    </select>
+            <div class="col-md-3">  
+                <div class="d-flex align-items-center mb-3">
+                        <h6 class="m-1 mr-2">Magazine</h6>
+                        <select id="magazineselect" name="magazineSelect" class="form-select" aria-label="Default select example" onchange="redirectToMagazine()">
+                            <option value="" >Select a Magazine</option>
+                            @foreach (var magazine in Model.Magazines)
+                            {
+                                <option value="@magazine.Id">@magazine.Title</option>
+                            }
+                        </select>
+                </div>
             </div>
-        </div>
-           
-        
-
-          
-
-            <div class="col-md-3">
-                <form asp-controller="Home" asp-action="Index" method="get" class="d-flex">
-                    <input class="form-control me-2" type="search" name="searchString" placeholder="Search" style="width: 550px" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
-            </div>
+                 @using (Html.BeginForm("Index", "View", FormMethod.Get, new { @class = "form-inline", id = "searchForm" }))
+                    {
+                        <div class="input-group mb-3">
+                            @Html.TextBox("searchString", ViewBag.CurrentFilter as string, new { @class = "form-control", id = "searchInput", placeholder = "Search" })
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-primary" id="searchButton">Search</button>
+                            </div>
+                        </div>
+                    }
         </div>
     </nav>
 
 
 
+
     <div class="row pb-3" id="articleContainer">
-        @foreach (var article in Model.Articles.Take(6))
+        @foreach (var article in Model.Articles.Take(4))
         {
             <div class="clo-lg-2 col-sm-6">
                 <div class="row p-2">
@@ -222,6 +222,8 @@ Greenwich University, located in the UK, is renowned for its quality education a
 </div>
 
 <script>
+
+        
     $(document).ready(function () {
         // Giới hạn số từ trong card title
         $("#articleContainer .card-title").each(function () {
@@ -244,27 +246,80 @@ Greenwich University, located in the UK, is renowned for its quality education a
         });
     });
 
+    // ham load magazine ( doi du lieu onchange="redirectToMagazine() tren select duoc load thi thuc hien ham nay)
+    function redirectToMagazine() {
+    // lấy dữ liệu từ select box
+    var selectedMagazineId = document.getElementById("magazineselect").value;
+    // url mặc định
+    var baseUrl = "/student/view/index";
+    
+    if (selectedMagazineId) {
+        // Nếu có giá trị, thêm vào URL
+        window.location.href = baseUrl + "?magazineid=" + selectedMagazineId;
+    } else {
+        // Nếu không có giá trị, chỉ chuyển đến trang mặc định
+        window.location.href = baseUrl;
+    }
+}
+
+    function redirectToTerm() {
+        var selectedTermId = document.getElementById("termselect").value;
+        var baseUrl = "/student/view/index";
+        if (selectedTermId) {
+            window.location.href = baseUrl + "?termid=" + selectedTermId;
+        } else {
+            window.location.href = baseUrl;
+        }
+    }
+
+    function redirectToFaculty() {
+        var selectedFacultyId = document.getElementById("facultyselect").value;
+            var baseUrl = "/student/view/index";
+        if (selectedFacultyId) {
+            window.location.href = baseUrl + "?facultyid=" + selectedFacultyId;
+        } else {
+            window.location.href = baseUrl;
+        }
+    }
+    document.getElementById("searchForm").addEventListener("submit", function (event) {
+    // Lấy giá trị của ô tìm kiếm
+    var searchString = document.getElementById("searchInput").value;
+    // Kiểm tra xem ô tìm kiếm có rỗng không
+    if (!searchString.trim()) {
+        // Nếu rỗng, hủy việc gửi form
+        event.preventDefault();
+    } else {
+        // Nếu có giá trị, tạo URL tìm kiếm và chuyển hướng đến trang kết quả tìm kiếm
+        var baseUrl = "/student/view/index";
+        var searchUrl = baseUrl + "?searchString=" + searchString;
+        window.location.href = searchUrl;
+    }
+});
+
+
+
+
     @*
     $(document).ready(function () {
-        // Kiểm tra xem đã lưu giá trị tạp chí trước đó trong Local Storage chưa
-        var selectedMagazineId = localStorage.getItem('selectedMagazineId');
+        // kiểm tra xem đã lưu giá trị tạp chí trước đó trong local storage chưa
+        var selectedmagazineid = localstorage.getitem('selectedmagazineid');
 
-        // Nếu đã có giá trị tạp chí trong Local Storage, thiết lập lại giá trị của dropdown menu
-        if (selectedMagazineId) {
-            $('#magazineSelect').val(selectedMagazineId);
+        // nếu đã có giá trị tạp chí trong local storage, thiết lập lại giá trị của dropdown menu
+        if (selectedmagazineid) {
+            $('#magazineselect').val(selectedmagazineid);
         }
 
-        // Lắng nghe sự kiện thay đổi của dropdown menu tạp chí
-        $('#magazineSelect').change(function () {
-            // Lấy giá trị của tạp chí được chọn
-            var selectedMagazineId = $(this).val();
+        // lắng nghe sự kiện thay đổi của dropdown menu tạp chí
+        $('#magazineselect').change(function () {
+            // lấy giá trị của tạp chí được chọn
+            var selectedmagazineid = $(this).val();
 
-            // Lưu giá trị tạp chí vào Local Storage
-            localStorage.setItem('selectedMagazineId', selectedMagazineId);
+            // lưu giá trị tạp chí vào local storage
+            localstorage.setitem('selectedmagazineid', selectedmagazineid);
 
-            // Chuyển hướng đến action "Index" với tham số id tương ứng
-            if (selectedMagazineId) {
-                window.location.href = '/?id=' + selectedMagazineId;
+            // chuyển hướng đến action "index" với tham số id tương ứng
+            if (selectedmagazineid) {
+                window.location.href = '/?id=' + selectedmagazineid;
             } else {
                 window.location.href = '/';
             }
@@ -319,51 +374,40 @@ Greenwich University, located in the UK, is renowned for its quality education a
         });
     });
 
-    *@
+   //  *@
 
-    document.addEventListener("DOMContentLoaded", function () {
-        var selectBox = document.getElementById("magazineSelect");
-        selectBox.addEventListener("change", function () {
-            var selectedMagazineId = selectBox.value;
-            if (selectedMagazineId) {
-                // Nếu đã chọn một tạp chí, gửi yêu cầu đến server để lấy danh sách bài báo
-                window.location.href = "/student/Home/SelectMagazine?id=" + selectedMagazineId;
-            } else {
-                window.location.href = "/student/Home/Index";
-            }
-        });
-    });
+    
 
 
-   document.addEventListener("DOMContentLoaded", function () {
-        var termSelectBox = document.getElementById("termSelect");
+   // document.addEventListener("DOMContentLoaded", function () {
+   //      var termSelectBox = document.getElementById("termSelect");
 
-        termSelectBox.addEventListener("change", function () {
-            var selectedTermId = termSelectBox.value;
-            if (selectedTermId) {
-                // Nếu đã chọn một term, gửi yêu cầu đến server để lấy danh sách bài báo theo term
-                window.location.href = "/student/Home/SelectTerm?id=" + selectedTermId;
-            } else {
-                // Nếu chọn "Select a Term", chuyển hướng về trang chính ("home")
-                window.location.href = "/student/Home/Index";
-            }
-        });
-    });
+   //      termSelectBox.addEventListener("change", function () {
+   //          var selectedTermId = termSelectBox.value;
+   //          if (selectedTermId) {
+   //              Nếu đã chọn một term, gửi yêu cầu đến server để lấy danh sách bài báo theo term
+   //              window.location.href = "/student/Home/SelectTerm?id=" + selectedTermId;
+   //          } else {
+   //              Nếu chọn "Select a Term", chuyển hướng về trang chính ("home")
+   //              window.location.href = "/student/Home/Index";
+   //          }
+   //      });
+   //  });
 
-    document.addEventListener("DOMContentLoaded", function () {
-        var termSelectBox = document.getElementById("facultySelect");
+   //  document.addEventListener("DOMContentLoaded", function () {
+   //      var termSelectBox = document.getElementById("facultySelect");
 
-        termSelectBox.addEventListener("change", function () {
-            var selectedFacultyId = termSelectBox.value;
-             if (selectedFacultyId) {
-                // Nếu đã chọn một term, gửi yêu cầu đến server để lấy danh sách bài báo theo term
-                window.location.href = "/student/Home/SelectFaculty?id=" + selectedFacultyId;
-            } else {
-                // Nếu chọn "Select a Term", chuyển hướng về trang chính ("home")
-                window.location.href = "/student/Home/Index";
-            }
-        });
-    });
+   //      termSelectBox.addEventListener("change", function () {
+   //          var selectedFacultyId = termSelectBox.value;
+   //           if (selectedFacultyId) {
+   //              Nếu đã chọn một term, gửi yêu cầu đến server để lấy danh sách bài báo theo term
+   //              window.location.href = "/student/Home/SelectFaculty?id=" + selectedFacultyId;
+   //          } else {
+   //              Nếu chọn "Select a Term", chuyển hướng về trang chính ("home")
+   //              window.location.href = "/student/Home/Index";
+   //          }
+   //      });
+   //  });
 
     
     
