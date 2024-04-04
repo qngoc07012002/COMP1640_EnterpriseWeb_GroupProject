@@ -359,14 +359,30 @@ namespace GreenwichUniversityMagazine.Areas.Coordinate.Controllers
         public IActionResult GetNotification()
         {
             //get current UserID
-            var userid = 1;
             //get all notification from DB
             //  List<Notification> notifications = _unitOfWork.NotificationRepository.GetAll().ToList();
-            var notifications = new List<Notification>();
-            notifications.Add(new Notification { id = 1, description = "Des1" });
+            var notifications = new List<Comment>();
+            List<User> users = _unitOfWork.UserRepository.GetAll().ToList();
+            List<Article> article = _unitOfWork.ArticleRepository.GetAll().ToList();
+            var UserIdGet = HttpContext.Session.GetString("UserId");
+            int.TryParse(UserIdGet, out int userIdCurrent);
+
+            User user = _unitOfWork.UserRepository.GetById(userIdCurrent);
+            Faculty faculty = _unitOfWork.FacultyRepository.Get(u => u.Id == user.FacultyId);
+            List<Comment> comments;
+            if (user.Role.ToLower() == "student")
+            {
+                comments = _unitOfWork.CommentRepository.GetAll().Where(u => u.IsNotification == true && u.Article.UserId == userIdCurrent && u.UserId != userIdCurrent).ToList();
+            }
+            else
+            {
+                comments = _unitOfWork.CommentRepository.GetAll().Where(u => u.IsNotification == true && u.UserId != userIdCurrent && u.User.Role.ToLower() != "coordinate" && u.Type.ToLower() == "private" && u.Article.User.FacultyId == user.FacultyId).ToList();
+            }
             // Return partial view with the data
-            return PartialView("_Notification", notifications);
+            comments.Reverse();
+            return PartialView("_Notification", comments);
         }
+
         public IActionResult changeStatus(int id)
         {
             var article = _unitOfWork.ArticleRepository.GetById(id);
