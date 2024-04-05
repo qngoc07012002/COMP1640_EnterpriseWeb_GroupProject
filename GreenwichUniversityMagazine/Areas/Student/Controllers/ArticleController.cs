@@ -9,6 +9,7 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 using System.Globalization;
 using System.Xml.Linq;
+using GreenwichUniversityMagazine.Serivces.IServices;
 
 namespace GreenwichUniversityMagazine.Areas.Student.Controllers
 {
@@ -17,11 +18,14 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _webhost;
+        private readonly IEmailService _emailService;
 
-        public ArticleController(IUnitOfWork db, IWebHostEnvironment webhost)
+
+        public ArticleController(IUnitOfWork db, IWebHostEnvironment webhost, IEmailService emailService)
         {
             _unitOfWork = db;
             _webhost = webhost;
+            _emailService = emailService;
         }
 
         public IActionResult Index()
@@ -30,9 +34,12 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
         }
         public IActionResult Create()
         {
+            var UserIdGet = HttpContext.Session.GetString("UserId");
+            int.TryParse(UserIdGet, out int studentId);
+            User user = _unitOfWork.UserRepository.GetById(studentId);
             ArticleVM articleVM = new ArticleVM()
             {
-                MyMagazines = _unitOfWork.MagazineRepository.GetAll().Where(u => u.EndDate > DateTime.Now).Select(
+                MyMagazines = _unitOfWork.MagazineRepository.GetAll().Where(u => u.EndDate >= DateTime.Now && u.FacultyId == user.FacultyId).Select(
                     u => new SelectListItem
                     {
                         Text = u.Title,
@@ -44,12 +51,15 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
 
         public IActionResult Update(int id, string? status)
         {
+            var UserIdGet = HttpContext.Session.GetString("UserId");
+            int.TryParse(UserIdGet, out int studentId);
+            User user = _unitOfWork.UserRepository.GetById(studentId);
             try
             {
                 ArticleVM articleVM = new ArticleVM()
                 {
-                    MyMagazines = _unitOfWork.MagazineRepository.GetAll().
-                    Select(u => new SelectListItem
+                    MyMagazines = _unitOfWork.MagazineRepository.GetAll(includeProperty: "Term").Where(u => u.EndDate >= DateTime.Now && u.FacultyId == user.FacultyId && u.Term.EndDate > DateTime.Now)
+                    .Select(u => new SelectListItem
                     {
                         Text = u.Title,
                         Value = u.Id.ToString()
@@ -59,8 +69,6 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                     status = status
 
                 };
-                var UserIdGet = HttpContext.Session.GetString("UserId");
-                int.TryParse(UserIdGet, out int studentId);
                 //Update
                 articleVM.article = _unitOfWork.ArticleRepository.Get(article => article.ArticleId == id);
                 if (studentId == articleVM.article.UserId)
@@ -157,13 +165,24 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                     ArticleVM articleVM2 = new();
                     articleVM2.article = _unitOfWork.ArticleRepository.Get(u => u.ArticleId == articleVM.article.ArticleId);
                 }
+                //Create Done
                 if (articleVM.article.ArticleId == 0)
                 {
                     var UserIdGet = HttpContext.Session.GetString("UserId");
                     int.TryParse(UserIdGet, out int studentId);
                     articleVM.article.UserId = studentId;
-                    articleVM.article.SubmitDate = DateTime.Today;
-                    articleVM.article.ModifyDate = DateTime.Today;
+                    articleVM.article.SubmitDate = DateTime.Now;
+                    articleVM.article.ModifyDate = DateTime.Now;
+                    User student = _unitOfWork.UserRepository.GetById(studentId);
+
+                    //Sending email 
+                    List<User> coordinates = _unitOfWork.UserRepository.GetAll().Where(u => u.FacultyId == student.FacultyId && u.Role.ToUpper() == "COORDINATE").ToList();
+                    var subject = "New Article From Student";
+                    var message = $"The Student just add new article '{articleVM.article.Title}'.\n Let check it.";
+                    foreach (var coor in coordinates)
+                    {
+                        _emailService.SendEmailAsync(coor.Email.ToString(), subject, message);
+                    }
                     _unitOfWork.ArticleRepository.Add(articleVM.article);
                     _unitOfWork.Save();
                     TempData["success"] = "Article created succesfully, Please wait managerment confirm.";
@@ -204,8 +223,10 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
             }
             else
             {
-
-                articleVM.MyMagazines = _unitOfWork.MagazineRepository.GetAll().
+                var UserIdGet = HttpContext.Session.GetString("UserId");
+                int.TryParse(UserIdGet, out int studentId);
+                User user = _unitOfWork.UserRepository.GetById(studentId);
+                articleVM.MyMagazines = _unitOfWork.MagazineRepository.GetAll(includeProperty: "Term").Where(u => u.EndDate >= DateTime.Now && u.FacultyId == user.FacultyId && u.Term.EndDate > DateTime.Now).
                             Select(u => new SelectListItem
                             {
                                 Text = u.Title,
@@ -231,7 +252,7 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                 {
                     articleVM2.article.Body = articleVM2.article.Body + body2;
                     _unitOfWork.ArticleRepository.Update(articleVM2.article);
-                    _unitOfWork.Save(); 
+                    _unitOfWork.Save();
 
                 }
                 if (files.Count > 0)
@@ -276,7 +297,7 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                     }
 
                 }
-                
+
                 TempData["success"] = "Article update file succesfully!";
                 return RedirectToAction("Index");
 
@@ -312,7 +333,7 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                     articleVM.article.imgUrl = Url.Content("~/img/articleImg/" + fileName);
                 }
                 articleVM.article.UserId = articleVM2.article.UserId;
-                articleVM.article.ModifyDate = DateTime.Today;
+                articleVM.article.ModifyDate = DateTime.Now;
                 articleVM.article.Status = false;
 
                 //Delete Old Files
