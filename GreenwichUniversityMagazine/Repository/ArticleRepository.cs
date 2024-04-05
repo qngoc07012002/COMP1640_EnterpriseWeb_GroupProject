@@ -13,13 +13,13 @@ namespace GreenwichUniversityMagazine.Repository
         public IEnumerable<Article> Search(string searchString)
         {
             return _dbContext.Articles
-                .Include(a => a.User) // Bao gồm thông tin về người dùng trong kết quả truy vấn
+                .Include(a => a.User)  
                 .Where(a => a.Title.Contains(searchString)
-                         || a.User.Name.Contains(searchString)) // Thêm điều kiện tìm kiếm theo tên người dùng
+                         || a.User.Name.Contains(searchString)) 
                 .ToList();
         }
 
-
+       
 
         public List<Article> GetArticlesbyMagazine(int? id)
         {
