@@ -4,6 +4,7 @@ using GreenwichUniversityMagazine.Models.ViewModels;
 using GreenwichUniversityMagazine.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Identity.Client;
 
 namespace GreenwichUniversityMagazine.Areas.Student.Controllers
 {
@@ -19,7 +20,7 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
             _webhost = webhost;
         }
 
-        public IActionResult Index(string? searchString, int? magazineid, int? termid, int? facultyid)
+        public IActionResult Index(string? searchString, int? magazineid, int? termid, int? facultyid, int? articlesid)
         {
             ViewVM model = new ViewVM();
             model.Terms = _unitOfWork.TermRepository.GetAll().ToList();
@@ -48,11 +49,23 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
             }
             else
             {
-                model.Articles = _unitOfWork.ArticleRepository.GetAll().ToList();
+                model.Articles = _unitOfWork.ArticleRepository.GetAll().Where(a => a.Status == true).ToList();
             }
 
             return View(model);
         }
+
+        /*public IActionResult GetArticlesByFacultyId(int facultyId)
+        {
+            var model = new ViewVM();
+          
+            model.Magazines = _unitOfWork.MagazineRepository.GetAll().ToList();
+          
+
+            model.Articles = _unitOfWork.ArticleRepository.GetArticlesbyFaculty(facultyId).ToList();
+
+            return View("Index", model);
+        }*/
 
 
 

@@ -51,51 +51,56 @@
 @media screen and (max-width: 768px) {
     .main-container {
         flex-direction: column;
+        width: 100%; /* Thiết lập chiều rộng cho main-container khi ở chế độ responsive */
+        padding-left: 0; /* Xóa padding trái cho main-container khi ở chế độ responsive */
     }
 
-    .content,
     .sidebar {
         width: 100%;
         margin-left: 0;
     }
 
+    .content,
+    .sidebar {
+        padding: 10px; /* Thêm padding cho content và sidebar khi ở chế độ responsive */
+    }
+
     .card-container {
-        width: 100%;
+        padding-top: 10px; /* Thêm padding trên cho card-container khi ở chế độ responsive */
     }
 
     .card-1 {
         flex-direction: column;
         align-items: center;
+        width: 100%;
     }
 
     .card-image-1,
     .card-text-1 {
         width: 100%;
-        border-top-left-radius: 5px;
-        border-top-right-radius: 5px;
-    }
-}
-
-    .sidebar {
-        padding: 10px; 
+        border-top-left-radius: 0; /* Loại bỏ border-radius cho phần trên trái của card khi ở chế độ responsive */
+        border-top-right-radius: 0; /* Loại bỏ border-radius cho phần trên phải của card khi ở chế độ responsive */
     }
 
-    .custom-select select {
-        width: 100%; 
+    .custom-select select,
+    .search-container input[type="text"] {
+        width: 100%; /* Phóng to thanh select và input ra toàn bộ chiều rộng của container khi ở chế độ responsive */
     }
 
-    
-
-    .sidebar > * {
-        margin-bottom: 10px; 
+    .search-container i {
+        margin-bottom: 10px; /* Giảm khoảng cách dưới cho icon trong search-container khi ở chế độ responsive */
+    }
+    .viewbag {
+        padding-left: 10px; /* Thay đổi padding khi ở chế độ responsive */
     }
 }
 
 @media screen and (max-width: 600px) {
     .card-text-1 {
-        width: 100%;
+        width: 100%; /* Thiết lập chiều rộng cho card-text-1 là 100% khi ở chế độ responsive */
     }
 }
+
 
 .custom-select {
     margin-bottom: 50px; 
@@ -176,8 +181,6 @@
     padding: 8px 16px;
     margin: 0 10px; /* Khoảng cách giữa các nút phân trang */
 }
-
-
 
 
 
