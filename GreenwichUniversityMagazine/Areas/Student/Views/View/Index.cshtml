@@ -149,17 +149,10 @@
                     url = `${window.location.pathname}?searchString=${searchString}&page=${page}`;
                 } else if (magazineId) {
                     url = `${window.location.pathname}?magazineid=${magazineId}&page=${page}`;
-                    if (termId) {
-                        url += `&termid=${termId}`;
-                    }
-                    if (facultyId) {
-                        url += `&facultyid=${facultyId}`;
-                    }
+                    
                 } else if (termId) {
                     url = `${window.location.pathname}?termid=${termId}&page=${page}`;
-                    if (facultyId) {
-                        url += `&facultyid=${facultyId}`;
-                    }
+                   
                 } else if (facultyId) {
                     url = `${window.location.pathname}?facultyid=${facultyId}&page=${page}`;
                 } else {
