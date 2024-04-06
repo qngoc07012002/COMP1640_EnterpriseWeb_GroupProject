@@ -21,5 +21,23 @@ namespace GreenwichUniversityMagazine.Repository
              var query = _dbContext.Articles.Where(c => c.MagazinedId != 0);
              return query.ToList();
          }*/
+        public async Task<int> CountNumberOfMagazine(int rangeSort)
+        {
+            var latestTermIds = await _dbContext.Terms
+       .OrderByDescending(t => t.EndDate)
+       .Select(t => t.Id)
+       .Take(rangeSort)
+       .ToListAsync();
+
+            var query = from magazine in _dbContext.Magazines
+                        where latestTermIds.Contains(magazine.TermId)
+                        select magazine;
+
+            var totalMagazines = await query.CountAsync();
+
+
+            return totalMagazines;
+
+        }
     }
 }

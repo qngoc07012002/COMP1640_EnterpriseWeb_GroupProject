@@ -4,6 +4,6 @@ namespace GreenwichUniversityMagazine.Repository.IRepository
 {
     public interface ICommentRepository : IRepository<Comment>
     {
-        
+        Task<int> CountNumberOfComment(int rangeSort);
     }
 }

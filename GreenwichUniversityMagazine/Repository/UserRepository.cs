@@ -49,5 +49,9 @@ namespace GreenwichUniversityMagazine.Repository
         {
             return _dbContext.Users.FirstOrDefault(t => t.Id == id);
         }
+        public int GetNumberOfStudents()
+        {
+            return _dbContext.Users.Count(user => user.Role == "STUDENT");
+        }
     }
 }

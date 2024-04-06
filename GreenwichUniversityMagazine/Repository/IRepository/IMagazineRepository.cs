@@ -8,6 +8,7 @@ namespace GreenwichUniversityMagazine.Repository.IRepository
         /*List<Magazines> GetAllMagazineByArticle(int? ArticleId);*/
        /* public List<Magazines> GetMagazinesByArticles(string searchString);*/
        List<Magazines> GetAllMagazine();
+        Task<int> CountNumberOfMagazine(int rangeSort);
 
     }
 }

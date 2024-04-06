@@ -6,6 +6,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
@@ -23,6 +25,7 @@
     <Folder Include="wwwroot\img\avtImg\" />
     <Folder Include="wwwroot\Resource\Article\12\" />
 
+    <Folder Include="wwwroot\css\Manager\Filter\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -46,6 +49,9 @@
 
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Remove="wwwroot\css\Manager\Filter\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Update="Areas\Admin\Views\Home\Index.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>

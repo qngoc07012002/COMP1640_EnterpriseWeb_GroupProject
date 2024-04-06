@@ -10,5 +10,7 @@ namespace GreenwichUniversityMagazine.Repository.IRepository
         bool CheckPassword(int userId, string password);
         bool CheckEmail(User user);
         User GetById(int id);
+        int GetNumberOfStudents();
+
     }
 }

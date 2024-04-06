@@ -1,9 +1,52 @@
-﻿<link rel="stylesheet" href="~/css/Manager/Overview.css" />
+﻿@using GreenwichUniversityMagazine.Models.ViewModel
+@model OverviewVM
+
+<link rel="stylesheet" href="~/css/Manager/Overview.css" />
 <div class="dashboard">
     <div class="dashboard-header">
-        <h1>Dashboard</h1>
-        <h1>Search bar</h1>
-        <div class="sorting-items"></div>
+        <img src="~/css/Manager/Filter/gw.jpg" class="header-background-image" />
+        <h1 class="dashboard-header-title">Dashboard Manager</h1>
+        <div class="sorting-items">
+            <div class="sorting-items-container">
+                <a asp-area="Manager" asp-controller="DashBoard" asp-action="Overview">
+                    <img src="~/css/Manager/Filter/filter.png" />
+                    <h4>Filter</h4>
+                </a>
+            </div>
+            <div class="sorting-items-container">
+                <a asp-area="Manager" asp-controller="DashBoard" asp-action="Overview" asp-route-rangeSort="2">
+                    <h4>Last 2 terms</h4>
+                </a>
+            </div>
+            <div class="sorting-items-container">
+                <a asp-area="Manager" asp-controller="DashBoard" asp-action="Overview" asp-route-rangeSort="4">
+                    <h4>Last 4 terms</h4>
+                </a>
+            </div>
+            <div class="sorting-items-container">
+                <a asp-area="Manager" asp-controller="DashBoard" asp-action="Overview" asp-route-rangeSort="6">
+
+                    <h4>Last 6 terms</h4>
+                </a>
+            </div>
+            <div class="sorting-items-container">
+                <a asp-area="Manager" asp-controller="DashBoard" asp-action="Overview" asp-route-rangeSort="8">
+
+                    <h4>Last 8 terms</h4>
+                </a>
+            </div>
+            <div class="sorting-items-container">
+                <a asp-area="Manager" asp-controller="DashBoard" asp-action="Overview" asp-route-rangeSort="12">
+
+                    <h4>Last 12 terms</h4>
+                </a>
+            </div>
+            <div class="sorting-items-container">
+                <a asp-area="Manager" asp-controller="DashBoard" asp-action="Overview" asp-route-rangeSort="-1">
+                    <h4>View All</h4>
+                </a>
+            </div>
+        </div>
     </div>
     <div class="div2">
         <h3 class="chart-name">Total Contributions for each Terms</h3>
@@ -11,28 +54,37 @@
                 style="width: 100%"></canvas>
     </div>
     <div class="exception-doughnut-container">
-        <h3 class="chart-name">Contribution rate and exceptions</h3>
-        <canvas id="exception-doughnut-chart" style="width:100%;height:80%"></canvas>
+        <h3 class="chart-name">Exceptions</h3>
+        <canvas id="exception-doughnut-chart" style="width:100%;height:70%"></canvas>
     </div>
     <div class="div4">
         <div class="widget-container">
             <div class="widget-data">
-                <h1 class="widget-contributions-title">16.000</h1>
+                <h1 class="widget-contributions-title">@Model.ChartDataList[5].sumContributions</h1>
                 <h4>Contributions</h4>
             </div>
             <div class="widget-icon">
-                <img src="~/css/Manager/Widgets/contributions.png"/>
+                <img src="~/css/Manager/Widgets/contributions.png" />
             </div>
         </div>
         <div class="widget-container">
             <div class="widget-data">
-                <h1 class="widget-comment-title">100.000+</h1>
+                <h1 class="widget-comment-title">@Model.ChartDataList[5].sumComments</h1>
                 <h4>Comments</h4>
             </div>
             <div class="widget-icon">
                 <img src="~/css/Manager/Widgets/comments.png" />
             </div>
         </div> <div class="widget-container">
+            <div class="widget-data">
+                <h1 class="widget-unapprovedArticles-title">@Model.ChartDataList[5].sumUnapproved</h1>
+                <h4>Unapproved</h4>
+            </div>
+            <div class="widget-icon">
+                <img src="~/css/Manager/Widgets/unapprovedArticles.png" />
+            </div>
+        </div>
+        <div class="widget-container">
             <div class="widget-data">
                 <h1 class="widget-exceptions-title">16.000</h1>
                 <h4>Exceptions</h4>
@@ -45,7 +97,7 @@
     <div class="div5">
         <h3 class="chart-name">Total contributors of each Faculties</h3>
         <canvas id="GroupBarChartContributers"
-                style="width: 611px; max-width: 611px"></canvas>
+                style="width: 100%"></canvas>
     </div>
     <div class="div6">
         <h3 class="chart-name">Total contributions of each Faculties</h3>
@@ -57,7 +109,7 @@
             <img src="~/css/Manager/home.svg" />
             <h4>Home</h4>
         </a>
-        <a href="/">
+        <a asp-area="Manager" asp-controller="DashBoard" asp-action="Overview">
             <img src="~/css/Manager/overview.svg" />
             <h4>Overview</h4>
         </a>
@@ -73,7 +125,7 @@
     <div class="div8">
         <div class="widget-container">
             <div class="widget-data">
-                <h1 class="widget-students-title">16.000</h1>
+                <h1 class="widget-students-title">@Model.ChartDataList[5].sumStudents</h1>
                 <h4>Students</h4>
             </div>
             <div class="widget-icon">
@@ -82,7 +134,16 @@
         </div>
         <div class="widget-container">
             <div class="widget-data">
-                <h1 class="widget-contributors-title">16.000</h1>
+                <h1 class="widget-magazine-title">@Model.ChartDataList[5].sumMagazines</h1>
+                <h4>Magazine</h4>
+            </div>
+            <div class="widget-icon">
+                <img src="~/css/Manager/Widgets/magazine.png" />
+            </div>
+        </div>
+        <div class="widget-container">
+            <div class="widget-data">
+                <h1 class="widget-contributors-title">@Model.ChartDataList[5].sumContributors</h1>
                 <h4>Contributors</h4>
             </div>
             <div class="widget-icon">
@@ -90,7 +151,7 @@
             </div>
         </div>  <div class="widget-container">
             <div class="widget-data">
-                <h1 class="widget-faculties-title">16.000</h1>
+                <h1 class="widget-faculties-title">@Model.ChartDataList[5].sumFaculty</h1>
                 <h4>Faculty</h4>
             </div>
             <div class="widget-icon">
@@ -101,10 +162,10 @@
     <div class="div9">
         <h3 class="chart-name">Contributors Distribution by Faculties</h3>
         <canvas id="StackedBarChartContributions"
-                style="width: 611px; max-width: 611px"></canvas>
+                style="width: 100%"></canvas>
     </div>
     <div class="div10">
-        <h3 class="chart-name">Pie Chart</h3>
+        <h3 class="chart-name">Exceptions</h3>
         <canvas id="exception-doughnut-chart2" style="width:100%;height:80%"></canvas>
 
     </div>
@@ -114,29 +175,27 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 @* Chart 1 *@
-
 <script>
-    var chrt = document
+    var chartDataForDoughnutChart = @Html.Raw(Json.Serialize(Model.ChartDataList[4]));
+    var chartDataForMultipleLine = @Html.Raw(Json.Serialize(Model.ChartDataList[1]));
+    var chartDataForSingleLine = @Html.Raw(Json.Serialize(Model.ChartDataList[0]));
+    var chartDataForGroupBar = @Html.Raw(Json.Serialize(Model.ChartDataList[2]));
+    var chartDataForStackedBar = @Html.Raw(Json.Serialize(Model.ChartDataList[3]));
+</script>
+
+<script>var chrt = document
         .getElementById("exception-doughnut-chart")
         .getContext("2d");
     var chartId = new Chart(chrt, {
         type: "doughnut",
         data: {
-            labels: [
-                "HTML",
-                "CSS",
-                "JAVASCRIPT",
-                "CHART.JS",
-                "JQUERY",
-                "BOOTSTRP",
-            ],
+            labels: chartDataForDoughnutChart.doughnutChartData.labels,
             datasets: [
                 {
-                    label: "online tutorial subjects",
-                    data: [20, 40, 13, 35, 20, 38],
+                    data: chartDataForDoughnutChart.doughnutChartData.data,
                     backgroundColor: [
-                        "yellow",
-                        "aqua",
+                        "#990011FF",
+                        "#ffa0c5",
                         "pink",
                         "lightgreen",
                         "gold",
@@ -153,10 +212,8 @@
                 position: "bottom",
             },
         },
-    });
-</script>
-<script>
-    var chrt = document
+    });</script>
+<script>var chrt = document
         .getElementById("exception-doughnut-chart2")
         .getContext("2d");
     var chartId = new Chart(chrt, {
@@ -190,128 +247,99 @@
             responsive: false,
             legend: {
                 display: true,
-                position: "top",
+                position: "bottom",
             },
         },
-    });
-</script>
-<script>
-    $(document).ready(function () {
-        // End Point
-        $.ajax({
-            url: "/Manager/Dashboard/GetDataCountTotalContributions",
-            type: "GET",
-            dataType: "json",
-            success: function (data) {
-                var ctx = document.getElementById("LineChartTotalContributions").getContext("2d");
-                var gradient = ctx.createLinearGradient(0, 0, 0, 400);
-                gradient.addColorStop(0, '#e4f3d3');
-                gradient.addColorStop(1, '#5ca9e9');
-                var LineChartTotalContributions_labels = data.listTerms;
-                new Chart("LineChartTotalContributions", {
-                    type: "line",
-                    data: {
-                        labels: LineChartTotalContributions_labels,
-                        datasets: [
-                            {
+    });</script>
+<script>var ctx = document.getElementById("LineChartTotalContributions").getContext("2d");
+    var gradient = ctx.createLinearGradient(0, 0, 0, 400);
+    gradient.addColorStop(0, '#e4f3d3');
+    gradient.addColorStop(1, '#5ca9e9');
+    var LineChartTotalContributions_labels = chartDataForSingleLine.listTerms;
+    new Chart("LineChartTotalContributions", {
+        type: "line",
+        data: {
+            labels: LineChartTotalContributions_labels,
+            datasets: [
+                {
 
-                                backgroundColor: gradient,
-                                borderColor: gradient,
-                                borderWidth: 2,
-                                data: data.listContributions,
-                                label:"Contributions"
-                            },
-                        ],
-                    },
-                    options: {
-                        responsive:false,
-                        legend: { display:false, },
-                        tension:{
+                    backgroundColor: gradient,
+                    borderColor: gradient,
+                    borderWidth: 2,
+                    data: chartDataForSingleLine.totalContributions,
+                    label: "Contributions"
+                },
+            ],
+        },
+        options: {
+            responsive: false,
+            legend: { display: false, },
+            tension: {
 
-                        }
-                    },
-                });
-            },
-            error: function (xhr, status, err) {
-                console.error("Err fetching End Point 1: ", xhr.responseText);
-            },
-        });
-    });
-</script>
-    @* Chart 1 *@
+            }
+        },
+    });</script>
+@* Chart 1 *@
 
 
 @* Chart 2 *@
 
-<script>
-    $(document).ready(function () {
-        // End Point
-        $.ajax({
-            url: "/Manager/Dashboard/GetMultipleLineChartData",
-            type: "GET",
-            dataType: "json",
-            success: function (data) {
-                var LineChartContributions_labels = data.listTerms;
-                // var borderColors = [
-                //     "red", "blue", "green", "yellow", "orange", "purple", "cyan", "magenta",
-                //     "brown", "lime", "pink", "teal", "lavender", "maroon", "olive", "navy",
-                //     "aquamarine", "turquoise", "gold", "silver"
-                // ];
-                var borderColors = ["#FF5733", "#33FF57", "#3366FF", "#FF33A1", "#A133FF", "#33FFFF", "#FFD933", "#FF3366", "#33FFD9", "#9933FF"];
-                var dataSets = [];
+<script>var LineChartContributions_labels = chartDataForMultipleLine.listTerms;
+    // var borderColors = [
+    //     "red", "blue", "green", "yellow", "orange", "purple", "cyan", "magenta",
+    //     "brown", "lime", "pink", "teal", "lavender", "maroon", "olive", "navy",
+    //     "aquamarine", "turquoise", "gold", "silver"
+    // ];
+    var borderColors = ["#ffd380", "#ffa600", "#ff8531", "#ff6361", "#bc5090", "#8a508f", "#2c4875", "#FF3366", "#003f5c", "#00202e"];
+    var dataSets = [];
 
-                for (var i = 0; i < data.chartData.length; i++) {
-                    var setData = {
-                        label: data.chartData[i].facultyName,
-                        data: data.chartData[i].contributions,
-                        borderColor: borderColors[i],
-                        fill: false
-                    };
-                    dataSets.push(setData);
-                }
-        new Chart("LineChartContributions", {
-            type: "line",
-            data: {
-                labels: LineChartContributions_labels,
-                datasets: dataSets,
+    for (var i = 0; i < chartDataForMultipleLine.multipleLineChartData.length; i++) {
+        var setData = {
+            label: chartDataForMultipleLine.multipleLineChartData[i].facultyName,
+            data: chartDataForMultipleLine.multipleLineChartData[i].contributions,
+            borderColor: borderColors[i],
+            fill: false,
+            lineTension: 0,
+        };
+        dataSets.push(setData);
+    }
+
+    new Chart("LineChartContributions", {
+        type: "line",
+        data: {
+            labels: LineChartContributions_labels,
+            datasets: dataSets,
+        },
+        options: {
+            legend: { position: "bottom" },
+            title: {
+                display: false,
             },
-            options: {
-                legend: { position: "bottom" },
-                title: {
-                    display: false,
-                },
-            },
-        });
-            },
-            error: function (xhr, status, err) {
-                console.error("Err fetching End Point 1: ", xhr.responseText);
-            },
-        });
-    });
-  </script>
-  @* Chart 4 *@
-@* <script>
-    var myChart = new Chart("StackedBarChartContributions", {
+        },
+    });</script>
+@* Chart 4 *@
+<script>var StackedBarChartContributions_labels = chartDataForStackedBar.listTerms;
+    var borderColors = [
+        "#ff595e", "#ffca3a", "#8ac926", "#1982c4", "#6a4c93", "#ffadad", "#fdffb6", "#ffd6a5",
+        "#caffbf", "#9bf6ff", "#a0c4ff", "#bdb2ff", "#ffc6ff", "maroon", "olive", "navy",
+        "aquamarine", "turquoise", "gold", "silver"
+    ];
+    var dataSets = [];
+
+    for (var i = 0; i < chartDataForStackedBar.stackBarChartData.length; i++) {
+        var setData = {
+            label: chartDataForStackedBar.stackBarChartData[i].facultyName,
+            data: chartDataForStackedBar.stackBarChartData[i].contributions,
+            backgroundColor: borderColors[i],
+            fill: false
+        };
+        dataSets.push(setData);
+    }
+    new Chart("StackedBarChartContributions", {
         type: "bar",
         data: {
-            labels: ["bike", "car", "scooter", "truck", "auto", "Bus"],
-            datasets: [
-                {
-                    label: "worst",
-                    backgroundColor: "blue",
-                    data: [0.25, 1, 0.2],
-                },
-                {
-                    label: "Okay",
-                    backgroundColor: "green",
-                    data: [0.25, 0, 0.3],
-                },
-                {
-                    label: "bad",
-                    backgroundColor: "red",
-                    data: [0.5, 0, 0.5],
-                },
-            ],
+            labels: StackedBarChartContributions_labels,
+            datasets: dataSets,
         },
         options: {
             responsive: false,
@@ -331,119 +359,47 @@
                 ],
             },
         },
-    });</script> *@
-<script>
-    $(document).ready(function () {
-        // End Point
-        $.ajax({
-            url: "/Manager/Dashboard/GetStackBarChartContributions",
-            type: "GET",
-            dataType: "json",
-            success: function (data) {
-                var StackedBarChartContributions_labels = data.listTerms;
-                var borderColors = [
-                    "red", "blue", "green", "yellow", "orange", "purple", "cyan", "magenta",
-                    "brown", "lime", "pink", "teal", "lavender", "maroon", "olive", "navy",
-                    "aquamarine", "turquoise", "gold", "silver"
-                ];
-                var dataSets = [];
+    });</script>
+@* Chart 3 *@
+<script>var GroupBarChartContributers_labels = chartDataForGroupBar.listTerms;
+    var borderColors = [
+        "#ffadad", "#ffd6a5", "#fdffb6", "#caffbf", "#9bf6ff", "#a0c4ff", "#bdb2ff", "#ffc6ff",
+        "brown", "lime", "pink", "teal", "lavender", "maroon", "olive", "navy",
+        "aquamarine", "turquoise", "gold", "silver"
+    ];
+    var dataSets = [];
 
-                for (var i = 0; i < data.chartData.length; i++) {
-                    var setData = {
-                        label: data.chartData[i].facultyName,
-                        data: data.chartData[i].contributions,
-                        backgroundColor: borderColors[i],
-                        fill: false
-                    };
-                    dataSets.push(setData);
-                }
-                new Chart("StackedBarChartContributions", {
-                    type: "bar",
-                    data: {
-                        labels: StackedBarChartContributions_labels,
-                        datasets: dataSets,
-                    },
-                    options: {
-                        responsive: false,
-                        legend: {
-                            position: "bottom", // place legend on the right side of chart
-                        },
-                        scales: {
-                            xAxes: [
-                                {
-                                    stacked: true, // this should be set to make the bars stacked
-                                },
-                            ],
-                            yAxes: [
-                                {
-                                    stacked: true, // this also..
-                                },
-                            ],
-                        },
-                    },
-                });
+    for (var i = 0; i < chartDataForGroupBar.groupBarChartData.length; i++) {
+        var setData = {
+            label: chartDataForGroupBar.groupBarChartData[i].facultyName,
+            data: chartDataForGroupBar.groupBarChartData[i].contributors,
+            backgroundColor: borderColors[i],
+            fill: false
+        };
+        dataSets.push(setData);
+    }
+    new Chart("GroupBarChartContributers", {
+        type: "bar",
+        data: {
+            labels: GroupBarChartContributers_labels,
+            datasets: dataSets,
+        },
+        options: {
+            responsive: false,
+            legend: {
+                position: "bottom", // place legend on the right side of chart
             },
-            error: function (xhr, status, err) {
-                console.error("Err fetching End Point 1: ", xhr.responseText);
-            },
-        });
-    });
-</script>
-    @* Chart 3 *@
-<script>
-    $(document).ready(function () {
-        // End Point
-        $.ajax({
-            url: "/Manager/Dashboard/GetGroupBarChart",
-            type: "GET",
-            dataType: "json",
-            success: function (data) {
-                var GroupBarChartContributers_labels = data.listTerms;
-                var borderColors = [
-                    "red", "blue", "green", "yellow", "orange", "purple", "cyan", "magenta",
-                    "brown", "lime", "pink", "teal", "lavender", "maroon", "olive", "navy",
-                    "aquamarine", "turquoise", "gold", "silver"
-                ];
-                var dataSets = [];
-
-                for (var i = 0; i < data.chartData.length; i++) {
-                    var setData = {
-                        label: data.chartData[i].facultyName,
-                        data: data.chartData[i].contributors,
-                        backgroundColor: borderColors[i],
-                        fill: false
-                    };
-                    dataSets.push(setData);
-                }
-                new Chart("GroupBarChartContributers", {
-                    type: "bar",
-                    data: {
-                        labels: GroupBarChartContributers_labels,
-                        datasets: dataSets,
+            scales: {
+                xAxes: [
+                    {
+                        stacked: false, // this should be set to make the bars stacked
                     },
-                    options: {
-                        responsive: false,
-                        legend: {
-                            position: "bottom", // place legend on the right side of chart
-                        },
-                        scales: {
-                            xAxes: [
-                                {
-                                    stacked: false, // this should be set to make the bars stacked
-                                },
-                            ],
-                            yAxes: [
-                                {
-                                    stacked: false, // this also..
-                                },
-                            ],
-                        },
+                ],
+                yAxes: [
+                    {
+                        stacked: false, // this also..
                     },
-                });
+                ],
             },
-            error: function (xhr, status, err) {
-                console.error("Err fetching End Point 1: ", xhr.responseText);
-            },
-        });
-    });
- </script>
+        },
+    });</script>
