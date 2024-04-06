@@ -534,7 +534,9 @@ footer {
     background-color: #3e8e41;
 }
 
-
+.login-button-container {
+    padding-left: 500px;
+}
 
 .login-button-container a {
     border: 1px solid black;
@@ -558,6 +560,7 @@ footer {
     }
 
 .login-button {
+    
     background-color: #03aa6d;
 }
 

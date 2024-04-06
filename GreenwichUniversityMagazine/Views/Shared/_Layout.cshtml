@@ -29,11 +29,17 @@
                     }
                     else if (userRole == "COORDINATE")
                     {
-                        <a asp-area="Coordinate" asp-controller="Coordinate" asp-action="Index">COORDINATE</a>
+                        <a asp-area="Coordinate" asp-controller="Coordinate" asp-action="Index">Article Management</a>
+                    }
+                    else if (userRole == "MANAGER")
+                    {
+                        <a asp-area="Manager" asp-controller="Dashboard" asp-action="Overview">Dashboard</a>
+
                     }
                     else if (userRole == "ADMIN")
                     {
-                        <a asp-area="Student" asp-controller="Home" asp-action="Index">ADMIN</a>
+                        <a asp-area="Admin" asp-controller="User" asp-action="Index">User Management</a>
+                        <a asp-area="Admin" asp-controller="Term" asp-action="Index">Term Management</a>
 
                     }
                     <a href="#">Events</a>
