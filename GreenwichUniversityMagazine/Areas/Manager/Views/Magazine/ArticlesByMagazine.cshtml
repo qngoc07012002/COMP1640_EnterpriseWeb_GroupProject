@@ -63,8 +63,7 @@
                         {
                             <p>No resources found for this article.</p>
                         }
-
-                        <p>@articleVM.article.Body</p>
+                        @Html.Raw(@articleVM.article.Body)
                         <a href="@Url.Action("DownloadFile", "Magazine", new { articleId = @articleVM.article.ArticleId, imageUrls = articleVM.article.imgUrl, bodyText=@articleVM.article.Body })" class="btn btn-primary">Download Files</a>
                     </article>
                 }
@@ -76,7 +75,7 @@
 <script>
     function downloadAllArticles() {
         var selectedMagazineId = document.getElementById("selectedMagazineId").value;
-        window.location.href = '@Url.Action("DownloadAllArticles", "Magazine")' + '?selectedMagazineId=' + selectedMagazineId;
+        window.location.href = '@Url.Action("DownloadAllArticlesByMagazine", "Magazine")' + '?selectedMagazineId=' + selectedMagazineId;
     }
 </script>
 
