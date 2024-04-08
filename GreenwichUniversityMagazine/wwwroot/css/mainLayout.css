@@ -3,18 +3,31 @@ body {
     padding: 0;
     font-family: "Arial", sans-serif;
 }
-
-header {
+#header-main {
     background-color: #01013e;
     color: #ffffff;
-    padding: 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-grow: 1;
-
+    font-family: "Arial", sans-serif !important;
+    height: 80px !important;
+    max-height: 80px !important;
+    position: sticky;
+    top: 0px;
+    z-index: 3;
+}
+#header-main > a{
+    height:65px;
+    margin-left:30px;
 }
 
+/*header {
+    
+    height: 100px !important;
+    max-height: 100px !important
+}
+*/
 .nav-container {
     padding-left: 100px;
     flex-grow: 2;
@@ -225,7 +238,7 @@ body {
     font-family: "Arial", sans-serif;
 }
 
-header {
+/*header {
     background-color: #01013e;
     color: #ffffff;
     padding: 20px;
@@ -234,18 +247,18 @@ header {
     justify-content: space-between;
     flex-grow: 1;
 
-}
+}*/
 
 .nav-container {
     padding-left: 100px;
     flex-grow: 2;
 }
 
-header img.logo {
-    width: 250px; /* Điều chỉnh kích thước của logo */
-    height: auto; /* Đảm bảo tỷ lệ khung hình đúng */
+/*header img.logo {
+    width: 250px;*/ /* Điều chỉnh kích thước của logo */
+    /*height: auto;*/ /* Đảm bảo tỷ lệ khung hình đúng */
 
-}
+/*}*/
 
 nav {
     display: flex;
@@ -570,6 +583,29 @@ footer {
 
 .dropdown-content{
     z-index:2;
+}
+#button-scroll-top {
+    display: none;
+    position: fixed;
+    bottom: 20px; /* Đặt khoảng cách từ dưới cùng của trang */
+    right: 20px; /* Đặt khoảng cách từ phải cùng của trang */
+    background-color: #3232FF;
+    border: none;
+    cursor: pointer;
+    height: 38px;
+    width: 38px;
+    border-radius: 50%;
+    padding: 0px;
+}
+.icon-scroll-top {
+    filter: invert(99%) sepia(0%) saturate(232%) hue-rotate(19deg) brightness(108%) contrast(101%);
+}
+#button-scroll-top:hover .icon-scroll-top {
+    filter: invert(0%) sepia(100%) saturate(7447%) hue-rotate(238deg) brightness(120%) contrast(102%);
+}
+#button-scroll-top:hover {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    transform: scale(1.1);
 }
 
 
