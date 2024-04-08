@@ -81,8 +81,14 @@ namespace GreenwichUniversityMagazine.Areas.Manager.Controllers
                 DoughnutChartData
             });
             //End Of Chart 5
-
-
+            //Chart 6 Exceptions by Faculties
+            var PieChartData = await _unitOfWork.ArticleRepository.GetPieChart(rangeSort);
+            overviewVM.ChartDataList.Add(new
+            {
+                PieChartData
+            });
+         
+            //End of chart 6
             //Widget Data
             //Sum Contributions
             int sumContributions = 0;
@@ -106,6 +112,12 @@ namespace GreenwichUniversityMagazine.Areas.Manager.Controllers
             int sumUnapproved = await _unitOfWork.ArticleRepository.CountNumberOfUnapproved(rangeSort);
             //Sum of Magazines
             int sumMagazines = await _unitOfWork.MagazineRepository.CountNumberOfMagazine(rangeSort);
+            //Sum of Exceptions
+            dynamic dynamicChartData = PieChartData;
+
+            int[] data = dynamicChartData.data;
+
+            int sumExceptions = data.Sum();
             overviewVM.ChartDataList.Add(new
             {
                 sumContributions,
@@ -114,10 +126,12 @@ namespace GreenwichUniversityMagazine.Areas.Manager.Controllers
                 sumStudents,
                 sumFaculty,
                 sumUnapproved,
-                sumMagazines
+                sumMagazines,
+                sumExceptions
             });
-
             //End Of Widget Data
+
+
             //return Ok(overviewVM.ChartDataList);
             return View("~/areas/manager/views/dashboard/overview.cshtml", overviewVM);
 

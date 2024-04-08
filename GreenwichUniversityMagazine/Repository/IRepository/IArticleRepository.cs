@@ -11,6 +11,7 @@ namespace GreenwichUniversityMagazine.Repository.IRepository
         Task<IEnumerable<object>> GetMultipleLineChartData(int rangeSort);
         Task<IEnumerable<object>> GetGroupBarChart(int rangeSort);
         Task<IEnumerable<object>> GetStackBarChartContributions(int rangeSort);
+        Task<object> GetPieChart(int rangeSort);
         Task<object> GetDoughnutChart(int rangeSort);
         Task<int> CountNumberOfUnapproved(int rangeSort);
 
@@ -19,6 +20,7 @@ namespace GreenwichUniversityMagazine.Repository.IRepository
         List<Article> GetArticlesbyMagazine(int? id);
         List<Article> GetArticlesbyTerm(int? id);
         List<Article> GetArticlesbyFaculty(int? id);
+
 
     }
 }
