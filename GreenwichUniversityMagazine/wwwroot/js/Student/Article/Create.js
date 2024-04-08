@@ -14,7 +14,7 @@ function handleFileSelect(event) {
         const file = selectedFiles[i];
         const fileName = file.name;
         const fileType = fileName.split('.').pop().toUpperCase();
-        if (['DOC', 'DOCX', 'PDF', 'CSV', 'JPE', 'IMG', 'PNG', 'jpeg', 'jpg'].includes(fileType)) {
+        if (['DOC', 'DOCX', 'PDF', 'CSV', 'JPE', 'IMG', 'PNG', 'JPEG', 'JPG'].includes(fileType)) {
             files.push(file);
             addUploadItem(file);
         }
