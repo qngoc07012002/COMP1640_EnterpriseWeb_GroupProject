@@ -39,7 +39,12 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
             User user = _unitOfWork.UserRepository.GetById(studentId);
             ArticleVM articleVM = new ArticleVM()
             {
-                MyMagazines = _unitOfWork.MagazineRepository.GetAll().Where(u => u.EndDate >= DateTime.Now && u.FacultyId == user.FacultyId).Select(
+                MyMagazines = _unitOfWork.MagazineRepository.GetAll(includeProperty: "Term").Where(u =>
+                    u.EndDate >= DateTime.Now &&
+                    u.StartDate <= DateTime.Now &&
+                    u.FacultyId == user.FacultyId &&
+                    u.Term.EndDate > u.EndDate &&
+                    u.StartDate >= u.Term.StartDate).Select(
                     u => new SelectListItem
                     {
                         Text = u.Title,
@@ -58,7 +63,12 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
             {
                 ArticleVM articleVM = new ArticleVM()
                 {
-                    MyMagazines = _unitOfWork.MagazineRepository.GetAll(includeProperty: "Term").Where(u => u.EndDate >= DateTime.Now && u.FacultyId == user.FacultyId && u.Term.EndDate > DateTime.Now)
+                    MyMagazines = _unitOfWork.MagazineRepository.GetAll(includeProperty: "Term").Where(u =>
+                    u.EndDate >= DateTime.Now &&
+                    u.StartDate <= DateTime.Now &&
+                    u.FacultyId == user.FacultyId &&
+                    u.Term.EndDate > u.EndDate &&
+                    u.StartDate >= u.Term.StartDate)
                     .Select(u => new SelectListItem
                     {
                         Text = u.Title,
@@ -226,7 +236,13 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                 var UserIdGet = HttpContext.Session.GetString("UserId");
                 int.TryParse(UserIdGet, out int studentId);
                 User user = _unitOfWork.UserRepository.GetById(studentId);
-                articleVM.MyMagazines = _unitOfWork.MagazineRepository.GetAll(includeProperty: "Term").Where(u => u.EndDate >= DateTime.Now && u.FacultyId == user.FacultyId && u.Term.EndDate > DateTime.Now).
+                articleVM.MyMagazines = _unitOfWork.MagazineRepository.GetAll(includeProperty: "Term")
+                    .Where(u => 
+                    u.EndDate >= DateTime.Now &&
+                    u.StartDate <= DateTime.Now &&
+                    u.FacultyId == user.FacultyId && 
+                    u.Term.EndDate > u.EndDate &&
+                    u.StartDate >= u.Term.StartDate).
                             Select(u => new SelectListItem
                             {
                                 Text = u.Title,

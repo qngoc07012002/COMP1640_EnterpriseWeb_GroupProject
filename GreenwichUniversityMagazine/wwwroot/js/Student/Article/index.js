@@ -58,7 +58,7 @@ function updateArticleList(articles) {
                         </div>
                         <div class="card-button">
                             <div class="d-flex justify-content-between align-items-center">`;
-            if (new Date(article.magazines.term.startDate) <= new Date() && new Date(article.magazines.term.endDate) >= new Date() && article.status === false) {
+            if (new Date() && new Date(article.magazines.term.endDate) >= new Date() && article.status === false) {
                 if (new Date(article.magazines.endDate) >= new Date()) {
                     articleCard += `<a onClick="confirmDelete(${article.articleId})" class="btn btn-danger mx-2"><i class="bi bi-trash-fill"></i> Delete</a>`;
                     articleCard += `<a href="/student/article/Update?id=${article.articleId}" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i> Modify</a>`;
@@ -68,7 +68,7 @@ function updateArticleList(articles) {
 
             } else {
                 if (article.status === true) {
-                    articleCard += `<a href="/student/article/Update?id=${article.articleId}" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i>View</a>`;
+                    articleCard += `<a href="/student/article/SelectArticle?id=${article.articleId}" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i>View</a>`;
                 }
                 else {
                     articleCard += `<span class="text-danger mx-2">Expired Term</span>`;
