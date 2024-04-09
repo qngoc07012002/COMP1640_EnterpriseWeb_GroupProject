@@ -49,23 +49,12 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
             }
             else
             {
-                model.Articles = _unitOfWork.ArticleRepository.GetAll().Where(a => a.Status == true).ToList();
+                model.Articles = _unitOfWork.ArticleRepository.GetAll().Where(a => a.Status == true).OrderByDescending(a => a.ArticleId).ToList();
             }
 
             return View(model);
         }
 
-        /*public IActionResult GetArticlesByFacultyId(int facultyId)
-        {
-            var model = new ViewVM();
-          
-            model.Magazines = _unitOfWork.MagazineRepository.GetAll().ToList();
-          
-
-            model.Articles = _unitOfWork.ArticleRepository.GetArticlesbyFaculty(facultyId).ToList();
-
-            return View("Index", model);
-        }*/
 
 
 

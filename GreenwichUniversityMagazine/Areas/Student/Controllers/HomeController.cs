@@ -20,7 +20,7 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
             homeVM.Terms = _unitOfWork.TermRepository.GetAll().ToList();
             homeVM.Facultys = _unitOfWork.FacultyRepository.GetAll().ToList();
             homeVM.Magazines = _unitOfWork.MagazineRepository.GetAll().ToList();
-            homeVM.Articles = _unitOfWork.ArticleRepository.GetAll().ToList();
+            homeVM.Articles = _unitOfWork.ArticleRepository.GetAll().Where(a => a.Status == true).OrderByDescending(a => a.ArticleId).ToList();
             //Get information
             var UserIdGet = HttpContext.Session.GetString("UserId");
             int.TryParse(UserIdGet, out int userIdCurrent);
