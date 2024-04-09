@@ -3,14 +3,14 @@
     "",
     "\\GreenwichUniversityMagazine",
     "\\GreenwichUniversityMagazine\\Areas",
-    "\\GreenwichUniversityMagazine\\Areas\\Admin",
-    "\\GreenwichUniversityMagazine\\Areas\\Admin\\Views",
-    "\\GreenwichUniversityMagazine\\Areas\\Cordinate",
     "\\GreenwichUniversityMagazine\\Areas\\Guest",
     "\\GreenwichUniversityMagazine\\Areas\\Manager",
+    "\\GreenwichUniversityMagazine\\Areas\\Manager\\Controllers",
+    "\\GreenwichUniversityMagazine\\Areas\\Manager\\Views",
+    "\\GreenwichUniversityMagazine\\Areas\\Manager\\Views\\Magazine",
     "\\GreenwichUniversityMagazine\\Areas\\Student",
     "\\GreenwichUniversityMagazine\\Areas\\Student\\Controllers"
   ],
-  "SelectedNode": "\\GreenwichUniversityMagazine\\GreenwichUniversityMagazine.sln",
+  "SelectedNode": "\\GreenwichUniversityMagazine\\Areas\\Manager\\Controllers\\MagazineController.cs",
   "PreviewInSolutionExplorer": false
 }

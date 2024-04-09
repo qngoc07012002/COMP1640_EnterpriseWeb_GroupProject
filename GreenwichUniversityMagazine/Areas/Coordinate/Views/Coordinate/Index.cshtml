@@ -1,158 +1,4 @@
-﻿@* @model CoordinateVM
-@{
-    ViewData["Title"] = "Article Management";
-    int itemsPerPage = 6;
-    int totalItems;
-
-    List<Article> filteredArticles = Model.ListArticle.ToList();
-
-    if (!string.IsNullOrEmpty(Context.Request.Query["magazine"]))
-    {
-        filteredArticles = filteredArticles.Where(article => article.MagazinedId == Context.Request.Query["magazine"]).ToList();
-    }
-
-    totalItems = filteredArticles.Count();
-
-    int totalPages = (int)Math.Ceiling((double)totalItems / itemsPerPage);
-    int currentPage = Context.Request.Query["page"].Count > 0 ? Convert.ToInt32(Context.Request.Query["page"]) : 1;
-    int startIndex = (currentPage - 1) * itemsPerPage;
-}
-
-
-
-<link rel="stylesheet" href="~/css/Student/Article.css" />
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" />
-
-<div class="card shadow border-0 my-4">
-    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
-        <div class="row">
-            <div class="col-12 text-center">
-                <h2 class="py-2">Article Managment</h2>
-            </div>
-        </div>
-    </div>
-    <div class="card-body p-5">
-        <div class="row pb-3">
-            <div class="col-6"></div>
-            <div class="col-6 text-end">
-                <div class="form-group row">
-                    <label class="col-sm-2 col-form-label p-0">Magazine:</label>
-                    <div class="col-sm-10">
-                        <div class="form-floating py-2">
-                            <select id="magazineSelect" class="form-select form-control">
-                                <option value="all">All</option>
-                                @foreach (var magazine in Model.AvailableMagazines)
-                                {
-                                    <option value="@magazine.Value">@magazine.Text</option>
-                                }
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row" id="bookList">
-                @foreach (var article in Model.ListArticle.Skip(startIndex).Take(itemsPerPage))
-                {
-                    <div class="article-card" data-magazine-id="@article.MagazinedId">
-                        <img class="article-card-img" src="@article.imgUrl" alt="Top Image">
-                        <div class="article-information">
-                            <label class="article-card-text">Magazine: @article.Magazines.Title</label>
-                            <h2 class="article-card-text">
-                                @if (article.Status == false)
-                                {
-                                }
-                                else
-                                {
-                                }
-                                @article.Title
-                            </h2>
-                            <p class="article-card-text text-ellipsis">@article.SubTitle</p>
-                        </div>
-                        <div class="card-button">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <a asp-controller="Coordinate" asp-action="Detail" asp-route-Id="@article.ArticleId" class="btn btn-primary mx-2">
-                                    <i class="bi bi-pencil-square"></i> Detail
-                                </a>
-                                <a asp-controller="Coordinate" asp-action="ChangeStatus" asp-route-id="@article.ArticleId" class="btn @((article.Status ? "btn-danger" : "btn-success")) mx-2">
-                                    <i class="bi bi-pencil-square"></i> @((article.Status ? "Pending" : "Approve"))
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                }
-            </div>
-            <ul class="pagination home-product-pagination text-center">
-                @for (int i = 1; i <= totalPages; i++)
-                {
-                    <li class="pagination-item @(i == currentPage ? "pagination-item--active" : "")">
-                        <a href="?page=@i" class="pagination-item-link">@i</a>
-                    </li>
-                }
-            </ul>
-        </div>
-    </div>
-</div> *@
-
-@* <script>
-    document.getElementById('magazineSelect').addEventListener('change', function () {
-        var magazineId = this.value;
-        var articleCards = document.querySelectorAll('.article-card');
-
-        articleCards.forEach(function (card) {
-            var cardMagazineId = card.getAttribute('data-magazine-id');
-            if (magazineId === 'all' || cardMagazineId === magazineId) {
-                card.style.display = '';
-            } else {
-                card.style.display = 'none';
-            }
-        });
-    });
-    window.onload = function () {
-        var articleCards = document.querySelectorAll('.article-card');
-        articleCards.forEach(function (card) {
-            card.style.display = '';
-        });
-    };
-</script> *@
-@* <script>
-    document.getElementById('magazineSelect').addEventListener('change', function () {
-        var magazineId = this.value;
-        var articleCards = document.querySelectorAll('.article-card');
-
-        articleCards.forEach(function (card) {
-            var cardMagazineId = card.getAttribute('data-magazine-id');
-            if (magazineId === 'all' || cardMagazineId === magazineId) {
-                card.style.display = '';
-            } else {
-                card.style.display = 'none';
-            }
-        });
-
-        // Lưu trạng thái của magazine select vào localStorage
-        localStorage.setItem('selectedMagazine', magazineId);
-    });
-
-    window.onload = function () {
-        var articleCards = document.querySelectorAll('.article-card');
-        var selectedMagazine = localStorage.getItem('selectedMagazine');
-
-        articleCards.forEach(function (card) {
-            var cardMagazineId = card.getAttribute('data-magazine-id');
-            if (selectedMagazine === 'all' || selectedMagazine === cardMagazineId) {
-                card.style.display = '';
-            } else {
-                card.style.display = 'none';
-            }
-        });
-
-        // Khôi phục giá trị của magazine select từ localStorage
-        if (selectedMagazine) {
-            document.getElementById('magazineSelect').value = selectedMagazine;
-        }
-    };
-</script> *@
+﻿
 @model CoordinateVM
 @{
     ViewData["Title"] = "Article Management";
@@ -162,12 +8,17 @@
     int currentPage = Context.Request.Query["page"].Count > 0 ? Convert.ToInt32(Context.Request.Query["page"]) : 1;
     int startIndex = (currentPage - 1) * itemsPerPage;
     var sortedArticles = Model.ListArticle.Skip(startIndex).Take(itemsPerPage);
-    // string filterStatus = Context.Request.Query["status"].Count > 0 ? Context.Request.Query["status"].ToString() : "all";
-    // var filteredArticles = sortedArticles.Where(a => filterStatus == "all" || (filterStatus == "pending" && !a.Status) || (filterStatus == "approved" && a.Status));
 }
 <style>
     .approve-text {
         background-color: #28a745; /* Màu xanh lá cây */
+        color: #ffffff; /* Màu chữ trắng */
+        padding: 8px 12px; /* Thêm padding để tạo khoảng cách giữa văn bản và viền */
+        border-radius: 5px; /* Bo góc */
+    }
+
+    .pending-text {
+        background-color: red; /* Màu xanh lá cây */
         color: #ffffff; /* Màu chữ trắng */
         padding: 8px 12px; /* Thêm padding để tạo khoảng cách giữa văn bản và viền */
         border-radius: 5px; /* Bo góc */
@@ -241,7 +92,6 @@
         height: 30px; /* Adjust height as needed */
     }
 
-
 </style>
 <link rel="stylesheet" href="~/css/Student/Article.css" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" />
@@ -259,23 +109,6 @@
             <div class="col-6"></div>
             <div class="col-6 text-end">
                 <div class="form-group row">
-
-                  @*   <div class="col-sm-10">
-                        <div class="form-floating py-2">
-                            <select id="magazineSelect" class="form-select form-control" name="id">
-                                <option value="all">All</option>
-                                @foreach (var magazine in Model.AvailableMagazines)
-                                {
-                                    <option value="@magazine.Value">@magazine.Text</option>
-                                }
-                            </select>
-                        </div>
-                        <select id="statusSelect" name="status">
-                            <option value="all">All</option>
-                            <option value="pending">Pending</option>
-                            <option value="approved">Approved</option>
-                        </select>
-                    </div> *@
                     <div class="select-container">
                         <div class="select-wrapper">
                             <label for="magazineSelect">Magazine:</label>
@@ -288,19 +121,28 @@
                             </select>
                         </div>
 
-                        <div class="select-wrapper">
+                       @*  <div class="select-wrapper">
                             <label for="statusSelect">Status:</label>
                             <select id="statusSelect" name="status" class="select">
                                 <option value="all">All</option>
                                 <option value="pending">Pending</option>
                                 <option value="approved">Approved</option>
                             </select>
+                        </div> *@
+                        <div class="radio-container">
+                            <label>Status:</label><br>
+                            <input type="radio" id="all" name="status" value="all" checked>
+                            <label for="all">All</label><br>
+                            <input type="radio" id="pending" name="status" value="pending">
+                            <label for="pending">Pending</label><br>
+                            <input type="radio" id="approved" name="status" value="approved">
+                            <label for="approved">Approved</label><br>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="container">
+        <div class="container" id="articleListContainer">
             <div class="row" id="bookList">
                 <div class="col text-center">
                     @if (Model.ListArticle == null || !Model.ListArticle.Any())
@@ -316,12 +158,6 @@
                                 <div class="article-information">
                                     <label class="article-card-text">Magazine: @article.Magazines.Title</label>
                                     <h2 class="article-card-text">
-                                       @*  @if (article.Status == false)
-                                        {
-                                        }
-                                        else
-                                        {
-                                        } *@
                                         @article.Title
                                     </h2>
                                     <p class="article-card-text text-ellipsis">@article.SubTitle</p>
@@ -339,28 +175,15 @@
                                             <a asp-area="Student" asp-controller="Article" asp-action="SelectArticle" asp-route-Id="@article.ArticleId" class="btn btn-primary mx-2">
                                                 <i class="bi bi-pencil-square"></i> View
                                             </a>
-                                            @* <div class="pd-1"> <a asp-area="Student" asp-controller="Article" asp-action="SelectArticle" asp-route-id="@article.ArticleId" class="card-title h6 text-primary opacity-75 text-uppercase text-center">@article.Title</a> </div> *@
                                         }
-                                       @*  <a asp-controller="Coordinate" asp-action="ChangeStatus" asp-route-id="@article.ArticleId" class="btn @(article.Status == false ? "btn-danger" : "btn-success") mx-2">
-                                            @if(article.Status == false)
-                                            {
-                                                <i class="bi bi-pencil-square">Pending</i>
-                                            }
-                                            else
-                                            {
-                                                <span class="approve-text">Approved</span>
-                                            }
-                                        </a> *@
-                                        <div class="btn @(article.Status == false ? "btn-danger" : "btn-success") mx-2">
                                             @if (article.Status == false)
                                             {
-                                                <i class="bi bi-pencil-square">Pending</i>
+                                                <span class="pending-text">Pending</span>
                                             }
                                             else
                                             {
                                                 <span class="approve-text">Approved</span>
                                             }
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -378,46 +201,8 @@
             </ul>
         </div>
     </div>
-    @* <script>
-        // Lưu giá trị của select box vào sessionStorage và chuyển trang khi thay đổi magazine
-        document.getElementById('magazineSelect').addEventListener('change', function () {
-            var selectedMagazineId = this.value;
-            sessionStorage.setItem('selectedMagazineId', selectedMagazineId);
-            window.location.href = '@Url.Action("Index", "Coordinate")?id=' + selectedMagazineId;
-        });
-
-        // Sự kiện onchange cho phân trang
-        document.querySelectorAll('.pagination-item-link').forEach(link => {
-            link.addEventListener('click', function (event) {
-                event.preventDefault();
-                var selectedPage = this.getAttribute('data-page');
-                var selectedMagazineId = sessionStorage.getItem('selectedMagazineId');
-                window.location.href = '@Url.Action("Index", "Coordinate")?page=' + selectedPage + '&id=' + selectedMagazineId;
-            });
-        });
-
-        // Kiểm tra nếu có giá trị đã lưu trong sessionStorage, chọn lại select box với giá trị này
-        document.addEventListener("DOMContentLoaded", function () {
-            var selectedMagazineId = sessionStorage.getItem('selectedMagazineId');
-            var currentPath = window.location.pathname.toLowerCase();
-            if (selectedMagazineId && !currentPath.endsWith('/coordinate/index')) {
-                document.getElementById('magazineSelect').value = selectedMagazineId;
-            } else if (!selectedMagazineId && currentPath !== '/coordinate/index') {
-                document.getElementById('magazineSelect').value = 'all';
-            }
-        });
-        document.getElementById('statusSelect').addEventListener('change', function () {
-            var selectedStatus = this.value;
-            var selectedMagazineId = document.getElementById('magazineSelect').value; // Lấy giá trị của select magazine
-
-            // Tạo URL mới dựa trên giá trị được chọn
-            var newUrl = '@Url.Action("Index", "Coordinate")' + '?id=' + selectedMagazineId + '&status=' + selectedStatus;
-
-            // Chuyển hướng trang
-            window.location.href = newUrl;
-        });
-    </script> *@
     <script>
+
         // Lưu giá trị của select box vào sessionStorage và chuyển trang khi thay đổi magazine
         document.getElementById('magazineSelect').addEventListener('change', function () {
             var selectedMagazineId = this.value;
@@ -435,10 +220,16 @@
         });
 
         // Sự kiện onchange cho select box status
-        document.getElementById('statusSelect').addEventListener('change', function () {
-            var selectedStatus = this.value;
-            sessionStorage.setItem('selectedStatus', selectedStatus);
-            updateUrl();
+        // Lắng nghe sự kiện change của các radio buttons
+        var radioButtons = document.querySelectorAll('input[name="status"]');
+        radioButtons.forEach(function (radioButton) {
+            radioButton.addEventListener('change', function () {
+                if (this.checked) {
+                    var selectedStatus = this.value;
+                    sessionStorage.setItem('selectedStatus', selectedStatus);
+                    updateUrl();
+                }
+            });
         });
 
         // Hàm cập nhật URL dựa trên các giá trị được chọn
@@ -450,22 +241,32 @@
             window.location.href = newUrl;
         }
 
-        // Kiểm tra nếu có giá trị đã lưu trong sessionStorage, chọn lại select box với giá trị này
+        // Kiểm tra nếu có giá trị đã lưu trong sessionStorage, chọn lại select box và radio buttons với giá trị này
         document.addEventListener("DOMContentLoaded", function () {
             var selectedMagazineId = sessionStorage.getItem('selectedMagazineId');
             var selectedStatus = sessionStorage.getItem('selectedStatus');
             var currentPath = window.location.pathname.toLowerCase();
 
-            if (selectedMagazineId && !currentPath.endsWith('/coordinate/index')) {
-                document.getElementById('magazineSelect').value = selectedMagazineId;
-            } else if (!selectedMagazineId && currentPath !== '/coordinate/index') {
-                document.getElementById('magazineSelect').value = 'all';
-            }
+            // Kiểm tra nếu đường dẫn là "/coordinate/index", tức là không phải trang "Article Management"
+            if (!currentPath.includes('/coordinate/index')) {
+                if (selectedMagazineId) {
+                    document.getElementById('magazineSelect').value = selectedMagazineId;
+                } else {
+                    document.getElementById('magazineSelect').value = 'all';
+                }
 
-            if (selectedStatus && !currentPath.endsWith('/coordinate/index')) {
-                document.getElementById('statusSelect').value = selectedStatus;
-            } else if (!selectedStatus && currentPath !== '/coordinate/index') {
-                document.getElementById('statusSelect').value = 'all';
+                if (selectedStatus) {
+                    document.querySelector('input[name="status"][value="' + selectedStatus + '"]').checked = true;
+                } else {
+                    document.querySelector('input[name="status"][value="all"]').checked = true;
+                }
+            } else {
+                // Xóa session khi vào trang "Article Management"
+                sessionStorage.setItem('selectedMagazineId', 'all');
+
+                sessionStorage.setItem('selectedStatus', 'all');
+                document.querySelector('input[name="status"][value="all"]').checked = true;
             }
         });
     </script>
+

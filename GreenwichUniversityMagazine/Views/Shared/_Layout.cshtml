@@ -14,7 +14,7 @@
     
 </head>
 <body>
-    <header>
+    <header id="header-main">
         <a asp-area="Student" asp-controller="Home" asp-action="Index"> 
         <img src="~/img/Layout/logo.png" alt="Greenwich University Logo" class="logo">
         </a>
@@ -29,7 +29,7 @@
                     }
                     else if (userRole == "COORDINATE")
                     {
-                        <a asp-area="Coordinate" asp-controller="Coordinate" asp-action="Index">Article Management</a>
+                        <a href="/Coordinate/Coordinate/Index">Article Management</a>
                     }
                     else if (userRole == "MANAGER")
                     {
@@ -68,11 +68,11 @@
                         <div class="notification_container">
                             <button id="fetchDataButton" class="notification_button">
                                 @{
-                                    if (ViewBag.CommentsCount == 0)
+                                    if (ViewBag.CommentsCount == 0 || ViewBag.CommentsCount == null)
                                     {
 
                                     }
-                                    else if (ViewBag.CommentsCount < 5 && ViewBag.CommentsCount > 0)
+                                    else if (ViewBag.CommentsCount < 5 && ViewBag.CommentsCount != null)
                                     {
                                         <span class="notification_count">@ViewBag.CommentsCount</span>
                                     }
@@ -148,9 +148,13 @@
             @RenderBody()
         </main>
     </div>
-   
-   
+
+
+    <button id="button-scroll-top" onClick="scrollToTop()">
+        <img src="~/css/Manager/Button/scrollTop.svg" class="icon-scroll-top"/>
+    </button>
     <footer>
+ 
         <p>&copy; 2024 Greenwich University Forum. All rights reserved.</p>
     </footer>
     @await RenderSectionAsync("Scripts", required: false)
@@ -161,6 +165,23 @@
 <script src="/_framework/aspnetcore-browser-refresh.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+@* Scroll To Top Button *@
+<script>
+    window.onscroll = function () { scrollFunction() };
+
+    function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("button-scroll-top").style.display = "block";
+        } else {
+            document.getElementById("button-scroll-top").style.display = "none";
+        }
+    }
+
+    function scrollToTop() {
+        document.body.scrollTop = 0; // For Safari
+        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    }
+</script>
 
 <script>
     $(document).ready(function () {

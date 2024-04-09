@@ -26,8 +26,9 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
             model.Terms = _unitOfWork.TermRepository.GetAll().ToList();
             model.Facultys = _unitOfWork.FacultyRepository.GetAll().ToList();
             model.Magazines = _unitOfWork.MagazineRepository.GetAll().ToList();
+            model.Articles = _unitOfWork.ArticleRepository.GetAll().Where(a => a.Status == true).ToList();
 
-           
+
             if (!string.IsNullOrEmpty(searchString))
             {
                 model.Articles = _unitOfWork.ArticleRepository.Search(searchString).ToList();

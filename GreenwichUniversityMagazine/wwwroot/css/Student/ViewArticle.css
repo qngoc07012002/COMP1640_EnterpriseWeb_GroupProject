@@ -1,4 +1,92 @@
-﻿.main-container {
+﻿.main-container .sidebar {
+    margin: 10px;
+    margin-left: 270px;
+    width: 340px;
+    float: left;
+    height: auto;
+}
+
+    .main-container .sidebar .sidebar-image {
+        display: flex;
+        width: 200px;
+        height: auto;
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 10px;
+        justify-content: center;
+    }
+
+    .main-container .sidebar .form-inline {
+        width: 339px;
+        margin-top: 30px;
+    }
+
+input {
+    width: 219px;
+    height: 35px;
+    border-radius: 5px;
+    outline: none;
+    padding: 0 25px;
+}
+
+button {
+    color: #fff;
+    position: relative;
+    cursor: pointer;
+    height: 39px;
+    border-radius: 5px;
+    background-color: #01013e;
+}
+
+.main-container .sidebar .form-inline .input-group {
+    position: relative;
+    display: inline-block;
+    font-size: 20px;
+    box-sizing: border-box;
+    transition: 0.5s;
+}
+
+    .main-container .sidebar .form-inline .input-group .form-control {
+    }
+
+.main-container .sidebar .sidebar-title {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: auto;
+    height: auto;
+    background-color: #01013e;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    border-radius: 0.5em;
+    border: 0.5px solid black;
+    font-size: 15px;
+}
+
+.main-container .sidebar .select-article {
+    display: flex;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+    .main-container .sidebar .select-article > select {
+        width: 100%;
+        background: #fff;
+        color: #000;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border: 0.5px solid #2a2f3b;
+        padding: 1em;
+        border-radius: 0.5em;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+.select:hover {
+    background: #323741;
+}    
+.main-container {
     display: flex;
     width: 80%;
     margin: 0 auto; 
@@ -10,11 +98,7 @@
     width: 60%; 
 }
 
-.sidebar {
-    width: 40%; 
-    margin-left: 80px; 
-    padding: 20px;
-}
+
 
 .card-container {
     display: flex;
@@ -55,16 +139,7 @@
         padding-left: 0; /* Xóa padding trái cho main-container khi ở chế độ responsive */
     }
 
-    .sidebar {
-        width: 100%;
-        margin-left: 0;
-    }
-
-    .content,
-    .sidebar {
-        padding: 10px; /* Thêm padding cho content và sidebar khi ở chế độ responsive */
-    }
-
+        
     .card-container {
         padding-top: 10px; /* Thêm padding trên cho card-container khi ở chế độ responsive */
     }
@@ -82,14 +157,6 @@
         border-top-right-radius: 0; /* Loại bỏ border-radius cho phần trên phải của card khi ở chế độ responsive */
     }
 
-    .custom-select select,
-    .search-container input[type="text"] {
-        width: 100%; /* Phóng to thanh select và input ra toàn bộ chiều rộng của container khi ở chế độ responsive */
-    }
-
-    .search-container i {
-        margin-bottom: 10px; /* Giảm khoảng cách dưới cho icon trong search-container khi ở chế độ responsive */
-    }
     .viewbag {
         padding-left: 10px; /* Thay đổi padding khi ở chế độ responsive */
     }
@@ -97,50 +164,8 @@
 
 @media screen and (max-width: 600px) {
     .card-text-1 {
-        width: 100%; /* Thiết lập chiều rộng cho card-text-1 là 100% khi ở chế độ responsive */
+        width: 100%;  Thiết lập chiều rộng cho card-text-1 là 100% khi ở chế độ responsive 
     }
-}
-
-
-.custom-select {
-    margin-bottom: 50px; 
-    
-}
-.custom-select select {
-        width: 50%; /* Phóng to thanh select ra toàn bộ chiều rộng của container */
-        padding: 8px; /* Khoảng cách trong nội dung */
-        font-size: 16px; /* Kích thước chữ */
-        border: 1px solid #ccc; /* Đường viền */
-        border-radius: 5px; /* Bo tròn góc */
-        background-color: white; /* Màu nền */
-        appearance: none; /* Loại bỏ giao diện mặc định của select */
-        outline: none; /* Loại bỏ đường viền khi focus */
-        cursor: pointer; /* Chỉ định con trỏ khi di chuột qua */
-}
-
-.search-container input[type="text"] {
-    width: 70%; 
-    padding: 8px; 
-    font-size: 16px; 
-    border: 1px solid #ccc; 
-    border-radius: 5px; 
-}
-
-.search-container i {
-    font-size: 18px;
-    margin-bottom: 30px;
-}
-
-.search-container button {
-    padding: 8px; 
-    font-size: 16px;
-    border: none; 
-    background: none; 
-    cursor: pointer; 
-}
-
-.search-container button:hover {
-        color: #555; 
 }
 
 .home-product-pagination {

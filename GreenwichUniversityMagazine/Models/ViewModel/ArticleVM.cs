@@ -6,12 +6,15 @@ namespace GreenwichUniversityMagazine.Models.ViewModel
 {
     public class ArticleVM
     {
+        public List<Term>? Terms { get; set; }
+        public List<Article>? Articles { get; set; }
+        public List<Magazines>? Magazine { get; set; }
+        public List<Faculty>? Facultys { get; set; }
         public Article article { get; set; }
         [ValidateNever]
         public string? status { get; set; }
         [ValidateNever]
         public Magazines Magazines { get; set; }
-        public List<SelectListItem>? MonthYearOptions { get; set; }
         public User? User { get; set; }
         [ValidateNever]
         public IEnumerable<SelectListItem> MyUsers { get; set; }

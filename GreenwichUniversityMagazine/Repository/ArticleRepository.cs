@@ -271,12 +271,49 @@ namespace GreenwichUniversityMagazine.Repository
 
         }
 
+        public async Task<object> GetPieChart(int rangeSort)
+        {
+            var query = from article in _dbContext.Articles
+                        join comment in _dbContext.Comments on article.ArticleId equals comment.ArticleId into commentGroup
+                        from comment in commentGroup.DefaultIfEmpty()
+                        join magazine in _dbContext.Magazines on article.MagazinedId equals magazine.Id
+                        join faculty in _dbContext.Faculties on magazine.FacultyId equals faculty.Id
+                        join term in (from t in _dbContext.Terms
+                                      orderby t.EndDate descending
+                                      select new { t.Name, t.Id }).Take(rangeSort) on magazine.TermId equals term.Id
+                        select new
+                        {
+                            article.ArticleId,
+                            CommentId = comment != null ? comment.Id : 0,
+                            Faculty=faculty.Name
+                        };
+            query = query.Where(item => item.CommentId == 0);
+            query = query.OrderBy(item => item.Faculty);
+            var groupedQuery = query.GroupBy(item => item.Faculty)
+                        .Select(grouping => new
+                        {
+                            Faculty = grouping.Key,
+                            CommentCount = grouping.Count()
+                        });
+            var result = groupedQuery.ToList();
+            string[] labels = new string[result.Count()];
+            int[] data= new int[result.Count()];
+            for(int i= 0;i < result.Count();i++)
+            {
+                labels[i] = result[i].Faculty;
+                data[i] = result[i].CommentCount;
+            }
 
+            var chartData = new
+            {
+                labels,
+                data
+            };
 
+            return chartData;
+        }
 
-
-
-    }
+        }
 }
 
 

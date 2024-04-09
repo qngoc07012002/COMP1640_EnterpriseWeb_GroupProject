@@ -39,7 +39,12 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
             User user = _unitOfWork.UserRepository.GetById(studentId);
             ArticleVM articleVM = new ArticleVM()
             {
-                MyMagazines = _unitOfWork.MagazineRepository.GetAll().Where(u => u.EndDate >= DateTime.Now && u.FacultyId == user.FacultyId).Select(
+                MyMagazines = _unitOfWork.MagazineRepository.GetAll(includeProperty: "Term").Where(u =>
+                    u.EndDate >= DateTime.Now &&
+                    u.StartDate <= DateTime.Now &&
+                    u.FacultyId == user.FacultyId &&
+                    u.Term.EndDate > u.EndDate &&
+                    u.StartDate >= u.Term.StartDate).Select(
                     u => new SelectListItem
                     {
                         Text = u.Title,
@@ -58,7 +63,12 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
             {
                 ArticleVM articleVM = new ArticleVM()
                 {
-                    MyMagazines = _unitOfWork.MagazineRepository.GetAll(includeProperty: "Term").Where(u => u.EndDate >= DateTime.Now && u.FacultyId == user.FacultyId && u.Term.EndDate > DateTime.Now)
+                    MyMagazines = _unitOfWork.MagazineRepository.GetAll(includeProperty: "Term").Where(u =>
+                    u.EndDate >= DateTime.Now &&
+                    u.StartDate <= DateTime.Now &&
+                    u.FacultyId == user.FacultyId &&
+                    u.Term.EndDate > u.EndDate &&
+                    u.StartDate >= u.Term.StartDate)
                     .Select(u => new SelectListItem
                     {
                         Text = u.Title,
@@ -112,6 +122,7 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                 User user = _unitOfWork.UserRepository.Get(u => u.Id == comment.UserId);
                 commentUsers.Add(user);
             }
+            
             ArticleVM articleVM = new ArticleVM
             {
                 article = article,
@@ -119,28 +130,15 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                 Magazines = article.Magazines,
                 FormattedModifyDate = article.ModifyDate?.ToString("dd/MM/yyyy"),
                 MyComments = comments,
-                CommentUsers = commentUsers
-            };
+                CommentUsers = commentUsers,
+                Terms = _unitOfWork.TermRepository.GetAll().ToList(),
+                Facultys = _unitOfWork.FacultyRepository.GetAll().ToList(),
+                Magazine = _unitOfWork.MagazineRepository.GetAll().ToList(),
+                Articles = _unitOfWork.ArticleRepository.GetAll().Where(a => a.Status == true).ToList()
+        };
 
-            articleVM.MonthYearOptions = GetMonthYearOptions();
+            
             return View(articleVM);
-        }
-        private List<SelectListItem> GetMonthYearOptions()
-        {
-            var options = new List<SelectListItem>();
-            // Lặp qua các tháng và năm để tạo các tùy chọn
-            for (int year = 2024; year >= 2019; year--)
-            {
-                for (int month = 1; month <= 12; month++)
-                {
-                    options.Add(new SelectListItem
-                    {
-                        Value = $"{month:00}/{year}",
-                        Text = $"{CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month)} {year}"
-                    });
-                }
-            }
-            return options;
         }
 
         #region API CALLs
@@ -226,7 +224,13 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                 var UserIdGet = HttpContext.Session.GetString("UserId");
                 int.TryParse(UserIdGet, out int studentId);
                 User user = _unitOfWork.UserRepository.GetById(studentId);
-                articleVM.MyMagazines = _unitOfWork.MagazineRepository.GetAll(includeProperty: "Term").Where(u => u.EndDate >= DateTime.Now && u.FacultyId == user.FacultyId && u.Term.EndDate > DateTime.Now).
+                articleVM.MyMagazines = _unitOfWork.MagazineRepository.GetAll(includeProperty: "Term")
+                    .Where(u => 
+                    u.EndDate >= DateTime.Now &&
+                    u.StartDate <= DateTime.Now &&
+                    u.FacultyId == user.FacultyId && 
+                    u.Term.EndDate > u.EndDate &&
+                    u.StartDate >= u.Term.StartDate).
                             Select(u => new SelectListItem
                             {
                                 Text = u.Title,
