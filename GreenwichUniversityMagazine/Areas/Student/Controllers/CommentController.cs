@@ -95,12 +95,12 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                     }
                     else
                     {
-                        return Unauthorized("User is not authenticated."); // Trả về lỗi 401 nếu người dùng không xác thực
+                        return RedirectToAction("Login","Home"); // Trả về lỗi 401 nếu người dùng không xác thực
                     }
                 }
                 else
                 {
-                    return Unauthorized("User is not authenticated."); // Trả về lỗi 401 nếu người dùng không xác thực
+                    return RedirectToAction("Login", "Home"); // Trả về lỗi 401 nếu người dùng không xác thực
                 }
             }
             catch (Exception ex)
