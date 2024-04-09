@@ -54,13 +54,13 @@
                 style="width: 100%"></canvas>
     </div>
     <div class="exception-doughnut-container">
-        <h3 class="chart-name">Exceptions</h3>
+        <h3 class="chart-name">Exceptions and Comments</h3>
         <canvas id="exception-doughnut-chart" style="width:100%;height:70%"></canvas>
     </div>
     <div class="div4">
         <div class="widget-container">
             <div class="widget-data">
-                <h1 class="widget-contributions-title">@Model.ChartDataList[5].sumContributions</h1>
+                <h1 class="widget-contributions-title">@Model.ChartDataList[6].sumContributions</h1>
                 <h4>Contributions</h4>
             </div>
             <div class="widget-icon">
@@ -69,7 +69,7 @@
         </div>
         <div class="widget-container">
             <div class="widget-data">
-                <h1 class="widget-comment-title">@Model.ChartDataList[5].sumComments</h1>
+                <h1 class="widget-comment-title">@Model.ChartDataList[6].sumComments</h1>
                 <h4>Comments</h4>
             </div>
             <div class="widget-icon">
@@ -77,7 +77,7 @@
             </div>
         </div> <div class="widget-container">
             <div class="widget-data">
-                <h1 class="widget-unapprovedArticles-title">@Model.ChartDataList[5].sumUnapproved</h1>
+                <h1 class="widget-unapprovedArticles-title">@Model.ChartDataList[6].sumUnapproved</h1>
                 <h4>Unapproved</h4>
             </div>
             <div class="widget-icon">
@@ -86,7 +86,7 @@
         </div>
         <div class="widget-container">
             <div class="widget-data">
-                <h1 class="widget-exceptions-title">16.000</h1>
+                <h1 class="widget-exceptions-title">@Model.ChartDataList[6].sumExceptions</h1>
                 <h4>Exceptions</h4>
             </div>
             <div class="widget-icon">
@@ -125,7 +125,7 @@
     <div class="div8">
         <div class="widget-container">
             <div class="widget-data">
-                <h1 class="widget-students-title">@Model.ChartDataList[5].sumStudents</h1>
+                <h1 class="widget-students-title">@Model.ChartDataList[6].sumStudents</h1>
                 <h4>Students</h4>
             </div>
             <div class="widget-icon">
@@ -134,7 +134,7 @@
         </div>
         <div class="widget-container">
             <div class="widget-data">
-                <h1 class="widget-magazine-title">@Model.ChartDataList[5].sumMagazines</h1>
+                <h1 class="widget-magazine-title">@Model.ChartDataList[6].sumMagazines</h1>
                 <h4>Magazine</h4>
             </div>
             <div class="widget-icon">
@@ -143,7 +143,7 @@
         </div>
         <div class="widget-container">
             <div class="widget-data">
-                <h1 class="widget-contributors-title">@Model.ChartDataList[5].sumContributors</h1>
+                <h1 class="widget-contributors-title">@Model.ChartDataList[6].sumContributors</h1>
                 <h4>Contributors</h4>
             </div>
             <div class="widget-icon">
@@ -151,7 +151,7 @@
             </div>
         </div>  <div class="widget-container">
             <div class="widget-data">
-                <h1 class="widget-faculties-title">@Model.ChartDataList[5].sumFaculty</h1>
+                <h1 class="widget-faculties-title">@Model.ChartDataList[6].sumFaculty</h1>
                 <h4>Faculty</h4>
             </div>
             <div class="widget-icon">
@@ -165,8 +165,8 @@
                 style="width: 100%"></canvas>
     </div>
     <div class="div10">
-        <h3 class="chart-name">Exceptions</h3>
-        <canvas id="exception-doughnut-chart2" style="width:100%;height:80%"></canvas>
+        <h3 class="chart-name">Exceptions by Faculties</h3>
+        <canvas id="exception-pie-chart" style="width:100%;height:80%"></canvas>
 
     </div>
 </div>
@@ -176,17 +176,16 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 @* Chart 1 *@
 <script>
-    var chartDataForDoughnutChart = @Html.Raw(Json.Serialize(Model.ChartDataList[4]));
-    var chartDataForMultipleLine = @Html.Raw(Json.Serialize(Model.ChartDataList[1]));
     var chartDataForSingleLine = @Html.Raw(Json.Serialize(Model.ChartDataList[0]));
+    var chartDataForMultipleLine = @Html.Raw(Json.Serialize(Model.ChartDataList[1]));
     var chartDataForGroupBar = @Html.Raw(Json.Serialize(Model.ChartDataList[2]));
     var chartDataForStackedBar = @Html.Raw(Json.Serialize(Model.ChartDataList[3]));
+    var chartDataForDoughnutChart = @Html.Raw(Json.Serialize(Model.ChartDataList[4]));
+    var chartDataPieChart = @Html.Raw(Json.Serialize(Model.ChartDataList[5]));
 </script>
 
-<script>var chrt = document
-        .getElementById("exception-doughnut-chart")
-        .getContext("2d");
-    var chartId = new Chart(chrt, {
+<script>
+   new Chart("exception-doughnut-chart", {
         type: "doughnut",
         data: {
             labels: chartDataForDoughnutChart.doughnutChartData.labels,
@@ -213,24 +212,14 @@
             },
         },
     });</script>
-<script>var chrt = document
-        .getElementById("exception-doughnut-chart2")
-        .getContext("2d");
-    var chartId = new Chart(chrt, {
+<script>
+  new Chart("exception-pie-chart", {
         type: "pie",
         data: {
-            labels: [
-                "HTML",
-                "CSS",
-                "JAVASCRIPT",
-                "CHART.JS",
-                "JQUERY",
-                "BOOTSTRP",
-            ],
+            labels: chartDataPieChart.pieChartData.labels,
             datasets: [
                 {
-                    label: "online tutorial subjects",
-                    data: [20, 40, 13, 35, 20, 38],
+                    data: chartDataPieChart.pieChartData.data,
                     backgroundColor: [
                         "yellow",
                         "aqua",
@@ -250,8 +239,7 @@
                 position: "bottom",
             },
         },
-    });</script>
-<script>var ctx = document.getElementById("LineChartTotalContributions").getContext("2d");
+    });</script><script>var ctx = document.getElementById("LineChartTotalContributions").getContext("2d");
     var gradient = ctx.createLinearGradient(0, 0, 0, 400);
     gradient.addColorStop(0, '#e4f3d3');
     gradient.addColorStop(1, '#5ca9e9');
