@@ -17,9 +17,10 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
         public IActionResult Index(string? searchString, int? magazineid, int? termid, int? facultyid)
         {
             HomeVM homeVM = new HomeVM();
-            homeVM.Terms = _unitOfWork.TermRepository.GetAll().ToList();
+            DateTime currentDateTime = DateTime.Now;
+            homeVM.Terms = _unitOfWork.TermRepository.GetAll().Where(t => t.StartDate <= currentDateTime).ToList();
             homeVM.Facultys = _unitOfWork.FacultyRepository.GetAll().ToList();
-            homeVM.Magazines = _unitOfWork.MagazineRepository.GetAll().ToList();
+            homeVM.Magazines = _unitOfWork.MagazineRepository.GetAll().Where(t => t.StartDate <= currentDateTime).ToList();
             homeVM.Articles = _unitOfWork.ArticleRepository.GetAll().Where(a => a.Status == true).OrderByDescending(a => a.ArticleId).ToList();
             //Get information
             var UserIdGet = HttpContext.Session.GetString("UserId");
