@@ -28,9 +28,9 @@
         @if (Model.Any())
         {
         <br/>
-        <div style="padding-left: 1150px; display: inline-block;">
-             <button type="button" class="btn btn-primary" onclick="downloadAllArticles()">Download All Articles</button>
-        </div>
+            <div style="padding-left: 880px; display: inline-block; width:500px;">
+                 <button type="button" class="btn btn-primary" onclick="downloadAllArticles()">Download All Articles</button>
+            </div>
 
             @foreach (var articleVM in Model)
             {
@@ -64,7 +64,7 @@
                             <p>No resources found for this article.</p>
                         }
                         @Html.Raw(@articleVM.article.Body)
-                        <a href="@Url.Action("DownloadFile", "Magazine", new { articleId = @articleVM.article.ArticleId, imageUrls = articleVM.article.imgUrl, bodyText=@articleVM.article.Body })" class="btn btn-primary">Download Files</a>
+                        <a href="@Url.Action("DownloadFile", "DownloadZipFile", new { articleId = @articleVM.article.ArticleId, imageUrls = articleVM.article.imgUrl, bodyText=@articleVM.article.Body })" class="btn btn-primary">Download Files</a>
                     </article>
                 }
             }
@@ -75,7 +75,7 @@
 <script>
     function downloadAllArticles() {
         var selectedMagazineId = document.getElementById("selectedMagazineId").value;
-        window.location.href = '@Url.Action("DownloadAllArticlesByMagazine", "Magazine")' + '?selectedMagazineId=' + selectedMagazineId;
+        window.location.href = '@Url.Action("DownloadAllArticlesByMagazine", "DownloadZipFile")' + '?selectedMagazineId=' + selectedMagazineId;
     }
 </script>
 
