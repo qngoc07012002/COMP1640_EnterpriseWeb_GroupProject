@@ -23,10 +23,10 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
         public IActionResult Index(string? searchString, int? magazineid, int? termid, int? facultyid, int? articlesid)
         {
             ViewVM model = new ViewVM();
-            
-            model.Terms = _unitOfWork.TermRepository.GetAll().ToList();
+            DateTime currentDateTime = DateTime.Now;
+            model.Terms = _unitOfWork.TermRepository.GetAll().Where(t => t.StartDate <= currentDateTime).ToList();
             model.Facultys = _unitOfWork.FacultyRepository.GetAll().ToList();
-            model.Magazines = _unitOfWork.MagazineRepository.GetAll().ToList();
+            model.Magazines = _unitOfWork.MagazineRepository.GetAll().Where(t => t.StartDate <= currentDateTime).ToList();
             model.Articles = _unitOfWork.ArticleRepository.GetAll().Where(a => a.Status == true).ToList();
            
 

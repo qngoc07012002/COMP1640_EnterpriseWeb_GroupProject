@@ -21,10 +21,11 @@ namespace GreenwichUniversityMagazine.Repository
                 .ToList();
         }
 
-       
+
 
         public List<Article> GetArticlesbyMagazine(int? id)
         {
+
             var query = _dbContext.Articles.Where(c => c.MagazinedId == id && c.Status == true).OrderByDescending(a => a.ArticleId);
             return query.ToList();
         }
