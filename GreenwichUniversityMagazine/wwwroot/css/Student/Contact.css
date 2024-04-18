@@ -15,7 +15,7 @@
     padding-left: 120px;
     display: flex;
     flex-wrap: wrap;
-    gap: 20px; /* Khoảng cách giữa các card */
+    gap: 20px; 
     background: linear-gradient(375deg, #1cc7d0, #2ede98);
   
 }
@@ -27,7 +27,7 @@
 }
 
 .wrapper {
-    height: 500px;
+    height: 400px;
     width: 400px;
     position: relative;
     transform-style: preserve-3d;
@@ -112,35 +112,35 @@
             background: linear-gradient(375deg, transparent, transparent);
         }
 /* Thiết lập responsive cho card-member */
-@media (max-width: 1200px) {
+/*@media (max-width: 1000px) {
     .card-member {
-        grid-template-columns: repeat(3, 1fr); /* Hiển thị 3 cột trên màn hình có kích thước nhỏ hơn 1200px */
-        padding-left: 50px; /* Giảm padding bên trái để làm chỗ cho card */
-    }
+        grid-template-columns: repeat(3, 1fr);*/ /* Hiển thị 3 cột trên màn hình có kích thước nhỏ hơn 1200px */
+        /*padding-left: 50px;*/ /* Giảm padding bên trái để làm chỗ cho card */
+    /*}
 }
 
 @media (max-width: 768px) {
     .card-member {
-        grid-template-columns: repeat(2, 1fr); /* Hiển thị 2 cột trên màn hình có kích thước nhỏ hơn 768px */
-        padding-left: 20px; /* Giảm padding bên trái để làm chỗ cho card */
-    }
+        grid-template-columns: repeat(2, 1fr);*/ /* Hiển thị 2 cột trên màn hình có kích thước nhỏ hơn 768px */
+        /*padding-left: 20px;*/ /* Giảm padding bên trái để làm chỗ cho card */
+    /*}
 }
 
 @media (max-width: 480px) {
     .card-member {
-        grid-template-columns: 1fr; /* Hiển thị 1 cột trên màn hình có kích thước nhỏ hơn 480px */
-        padding-left: 10px; /* Giảm padding bên trái để làm chỗ cho card */
-        padding-right: 10px; /* Giảm padding bên phải để làm chỗ cho card */
-    }
+        grid-template-columns: 1fr;*/ /* Hiển thị 1 cột trên màn hình có kích thước nhỏ hơn 480px */
+        /*padding-left: 10px;*/ /* Giảm padding bên trái để làm chỗ cho card */
+        /*padding-right: 10px;*/ /* Giảm padding bên phải để làm chỗ cho card */
+    /*}
 
     .wrapper {
-        width: 100%; /* Đảm bảo card chiếm full chiều rộng trên màn hình nhỏ */
-    }
+        width: 100%;*/ /* Đảm bảo card chiếm full chiều rộng trên màn hình nhỏ */
+    /*}
 
         .wrapper .card {
-            width: 100%; /* Đảm bảo card chiếm full chiều rộng trên màn hình nhỏ */
-        }
-}
+            width: 100%;*/ /* Đảm bảo card chiếm full chiều rộng trên màn hình nhỏ */
+        /*}
+}*/
 
 
 
