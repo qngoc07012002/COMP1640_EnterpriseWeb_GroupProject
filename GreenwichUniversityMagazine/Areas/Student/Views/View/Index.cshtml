@@ -16,34 +16,36 @@
 <link rel="stylesheet" href="~/css/Student/ViewArticle.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-<div class="viewbag" style=" padding-left: 50px;
-    color: #007bff;">
-    @if (ViewBag.MagazineName != null)
-    {
-        <h2>Magazine: @ViewBag.MagazineName</h2>
-    }
-    @if (ViewBag.TermName != null)
-    {
-        <h2>Term: @ViewBag.TermName</h2>
-    }
-    @if (ViewBag.FacultyName != null)
-    {
-        <h2>Faculty: @ViewBag.FacultyName</h2>
-    }
-</div>
+
 <div class="main-container">
+
     <div class="content">
         <div class="card-container" id="cardContainer">
+            <div class="viewbag" style="border-bottom: 1px solid black; 
+    color: #01013e; font-size: 24px; font-family: 'Signika', sans-serif; margin-bottom: 20px">
+    @if (ViewBag.MagazineName != null)
+    {
+        <h2>Magazine - @ViewBag.MagazineName</h2>
+    } else if (ViewBag.TermName != null)
+    {
+        <h2>Term - @ViewBag.TermName</h2>
+    } else if (ViewBag.FacultyName != null)
+    {
+        <h2>Faculty - @ViewBag.FacultyName</h2>
+    } else  {
+        <h2>Article List</h2>
+    }
+</div>
             @foreach (var article in Model.Articles.Skip(startIndex).Take(itemsPerPage))
             {
-                <div class="card-1">
+                <div class="card-1" >
                     <div class="card-image-1">
                         <img src="@article.imgUrl" alt="image" />
                     </div>
                     <div class="card-text-1">
                         <a asp-area="Student" asp-controller="Article" asp-action="SelectArticle" asp-route-id="@article.ArticleId"><h3 >@article.Title</h3></a>
                         <p>@article.SubTitle</p>
-                        <p style="color: #00BFFF"> Magazine @article.Magazines.Title</p>
+                        <p style="color: #808080">@article.Magazines.Title</p>
                     </div>
                 </div>
             }
