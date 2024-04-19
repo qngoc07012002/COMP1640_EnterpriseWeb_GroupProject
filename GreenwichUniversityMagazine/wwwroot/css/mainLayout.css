@@ -2,6 +2,8 @@ body {
     margin: 0;
     padding: 0;
     font-family: "Arial", sans-serif;
+    min-height:100vh;
+    position:relative;
 }
 #header-main {
     background-color: #01013e;
@@ -16,6 +18,7 @@ body {
     position: sticky;
     top: 0px;
     z-index: 3;
+    line-height:24px;
 }
 #header-main > a{
     height:65px;
@@ -26,18 +29,16 @@ body {
     
     height: 100px !important;
     max-height: 100px !important
+    
 }
 */
-.nav-container {
-    padding-left: 100px;
-    flex-grow: 2;
-}
 
 
-header img.logo {
-    width: 250px; /* Điều chỉnh kích thước của logo */
-    height: auto; /* Đảm bảo tỷ lệ khung hình đúng */
-}
+
+.logo {
+        width: 250px;  
+        height: auto;  
+    }
 
 nav {
     display: flex;
@@ -45,7 +46,7 @@ nav {
     align-items: center;
 }
 
-    nav a {
+    nav> a {
         color: #ffffff;
         text-decoration: none;
         margin: 0 20px;
@@ -58,12 +59,12 @@ nav {
     height: 50px;
     border-radius: 50%; /* Làm cho hình tròn */
     overflow: hidden; /* Đảm bảo hình ảnh bị cắt theo hình tròn */
-    border: 2px solid #ffffff;
+    /*border: 2px solid #ffffff;*/
     cursor: pointer;
     background: white;
 }
 
-    .user-logo img {
+    .user-logo > img {
         width: 100%;
         height: 100%;
         object-fit: cover; /* Đảm bảo hình ảnh không bị méo khi cắt theo hình tròn */
@@ -78,33 +79,33 @@ footer {
     color: #ffffff;
     text-align: center;
     padding: 10px 0;
-    /*position: fixed;*/
     bottom: 0;
     width: 100%;
+    position:absolute;
 }
 
 .container {
 }
 
-.notification_container {
+/*.notification_container {
     position: relative;
     display: block;
     width: 28px;
     margin: auto 0;
     overflow: hidden;
     padding-right: 20px;
-}
+}*/
 
-.notification_icon {
+/*.notification_icon {
     position: relative;
     top: 4px;
     z-index: 1;
     font-size: 24px;
     color: white;
     cursor: pointer;
-}
+}*/
 
-.notification_count {
+/*.notification_count {
     position: absolute;
     top: 0;
     right: 0;
@@ -120,18 +121,21 @@ footer {
     color: white;
     font-family: "Roboto", sans-serif;
     font-weight: bold;
-}
+}*/
 
 .notification_button {
     background-color: transparent;
     border: none;
+    height:50px;
+    width:50px;
+    padding:0;
 }
 
 .notification_list_container {
     position: absolute;
     width: 500px;
-    top: 10%;
-    right: 2%;
+    top: 70px;
+    right: 20px;
     padding: 10px;
     width: 20%;
     border-radius: 10px;
@@ -143,7 +147,7 @@ footer {
     max-width: 100%;
     text-decoration: none;
 }
-
+/*
 .notification_detail_container {
     border: 1px solid transparent;
     margin-bottom: 10px;
@@ -155,18 +159,19 @@ footer {
 
     .notification_detail_container:hover {
         background-color: #3c3c9e;
-    }
+    }*/
 
 .notification_title,
 .notification_description,
 .notification_timeUpdate {
     color: white;
     font-size: 13px; /* Set font size for consistency */
-    max-width: 100%; /* Set maximum width to ensure text doesn't overflow */
-    overflow: hidden; /* Hide any overflowing text */
-    text-overflow: ellipsis; /* Add ellipsis (...) for text that overflows */
     padding: 0;
     margin: 0;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    -webkit-line-clamp: 2;
 }
 
 .notification_description {
@@ -177,25 +182,6 @@ footer {
     font-size: 11px;
 }
 
-.notification_viewMore {
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.notification_viewMore_heading:hover {
-    background-color: #5a5ad6;
-}
-
-.notification_viewMore_heading {
-    color: white;
-    background-color: #4444c3;
-    line-height: 30px;
-    font-size: 10px;
-    border-radius: 5px;
-    width: 100%;
-    text-align: center;
-    justify-content: center;
-}
 
 .notification_detail_wrapper {
     padding-top: 10px;
@@ -211,7 +197,7 @@ footer {
     margin: 5px;
 }
 .notificationbody {
-    max-height: 500px;
+    max-height:500px;
     overflow-y: auto;
 }
 
@@ -232,11 +218,11 @@ footer {
         .notificationbody::-webkit-scrollbar-thumb:hover {
             background: #555;
         }
-body {
+/*body {
     margin: 0;
     padding: 0;
     font-family: "Arial", sans-serif;
-}
+}*/
 
 /*header {
     background-color: #01013e;
@@ -249,17 +235,17 @@ body {
 
 }*/
 
-.nav-container {
+/*.nav-container {
     padding-left: 100px;
     flex-grow: 2;
-}
+}*/
 
 /*header img.logo {
     width: 250px;*/ /* Điều chỉnh kích thước của logo */
     /*height: auto;*/ /* Đảm bảo tỷ lệ khung hình đúng */
 
 /*}*/
-
+/*
 nav {
     display: flex;
     justify-content: flex-start;
@@ -272,35 +258,35 @@ nav {
         margin: 0 20px;
         font-size: 18px;
         position: relative;
-    }
+    }*/
 
-.user-logo {
+/*.user-logo {
     width: 35px;
     height: 35px;
-    border-radius: 50%; /* Làm cho hình tròn */
-    overflow: hidden; /* Đảm bảo hình ảnh bị cắt theo hình tròn */
-    border: 2px solid #ffffff;
+    border-radius: 50%;*/ /* Làm cho hình tròn */
+    /*overflow: hidden;*/ /* Đảm bảo hình ảnh bị cắt theo hình tròn */
+    /*border: 2px solid #ffffff;
 }
 
     .user-logo img {
         width: 100%;
         height: 100%;
-        object-fit: cover; /* Đảm bảo hình ảnh không bị méo khi cắt theo hình tròn */
-    }
+        object-fit: cover;*/ /* Đảm bảo hình ảnh không bị méo khi cắt theo hình tròn */
+    /*}*
 
 main {
     padding: 20px;
 }
 
-footer {
+/*footer {
     background-color: #01013e;
     color: #ffffff;
     text-align: center;
-    padding: 10px 0;
+    padding: 10px 0;*/
     /*position: fixed;*/
-    bottom: 0;
+    /*bottom: 0;
     width: 100%;
-}
+}*/
 
 .container {
 }
@@ -308,44 +294,37 @@ footer {
 .notification_container {
     position: relative;
     display: block;
-    width: 28px;
-    height: 28px;
+    width: 50px;
+    height: 50px;
     height: auto;
     overflow: hidden;
-    padding-right: 20px;
-    margin-right: 20px;
 }
 
 .notification_icon {
-    position: relative;
-    top: 4px;
     z-index: 1;
-    font-size: 24px;
     color: white;
 }
 
 .notification_count {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 10%;
+    right: 15%;
     z-index: 2;
     font-size: 11px;
     border-radius: 50%;
     background: #d60b28;
-    width: 16px;
-    height: 16px;
-    line-height: 16px;
-    display: block;
+    width: 18px;
+    height: 18px;
     text-align: center;
     color: white;
     font-family: "Roboto", sans-serif;
     font-weight: bold;
 }
 
-.notification_button {
+/*.notification_button {
     background-color: transparent;
     border: none;
-}
+}*/
 
 .notification_list_container {
     position: absolute;
@@ -362,29 +341,31 @@ footer {
 }
 
 .notification_detail_container {
-    border: 1px solid transparent;
+    border: 1px solid grey;
     margin-bottom: 10px;
-    height: 75px;
+    height: 120px;
+    max-height:120px;
     background-color: #272790;
     padding: 10px;
     border-radius: 10px;
+
 }
 
     .notification_detail_container:hover {
         background-color: #3c3c9e;
     }
 
-.notification_title,
+/*.notification_title,
 .notification_description,
 .notification_timeUpdate {
     color: white;
-    font-size: 13px; /* Set font size for consistency */
-    max-width: 100%; /* Set maximum width to ensure text doesn't overflow */
-    overflow: hidden; /* Hide any overflowing text */
-    text-overflow: ellipsis; /* Add ellipsis (...) for text that overflows */
-    padding: 0;
+    font-size: 13px;*/ /* Set font size for consistency */
+    /*max-width: 100%;*/ /* Set maximum width to ensure text doesn't overflow */
+    /*overflow: hidden;*/ /* Hide any overflowing text */
+    /*text-overflow: ellipsis;*/ /* Add ellipsis (...) for text that overflows */
+    /*padding: 0;
     margin: 0;
-}
+}*/
 
 .notification_description {
     font-size: 12px;
@@ -394,7 +375,7 @@ footer {
     font-size: 11px;
 }
 
-.notification_viewMore {
+/*.notification_viewMore {
     text-decoration: none;
 }
 
@@ -411,7 +392,7 @@ footer {
     width: 100%;
     text-align: center;
     justify-content: center;
-}
+}*/
 
 .notification_detail_wrapper {
     padding-top: 10px;
@@ -424,12 +405,15 @@ footer {
 }
 
 .notification_heading {
-    margin: 5px;
+    text-align:center;
 }
 
 .logned_bar {
     display: flex;
-    justify-content: flex-end;
+    justify-content:center;
+    align-items:center;
+    width:250px;
+    height:80px;
 }
 
 
@@ -438,26 +422,34 @@ footer {
     border-radius: 50%;
     overflow: hidden;
     padding: 0;
-    margin: 0;
-    margin-right: 20px;
+    margin: 0 auto;
+    vertical-align: middle;
+    height:50px;
+    width:50px;
+  
 }
 
 /* The container <div> - needed to position the dropdown content */
 .dropdown {
     position: relative;
     display: inline-block;
+    height:100%;
+    align-content:center;
+    width:54px;
 }
 
 /* Dropdown Content (Hidden by Default) */
 .dropdown-content {
     display: none;
     position: absolute;
-    right: 0px;
+    right:0;
     background-color: #1f1f1f;
     min-width: 300px;
-    z-index: 1;
+    z-index: 2;
     border-radius: 5%;
     overflow: hidden;
+    margin-top:8px;
+    margin-right:-40px;
 }
 
 .black-header {
@@ -481,7 +473,7 @@ footer {
     top: 50%;
 }
 
-    .user-image img {
+    .user-image > img {
         width: 100%;
         height: 100%;
         object-fit: cover;
@@ -509,7 +501,7 @@ footer {
     display: inline-block;
 }
 
-    .dropdown-content-child img {
+    .dropdown-content-child > img {
         display: inline-block;
         vertical-align: middle;
     }
@@ -548,7 +540,8 @@ footer {
 }
 
 .login-button-container {
-    padding-left: 500px;
+    margin-right: 30px;
+    width:250px;
 }
 
 .login-button-container a {
@@ -581,9 +574,7 @@ footer {
         background-color: #16c988;
     }
 
-.dropdown-content{
-    z-index:2;
-}
+
 #button-scroll-top {
     display: none;
     position: fixed;
