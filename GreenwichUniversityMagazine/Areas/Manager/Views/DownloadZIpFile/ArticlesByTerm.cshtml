@@ -1,0 +1,76 @@
+﻿@using GreenwichUniversityMagazine.Models.ViewModel
+@model List<ArticleVM>
+
+@{
+    ViewData["Title"] = "Articles By Term";
+}
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Articles By Term</title>
+    <link rel="stylesheet" href="~/css/Manager/articlesbymagazine.css" />
+</head>
+
+<div class="container">
+    <h2>Select a Term</h2>
+    <form method="get" class="my-form">
+        <div class="form-group">
+            @Html.DropDownList("selectedTermId", ViewBag.Terms as SelectList, "Select a Term", new { @class = "form-control custom-dropdown" })
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-show-articles">Show Articles</button>
+    </form>
+
+    @if (Model != null && Model.Any())
+    {
+        <br />
+        <div style="padding-left: 880px; display: inline-block; width:500px;">
+            <button type="button" class="btn btn-primary" onclick="downloadAllArticles()">Download All Articles</button>
+        </div>
+
+        @foreach (var articleVM in Model)
+        {
+            if (articleVM.article.Status == true)
+            {
+                <article class="article">
+                    <h2>@articleVM.article.Title</h2>
+                    <p>@articleVM.article.SubTitle</p>
+                    <img src="@articleVM.article.imgUrl" height="350px" width="450px" />
+                    @{
+                        var articleId = articleVM.article.ArticleId;
+                        var resourceFolderPath = $"~/Resource/Article/{articleId}/";
+                        var physicalResourceFolderPath = $"{Environment.CurrentDirectory}/wwwroot/Resource/Article/{articleId}/";
+                    }
+
+                    <h3>Resources</h3>
+
+                    @if (Directory.Exists(physicalResourceFolderPath))
+                    {
+                        <ul class="resources">
+                            @foreach (var file in new DirectoryInfo(physicalResourceFolderPath).GetFiles())
+                            {
+                                var fileName = file.Name;
+                                var filePath = $"{resourceFolderPath}{fileName}";
+                                <li><a href="@Url.Content(filePath)">@fileName</a></li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <p>No resources found for this article.</p>
+                    }
+                    @Html.Raw(articleVM.article.Body)
+                    <a href="@Url.Action("DownloadFile", "DownloadZipFile", new { articleId = @articleVM.article.ArticleId, imageUrls = articleVM.article.imgUrl, bodyText=@articleVM.article.Body })" class="btn btn-primary">Download Files</a>
+                </article>
+            }
+        }
+    }
+</div>
+
+<script>
+    function downloadAllArticles() {
+        var selectedTermId = document.getElementById("selectedTermId").value;
+        window.location.href = '@Url.Action("DownloadAllArticlesByTerm", "DownloadZipFile")' + '?selectedTermId=' + selectedTermId;
+    }
+</script>

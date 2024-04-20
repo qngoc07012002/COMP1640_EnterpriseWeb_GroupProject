@@ -7,6 +7,7 @@ namespace GreenwichUniversityMagazine.Repository
     public class ArticleRepository : Repository<Article>, IArticleRepository
     {
         private dbContext _dbContext;
+        
         public ArticleRepository(dbContext dbContext) : base(dbContext)
         {
             _dbContext = dbContext;
@@ -20,21 +21,22 @@ namespace GreenwichUniversityMagazine.Repository
                 .ToList();
         }
 
-       
+
 
         public List<Article> GetArticlesbyMagazine(int? id)
         {
-            var query = _dbContext.Articles.Where(c => c.MagazinedId == id && c.Status == true);
+
+            var query = _dbContext.Articles.Where(c => c.MagazinedId == id && c.Status == true).OrderByDescending(a => a.ArticleId);
             return query.ToList();
         }
         public List<Article> GetArticlesbyTerm(int? id)
         {
-            var query = _dbContext.Articles.Where(c => c.Magazines.TermId == id && c.Status == true);
+            var query = _dbContext.Articles.Where(c => c.Magazines.TermId == id && c.Status == true).OrderByDescending(a => a.ArticleId);
             return query.ToList();
         }
         public List<Article> GetArticlesbyFaculty(int? id)
         {
-            var query = _dbContext.Articles.Where(c => c.Magazines.FacultyId == id && c.Status == true);
+            var query = _dbContext.Articles.Where(c => c.Magazines.FacultyId == id && c.Status == true).OrderByDescending(a => a.ArticleId);
             return query.ToList();
         }
 

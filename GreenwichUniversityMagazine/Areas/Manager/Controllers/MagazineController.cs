@@ -30,21 +30,24 @@ namespace GreenwichUniversityMagazine.Areas.Manager.Controllers
         }
         public IActionResult Create()
         {
+            DateTime currentDateTime = DateTime.Now;
             MagazineVM magazineVM = new MagazineVM()
             {
-                MyFaculties = _unitOfWork.FacultyRepository.GetAll().
-                            Select(u => new SelectListItem
-                            {
-                                Text = u.Name,
-                                Value = u.Id.ToString()
-                            }),
+                MyFaculties = _unitOfWork.FacultyRepository.GetAll()
+                              .Select(u => new SelectListItem
+                              {
+                                  Text = u.Name,
+                                  Value = u.Id.ToString()
+                              }),
                 MyTerms = _unitOfWork.TermRepository.GetAll()
-                .Select(u => new SelectListItem
-                {
-                    Text = $"{u.StartDate.ToString()} - {u.EndDate.ToString()} / {u.Name}",
-                    Value = u.Id.ToString(),
-                }),
-            }; return View(magazineVM);
+                          .Where(u => u.StartDate > currentDateTime)
+                          .Select(u => new SelectListItem
+                          {
+                              Text = $"{u.StartDate.ToString()} - {u.EndDate.ToString()} / {u.Name}",
+                              Value = u.Id.ToString(),
+                          }),
+            };
+            return View(magazineVM);
         }
         [HttpPost]
         public IActionResult Create(MagazineVM magazineVM)

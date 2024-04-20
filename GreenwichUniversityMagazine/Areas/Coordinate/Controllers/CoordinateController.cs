@@ -32,7 +32,7 @@ namespace GreenwichUniversityMagazine.Areas.Coordinate.Controllers
             int.TryParse(HttpContext.Session.GetString("UserId"), out int userId);
             var user = _unitOfWork.UserRepository.GetById(userId);
             int facultyId = user.FacultyId.Value;
-
+                
             CoordinateVM model = new CoordinateVM();
             var magazines = _unitOfWork.MagazineRepository.GetAll()
                                      .Where(u => u.FacultyId == facultyId &&
