@@ -191,7 +191,9 @@ footer {
 }
 
 .notification_heading {
+    font-size: 1.17em;
     margin: 5px;
+    font-weight:200;
 }
 .notificationbody {
     max-height:500px;
