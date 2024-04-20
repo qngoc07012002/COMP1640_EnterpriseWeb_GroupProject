@@ -144,8 +144,8 @@ button {
     display: flex;
     width: 80%;
     margin: 0 auto;
-    padding-left: 150px;
-    padding-top: 50px;
+    padding-left: 300px;
+    
 }
 
 .content {
@@ -157,7 +157,7 @@ button {
 .card-container {
     display: flex;
     flex-direction: column;
-    padding-top: 20px;
+
     
 }
 

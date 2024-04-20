@@ -19,6 +19,22 @@
     width: 60%;
 }
 
+.viewall {
+    text-decoration: none;
+
+    color: #01013e;
+    font-size: 20px;
+    font-family: 'Signika', sans-serif;
+
+}
+
+.viewall:hover {
+    color: #01013e;
+    font-size: 21px;
+    border-bottom: solid 1px black;
+    font-family: 'Signika', sans-serif;
+}
+
 .homepage {
     z-index: 1;
     padding-bottom: 30px;
