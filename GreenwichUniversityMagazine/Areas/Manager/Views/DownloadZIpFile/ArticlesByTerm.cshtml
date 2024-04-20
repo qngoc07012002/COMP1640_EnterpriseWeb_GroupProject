@@ -25,7 +25,7 @@
     @if (Model != null && Model.Any())
     {
         <br />
-        <div style="padding-left: 1150px; display: inline-block;">
+        <div style="padding-left: 880px; display: inline-block; width:500px;">
             <button type="button" class="btn btn-primary" onclick="downloadAllArticles()">Download All Articles</button>
         </div>
 
@@ -61,7 +61,7 @@
                         <p>No resources found for this article.</p>
                     }
                     @Html.Raw(articleVM.article.Body)
-                    <a href="@Url.Action("DownloadFile", "Magazine", new { articleId = @articleVM.article.ArticleId, imageUrls = articleVM.article.imgUrl, bodyText=@articleVM.article.Body })" class="btn btn-primary">Download Files</a>
+                    <a href="@Url.Action("DownloadFile", "DownloadZipFile", new { articleId = @articleVM.article.ArticleId, imageUrls = articleVM.article.imgUrl, bodyText=@articleVM.article.Body })" class="btn btn-primary">Download Files</a>
                 </article>
             }
         }
@@ -71,6 +71,6 @@
 <script>
     function downloadAllArticles() {
         var selectedTermId = document.getElementById("selectedTermId").value;
-        window.location.href = '@Url.Action("DownloadAllArticlesByTerm", "Magazine")' + '?selectedTermId=' + selectedTermId;
+        window.location.href = '@Url.Action("DownloadAllArticlesByTerm", "DownloadZipFile")' + '?selectedTermId=' + selectedTermId;
     }
 </script>

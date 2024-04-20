@@ -23,11 +23,12 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
         public IActionResult Index(string? searchString, int? magazineid, int? termid, int? facultyid, int? articlesid)
         {
             ViewVM model = new ViewVM();
-            model.Terms = _unitOfWork.TermRepository.GetAll().ToList();
+            DateTime currentDateTime = DateTime.Now;
+            model.Terms = _unitOfWork.TermRepository.GetAll().Where(t => t.StartDate <= currentDateTime).ToList();
             model.Facultys = _unitOfWork.FacultyRepository.GetAll().ToList();
-            model.Magazines = _unitOfWork.MagazineRepository.GetAll().ToList();
+            model.Magazines = _unitOfWork.MagazineRepository.GetAll().Where(t => t.StartDate <= currentDateTime).ToList();
             model.Articles = _unitOfWork.ArticleRepository.GetAll().Where(a => a.Status == true).ToList();
-
+           
 
             if (!string.IsNullOrEmpty(searchString))
             {
@@ -50,23 +51,12 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
             }
             else
             {
-                model.Articles = _unitOfWork.ArticleRepository.GetAll().Where(a => a.Status == true).ToList();
+                model.Articles = _unitOfWork.ArticleRepository.GetAll().Where(a => a.Status == true).OrderByDescending(a => a.ArticleId).ToList();
             }
 
             return View(model);
         }
 
-        /*public IActionResult GetArticlesByFacultyId(int facultyId)
-        {
-            var model = new ViewVM();
-          
-            model.Magazines = _unitOfWork.MagazineRepository.GetAll().ToList();
-          
-
-            model.Articles = _unitOfWork.ArticleRepository.GetArticlesbyFaculty(facultyId).ToList();
-
-            return View("Index", model);
-        }*/
 
 
 

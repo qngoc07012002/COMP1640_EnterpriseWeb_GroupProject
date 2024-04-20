@@ -1,4 +1,58 @@
-﻿.main-container .sidebar {
+﻿/* Pagination styles */
+.pagination {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+    text-align: center;
+}
+
+.pagination-item {
+    display: inline-block;
+    margin: 0 5px;
+}
+
+.pagination-item-link {
+    display: block;
+    padding: 5px 10px;
+    text-decoration: none;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    transition: background-color 0.3s ease;
+}
+
+    .pagination-item-link:hover {
+        background-color: #f0f0f0;
+    }
+
+.pagination-item--active .pagination-item-link {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+
+.pagination-previous,
+.pagination-next {
+    margin: 0 10px;
+}
+
+    .pagination-previous .pagination-item-link,
+    .pagination-next .pagination-item-link {
+        padding: 5px 15px;
+    }
+
+        .pagination-previous .pagination-item-link::before {
+            content: "«";
+            margin-right: 5px;
+        }
+
+        .pagination-next .pagination-item-link::after {
+            content: "»";
+            margin-left: 5px;
+        }
+
+
+.main-container .sidebar {
     margin: 10px;
     margin-left: 150px;
     width: 340px;
@@ -104,6 +158,12 @@ button {
     display: flex;
     flex-direction: column;
     padding-top: 20px;
+    
+}
+
+a {
+    text-decoration: none;
+    color: black;
 }
 
 .card-1 {
@@ -112,8 +172,18 @@ button {
     border-radius: 5px;
     margin-bottom: 20px;
     overflow: hidden;
+    transition: transform .2s;
     
 }
+
+    .card-1:hover {
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        display: flex;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        overflow: hidden;
+        transform: scale(1.05);
+    }
 
 .card-image-1 {
     width: 40%;
