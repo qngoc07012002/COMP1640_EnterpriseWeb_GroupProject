@@ -125,17 +125,15 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
             
             ArticleVM articleVM = new ArticleVM
             {
-
                 article = article,
                 User = article.User,
                 Magazines = article.Magazines,
                 FormattedModifyDate = article.ModifyDate?.ToString("dd/MM/yyyy"),
                 MyComments = comments,
                 CommentUsers = commentUsers,
-                
-                Terms = _unitOfWork.TermRepository.GetAll().Where(t => t.StartDate <= DateTime.Now).ToList(),
+                Terms = _unitOfWork.TermRepository.GetAll().ToList(),
                 Facultys = _unitOfWork.FacultyRepository.GetAll().ToList(),
-                Magazine = _unitOfWork.MagazineRepository.GetAll().Where(t => t.StartDate <= DateTime.Now).ToList(),
+                Magazine = _unitOfWork.MagazineRepository.GetAll().ToList(),
                 Articles = _unitOfWork.ArticleRepository.GetAll().Where(a => a.Status == true).ToList()
         };
 
