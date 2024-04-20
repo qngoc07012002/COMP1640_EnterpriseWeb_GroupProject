@@ -1,6 +1,6 @@
 ﻿.main-container .sidebar {
     margin: 10px;
-    margin-left: 270px;
+    margin-left: 150px;
     width: 340px;
     float: left;
     height: auto;
@@ -85,14 +85,14 @@ button {
 
 .select:hover {
     background: #323741;
-}    
+}
 .main-container {
     display: flex;
     width: 80%;
-    margin: 0 auto; 
+    margin: 0 auto;
     padding-left: 150px;
-    
- }
+    padding-top: 50px;
+}
 
 .content {
     width: 60%; 

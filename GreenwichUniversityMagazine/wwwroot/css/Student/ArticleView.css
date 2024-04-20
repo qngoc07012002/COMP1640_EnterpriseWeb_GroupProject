@@ -33,6 +33,8 @@
     }
 .content .main-content .article{
     margin-bottom:100px;
+    overflow-wrap: break-word;
+
 }
 
 .content .main-content .article .userImg>img{
@@ -195,11 +197,11 @@ form > #searchInput {
 .select:hover {
     background: #323741;
 }        
-    .clearfix {
+/*    .clearfix {
         content: '';
         display: flex;
         clear: both;
-    }
+    }*/
 
 .body-container {
     margin: 50px;
