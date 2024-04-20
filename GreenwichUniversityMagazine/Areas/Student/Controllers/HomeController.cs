@@ -56,6 +56,10 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
         {
             return View();
         }
+        public IActionResult Contact()
+        {
+            return View();
+        }
         public IActionResult Login()
         {
             return View();

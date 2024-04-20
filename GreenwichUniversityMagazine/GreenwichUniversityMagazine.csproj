@@ -20,6 +20,7 @@
     <Folder Include="Areas\Guest\Data\" />
     <Folder Include="Areas\Guest\Models\" />
     <Folder Include="Migrations\" />
+    <Folder Include="wwwroot\img\Layout\Footer\" />
     <Folder Include="wwwroot\img\userAvt\" />
     <Folder Include="wwwroot\img\avtImg\" />
     <Folder Include="wwwroot\fileDownloaded\" />
