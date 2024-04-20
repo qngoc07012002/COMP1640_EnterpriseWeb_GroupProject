@@ -12,7 +12,7 @@
                     <div class="notification_detail_container">
                         <h5 class="notification_title">@comment.Article.Title</h5>
                         <div class="notification_detail_wrapper">
-                            <div class="user-logo">
+                            <div class="user-logo-notification">
                                 @{
                                     var userId = Accessor.HttpContext.Session.GetString("userId");
                                     if (comment.User.Role == "STUDENT")
