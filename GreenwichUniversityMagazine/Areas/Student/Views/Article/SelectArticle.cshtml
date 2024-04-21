@@ -1,226 +1,257 @@
 ﻿@model ArticleVM
 @inject IHttpContextAccessor Accessor
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
 <link rel="stylesheet" href="~/css/Student/ArticleView.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-<div class="content clearfix">
-    <div class="main-content">
-        <div class="article">
-            <i class="far fa-user"></i> @Model.Magazines.Title
-            <i class="far calendar"></i>@Model.FormattedModifyDate
-            <div class="recent-post-title">
-                <h1>@Model.article.Title</h1>
-            </div>
-            <div class="subTitle">
-                <h3>@Model.article.SubTitle</h3>
-            </div>
-            <div class="userImg">
-                <img src="@Model.User.avtUrl" alt="User Image">
-            </div>
-            <div class="userName">
-                <i>@Model.User.Name</i>
-            </div>
 
-            <div class="post">
-                <img class="post-image" src="@Model.article.imgUrl" alt="Thumbnail">
-                <div class="post-content">
-                    <!-- Hiển thị nội dung của bài báo -->
-                    @Html.Raw(Model.article.Body)
+<div class="container-main">
+    
+        <div class="main-content">
+            <div class="article">
+                <i class="far fa-user"></i> @Model.Magazines.Title
+                <i class="far calendar"></i>@Model.FormattedModifyDate
+                <div class="recent-post-title">
+                    <h1>@Model.article.Title</h1>
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="sidebar">
-        <img class="sidebar-image" src="~/css/Student/logo_greenwich.png" alt="Italian Trulli">
+                <div class="subTitle">
+                    <h3>@Model.article.SubTitle</h3>
+                </div>
+                <div class="userImg">
+                    <img src="@Model.User.avtUrl" alt="User Image">
+                </div>
+                <div class="userName">
+                    <i>@Model.User.Name</i>
+                </div>
 
-        <div class="container-fluid">
-            
-            <div>
-
-                @using (Html.BeginForm("Index", "View", FormMethod.Get, new { @class = "form-inline", id = "searchForm" }))
-                {
-                    <div class="input-group">
-                        @Html.TextBox("searchString", ViewBag.CurrentFilter as string, new { @class = "form-control", id = "searchInput", placeholder = "Search" })
-                        <button type="submit" class="btn btn-outline-success" id="searchButton">Search</button>
+                <div class="post">
+                    <img class="post-image" src="@Model.article.imgUrl" alt="Thumbnail">
+                    <div class="post-content">
+                        <!-- Hiển thị nội dung của bài báo -->
+                        @Html.Raw(Model.article.Body)
                     </div>
-                }
-
+                </div>
             </div>
-            <div class="col-md-3">
-                <h6 class="m-1 mr-2 sidebar-title">Term</h6>
-                <div class="select-article" >
+        </div>
+        <div class="sidebar">
+            <img class="sidebar-image" src="~/css/Student/logo_greenwich.png" alt="Italian Trulli">
+
+            <div class="container-fluid">
+            
+                <div>
+
+                    @using (Html.BeginForm("Index", "View", FormMethod.Get, new { @class = "form-inline", id = "searchForm" }))
+                    {
+                        <div class="input-group">
+                            @Html.TextBox("searchString", ViewBag.CurrentFilter as string, new { @class = "form-control", id = "searchInput", placeholder = "Search" })
+                            <button type="submit" class="btn btn-outline-success" id="searchButton">Search</button>
+                        </div>
+                    }
+
+                </div>
+                <div class="col-md-3">
+                    <h6 class="m-1 mr-2 sidebar-title">Term</h6>
+                    <div class="select-article" >
                     
-                    <select id="termselect" name="termSelect"  aria-label="Default select example" onchange="redirectToTerm()">
-                        <option value="">Select a Term</option>
-                        @if (Model.Terms == null)
-                        {
-                            <p>No terms available.</p>
-                        }
-                        else
-                        {
-                            @foreach (var term in Model.Terms)
+                        <select id="termselect" name="termSelect"  aria-label="Default select example" onchange="redirectToTerm()">
+                            <option value="">Select a Term</option>
+                            @if (Model.Terms == null)
                             {
-                                <option value="@term.Id"> @term.StartDate.ToShortDateString() - @term.EndDate.ToShortDateString() @term.Name</option>
+                                <p>No terms available.</p>
                             }
-                        }
+                            else
+                            {
+                                @foreach (var term in Model.Terms)
+                                {
+                                    <option value="@term.Id"> @term.StartDate.ToShortDateString() - @term.EndDate.ToShortDateString() @term.Name</option>
+                                }
+                            }
                        
-                    </select>
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <h6 class="m-1 mr-2 sidebar-title">Magazine</h6>
-                <div class="select-article">
-                   
-                    <select id="magazineselect" name="magazineSelect" class="select-article" aria-label="Default select example" onchange="redirectToMagazine()">
-                            <option value="" >Select a Magazine</option>
-                        @if (Model.Magazine == null)
-                        {
-                            <p>No Magazines available.</p>
-                        }
-                        else
-                        {
-                            @foreach (var magazine in Model.Magazine)
-                            {
-                                <option value="@magazine.Id">@magazine.Title</option>
-                            }
-                        }
                         </select>
+                    </div>
                 </div>
-            </div>
+
+                <div class="col-md-3">
+                    <h6 class="m-1 mr-2 sidebar-title">Magazine</h6>
+                    <div class="select-article">
+                   
+                        <select id="magazineselect" name="magazineSelect" class="select-article" aria-label="Default select example" onchange="redirectToMagazine()">
+                                <option value="" >Select a Magazine</option>
+                            @if (Model.Magazine == null)
+                            {
+                                <p>No Magazines available.</p>
+                            }
+                            else
+                            {
+                                @foreach (var magazine in Model.Magazine)
+                                {
+                                    <option value="@magazine.Id">@magazine.Title</option>
+                                }
+                            }
+                            </select>
+                    </div>
+                </div>
 
             
 
-        </div>
-        
-    </div>
-</div>
-<div class="body-container">
-    <div class="separator"><strong>Comment</strong> </div>
-
-
-    @foreach (var comment in Model.MyComments)
-    {
-        var user = Model.CommentUsers.FirstOrDefault(u => u.Id == comment.UserId);
-        var avtUrl = user != null ? user.avtUrl : "~/css/Student/logo_greenwich.png";
-
-        <div class="comment-private">
-            <div class="avatar-coordinate">
-                <img src="@avtUrl" alt="Avatar" class="avatar-coordinate-img">
             </div>
-            <div class="comment-content">
-                <a class="box">
-                    <strong>
-                        @if (user != null)
-                        {
-                            <span class="comment-value">@user.Name</span>
-                        }
-                        else
-                        {
-                            <span class="comment-value"></span>
-                        }
-                    </strong><span class="comment-value">@comment.Date</span>
-                </a>
-                <hr>
-                <div class="card__content">
-                    @comment.Description
+        
+        </div>
+    
+    <div class="comment-container">
+    
+
+
+        @foreach (var comment in Model.MyComments)
+        {
+            var user = Model.CommentUsers.FirstOrDefault(u => u.Id == comment.UserId);
+            var avtUrl = user != null ? user.avtUrl : "~/css/Student/logo_greenwich.png";
+
+            <div class="comment-private">
+                <div class="avatar-user">
+                    <img src="@avtUrl" alt="Avatar" class="avatar-coordinate-img">
+                </div>
+                <div class="comment-content">
+                    <a class="box">
+                        <strong>
+                            @if (user != null)
+                            {
+                                <span class="comment-value">@user.Name</span>
+                            }
+                            else
+                            {
+                                <span class="comment-value"></span>
+                            }
+                        </strong><span class="comment-value">@comment.Date</span>
+                    </a>
+                    <hr>
+                    <div class="card__content">
+                        @comment.Description
+                    </div>
                 </div>
             </div>
+        }
+        <div class="comment-input">
+            <form id="commentForm">
+                <!-- Các trường và nút gửi comment -->
+                <textarea name="commentInput" id="commentInput" placeholder="Enter your comment..." rows="4"></textarea>
+                <input type="hidden" name="articleId" id="articleId" value="@Model.article.ArticleId" /> <!-- Đây là một ví dụ, hãy thay đổi theo cấu trúc của mã HTML của bạn -->
+                <button type="submit" id="sendCommentButton">Send Comment</button>
+            </form>
         </div>
-    }
-    <div class="comment-input">
-        <form class="comment-form" method="post" action="/Student/Comment/UploadPublic">
-            <textarea name="CommentInput" placeholder="Enter your comment..." rows="4"></textarea>
-            <input type="hidden" name="articleId" value="@Model.article.ArticleId" />
-            <button type="submit" class="pushable">Send Comment</button>
-        </form>
     </div>
 </div>
-
 <script>
-
-
     $(document).ready(function () {
-        // Giới hạn số từ trong card title
-        $("#articleContainer .card-title").each(function () {
-            var maxWords = 5;
-            var title = $(this).text().trim().split(/\s+/);
-            if (title.length > maxWords) {
-                var limitedTitle = title.slice(0, maxWords).join(" ");
-                $(this).text(limitedTitle + "...");
-            }
-        });
+        
 
-        // Giới hạn số từ trong card text
-        $("#articleContainer .card-text").each(function () {
-            var maxWords = 15;
-            var text = $(this).text().trim().split(/\s+/);
-            if (text.length > maxWords) {
-                var limitedText = text.slice(0, maxWords).join(" ");
-                $(this).text(limitedText + "...");
-            }
-        });
-    });
-
-    // ham load magazine ( doi du lieu onchange="redirectToMagazine() tren select duoc load thi thuc hien ham nay)
-    function redirectToMagazine() {
-        // lấy dữ liệu từ select box
-        var selectedMagazineId = document.getElementById("magazineselect").value;
-        // url mặc định
-        var baseUrl = "/student/view/index";
-
-        if (selectedMagazineId) {
-            // Nếu có giá trị, thêm vào URL
-            window.location.href = baseUrl + "?magazineid=" + selectedMagazineId;
-        } else {
-            // Nếu không có giá trị, chỉ chuyển đến trang mặc định
-            window.location.href = baseUrl;
+        // Kiểm tra nếu có tham số 'commented' trong URL, tức là đã comment
+        var urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('commented')) {
+            // Nếu có tham số 'commented', gọi hàm cuộn xuống dưới cùng
+            scrollToBottom();
         }
-    }
 
-    function redirectToTerm() {
-        var selectedTermId = document.getElementById("termselect").value;
-        var baseUrl = "/student/view/index";
-        if (selectedTermId) {
-            window.location.href = baseUrl + "?termid=" + selectedTermId;
-        } else {
-            window.location.href = baseUrl;
-        }
-    }
-
-    function redirectToFaculty() {
-        var selectedFacultyId = document.getElementById("facultyselect").value;
-        var baseUrl = "/student/view/index";
-        if (selectedFacultyId) {
-            window.location.href = baseUrl + "?facultyid=" + selectedFacultyId;
-        } else {
-            window.location.href = baseUrl;
-        }
-    }
-    document.getElementById("searchForm").addEventListener("submit", function (event) {
-        // Lấy giá trị của ô tìm kiếm
-        var searchString = document.getElementById("searchInput").value;
-        // Kiểm tra xem ô tìm kiếm có rỗng không
-        if (!searchString.trim()) {
-            // Nếu rỗng, hủy việc gửi form
-            event.preventDefault();
-        } else {
-            // Nếu có giá trị, tạo URL tìm kiếm và chuyển hướng đến trang kết quả tìm kiếm
+        // ham load magazine ( doi du lieu onchange="redirectToMagazine() tren select duoc load thi thuc hien ham nay)
+        function redirectToMagazine() {
+            // lấy dữ liệu từ select box
+            var selectedMagazineId = document.getElementById("magazineselect").value;
+            // url mặc định
             var baseUrl = "/student/view/index";
-            var searchUrl = baseUrl + "?searchString=" + searchString;
-            window.location.href = searchUrl;
+
+            if (selectedMagazineId) {
+                // Nếu có giá trị, thêm vào URL
+                window.location.href = baseUrl + "?magazineid=" + selectedMagazineId;
+            } else {
+                // Nếu không có giá trị, chỉ chuyển đến trang mặc định
+                window.location.href = baseUrl;
+            }
         }
+
+        function redirectToTerm() {
+            var selectedTermId = document.getElementById("termselect").value;
+            var baseUrl = "/student/view/index";
+            if (selectedTermId) {
+                window.location.href = baseUrl + "?termid=" + selectedTermId;
+            } else {
+                window.location.href = baseUrl;
+            }
+        }
+
+        function redirectToFaculty() {
+            var selectedFacultyId = document.getElementById("facultyselect").value;
+            var baseUrl = "/student/view/index";
+            if (selectedFacultyId) {
+                window.location.href = baseUrl + "?facultyid=" + selectedFacultyId;
+            } else {
+                window.location.href = baseUrl;
+            }
+        }
+
+        document.getElementById("searchForm").addEventListener("submit", function (event) {
+            // Lấy giá trị của ô tìm kiếm
+            var searchString = document.getElementById("searchInput").value;
+            // Kiểm tra xem ô tìm kiếm có rỗng không
+            if (!searchString.trim()) {
+                // Nếu rỗng, hủy việc gửi form
+                event.preventDefault();
+            } else {
+                // Nếu có giá trị, tạo URL tìm kiếm và chuyển hướng đến trang kết quả tìm kiếm
+                var baseUrl = "/student/view/index";
+                var searchUrl = baseUrl + "?searchString=" + searchString;
+                window.location.href = searchUrl;
+            }
+        });
+        var commentSubmitted = false; // Biến trạng thái để kiểm tra xem comment đã được gửi hay chưa
+
+        // Hàm tự động cuộn xuống dưới cùng của trang
+        function scrollToBottom() {
+            window.scrollTo(0, document.body.scrollHeight);
+        }
+
+        // Xử lý sự kiện gửi comment bằng AJAX
+        $("#commentForm").submit(function (event) {
+            // Ngăn chặn hành động mặc định của form (không gửi request)
+            event.preventDefault();
+
+            // Lấy giá trị của ô comment
+            var commentInput = $("#commentInput").val();
+            // Lấy giá trị của ô articleId
+            var articleId = $("#articleId").val();
+
+            // Gửi request AJAX để thực hiện comment
+            $.ajax({
+                type: "POST",
+                url: "/student/Comment/UploadPublic",
+                data: { commentInput: commentInput, articleId: articleId },
+                success: function (response) {
+                    // Nếu comment thành công, đặt biến trạng thái thành true
+                    commentSubmitted = true;
+
+                    // Reload trang
+                    location.reload();
+
+                    // Sau khi tải lại trang, cuộn xuống dưới cùng
+                    $(window).on('load', function () {
+                        scrollToBottom();
+                    });
+                },
+                error: function (error) {
+                    // Xử lý lỗi nếu có
+                    console.error("Error submitting comment:", error);
+                }
+            });
+        });
+
+        // Kiểm tra trạng thái khi tải lại trang
+        $(window).on('load', function () {
+            if (commentSubmitted) {
+                // Nếu comment đã được gửi, cuộn xuống dưới cùng
+                scrollToBottom();
+            }
+        });
     });
-
-
-
-
-
-
-
-
 
 </script>

@@ -1,11 +1,17 @@
-﻿body {
+﻿.container-main {
+    margin-top: 60px;
+    display: grid;
+    grid-template-columns: 300px auto 600px;
+}
+
+body {
     margin: 0;
     padding:0;
     font-family: 'Lato', sans-serif;
     color: #333333;
     line-height: 28px;
     height: 100%;
-    display:block;
+    display:grid;
 }
   h1,
   h2,
@@ -16,34 +22,29 @@
     font-weight: bold;
   }
 
-.content {
-    display: block;
-    width: 100%;
-    height: auto;
-    margin: 30px auto 30px;
-    align-items: center;
-    justify-content: center;
+.main-content {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    margin: 10px;
+    width: 54%;
+    float: left;
+    margin-left: 230px;
     
 }
-    .content .main-content {
-        margin: 10px;
-        width: 54%;
-        float: left;
-        margin-left: 230px;
-    }
-.content .main-content .article{
+.main-content .article{
+    width: 1000px;
     margin-bottom:100px;
     overflow-wrap: break-word;
 
 }
 
-.content .main-content .article .userImg>img{
+.main-content .article .userImg>img{
    height:50px;
    width:50px;
    float:left;
    border-radius:30px;
 }
-.content .main-content .article .userName{
+.main-content .article .userName{
     display: table-cell; /* Important */ 
     vertical-align: middle; /* Important */ 
     padding-left:15px;
@@ -53,7 +54,7 @@
     
 }
 
-.content .main-content .post{
+.main-content .post{
     width: 95%;
     height: auto;
     margin: 10px;
@@ -62,11 +63,11 @@
     background-size: cover;
 }
 
-.content .main-content .post .post-content{
+.main-content .post .post-content{
     width: 98%;
     padding: 10px;
 }
-    .content .main-content .post .post-image {
+    .main-content .post .post-image {
         display: flex;
         width: 100%;
         height: auto;
@@ -74,22 +75,23 @@
         margin-left: auto;
         margin-right: auto;
     }
-.content .main-content .recent-post-title{
+.main-content .recent-post-title{
     color:#01013e;
     line-height:40px;
 }
-.content .main-content .subTitle{
+.main-content .subTitle{
     font-style:oblique;
 }
-.content .sidebar{
+.sidebar{
     margin: 10px;
-    margin-left:60px;
+    margin-left:26px;
     width: 340px;
     float:left;
     height: auto;
+    z-index:1;
 }
 
-    .content .sidebar .sidebar-image {
+    .sidebar .sidebar-image {
         display:flex;
         width: 200px;
         height: auto;
@@ -98,7 +100,7 @@
         border-radius: 10px;
         justify-content:center;
     }
-    .content .sidebar .form-inline {
+    .sidebar .form-inline {
         width:339px;
         margin-top:30px;
     }
@@ -118,7 +120,7 @@ button {
     background-color: #01013e;
 }
     
-.content .sidebar .form-inline .input-group {
+.sidebar .form-inline .input-group {
     
     position: relative;
     display: inline-block;
@@ -126,9 +128,7 @@ button {
     box-sizing: border-box;
     transition: 0.5s;
 }
-.content .sidebar .form-inline .input-group .form-control {
-    
-}
+
     /*    .content .sidebar .search-button {
         width: 320px;
         height: 30px;
@@ -162,7 +162,7 @@ form > #searchInput {
     -webkit-border-radius: 4px 0 0 4px;
     border-radius: 4px 0 0 4px;
 }*/
-    .content .sidebar .sidebar-title {
+    .sidebar .sidebar-title {
         margin-top: 10px;
         margin-bottom: 10px;
         width: auto;
@@ -175,12 +175,12 @@ form > #searchInput {
         border: 0.5px solid black;
         font-size: 15px;
     }
-    .content .sidebar .select-article {
+    .sidebar .select-article {
         display: flex;
         margin-top: 5px;
         margin-bottom: 5px;
     }
-.content .sidebar .select-article > select {
+.sidebar .select-article > select {
             width: 100%;
             background: #fff;
             color: #000;
@@ -197,21 +197,28 @@ form > #searchInput {
 .select:hover {
     background: #323741;
 }        
-/*    .clearfix {
+    .clearfix {
         content: '';
         display: flex;
         clear: both;
-    }*/
+    }
 
 .body-container {
     margin: 50px;
     margin-bottom: 200px;
-    position: relative;
     border-radius: 5px;
-    left: 530px;
-    top: 2px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
 }
 
+
+.comment-container{
+    grid-column:1/4;
+    display:grid;
+    align-items:center;
+    justify-content:center;
+}
 .comment {
     margin-bottom: 20px;
 }
@@ -224,18 +231,20 @@ form > #searchInput {
     margin-top: 5px;
 }
 
+
 .comment-private {
+    display: grid;
+    grid-template-columns: 60px 700px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    margin-bottom:20px;
+    margin-bottom: 20px;
     width: 800px;
     height: auto;
     border-radius: 8px;
     z-index: 1;
-    overflow: hidden; /* Đảm bảo avt không bị tràn ra ngoài */
-    display: flex; /* Dùng flexbox để sắp xếp các thành phần */
+    
 }
 
-.avatar-coordinate {
+.avatar-user {
     margin-top: 21px;
     width: 50px; /* Điều chỉnh kích thước của avatar */
     height: 50px;
@@ -255,7 +264,10 @@ form > #searchInput {
 .comment-content {
     flex: 1; /* Chia phần còn lại của ô comment */
     padding: 10px; /* Thêm padding cho nội dung comment */
-    
+    display:block;
+}
+.card__content{
+    overflow-wrap:break-word;
 }
 /* Comment Reply */
 .comment-input {
