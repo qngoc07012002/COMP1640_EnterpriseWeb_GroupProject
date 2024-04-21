@@ -25,7 +25,9 @@ namespace GreenwichUniversityMagazine.Areas.Manager.Controllers
         }
         public IActionResult Index()
         {
-            List<Magazines> objCategoryList = _unitOfWork.MagazineRepository.GetAll().ToList();
+            List<Magazines> objCategoryList = _unitOfWork.MagazineRepository.GetAll()
+    .OrderByDescending(t => t.StartDate)
+    .ToList();
             return View(objCategoryList);
         }
         public IActionResult Create()
