@@ -68,20 +68,7 @@
                     <div class="logned_bar">
                         <div class="notification_container">
                             <button id="fetchDataButton" class="notification_button">
-                                @{
-                                    if (ViewBag.CommentsCount == 0 || ViewBag.CommentsCount == null)
-                                    {
-                                    
-                                    }
-                                    else if (ViewBag.CommentsCount < 5 && ViewBag.CommentsCount != null)
-                                    {
-                                        <span class="notification_count">@ViewBag.CommentsCount</span>
-                                    }
-                                    else
-                                    {
-                                        <span class="notification_count">5+</span>
-                                    }
-                                }
+                                <span class="notification_count"></span>
                                 <img src="~/css/Navigation/notification.png" class="notification_icon" />
                             </button>
                         </div>
@@ -212,9 +199,37 @@
     }
 
     function scrollToTop() {
-        document.body.scrollTop = 0; // For Safari
-        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
     }
+</script>
+<script>
+    $(document).ready(function () {
+        // Function to fetch comments count
+        function fetchCommentsCount() {
+            $.ajax({
+                url: 'https://localhost:7112/student/home/GetCommentsCount',
+                type: 'GET',
+                success: function (data) {
+                    if (data && data.notifies !== undefined) {
+                        var notifies = data.notifies;
+                        if (notifies === 0) {
+                            $('.notification_count').remove();
+                        } else if (notifies < 5) {
+                            $('.notification_count').text(notifies);
+                        } else {
+                            $('.notification_count').text('5+');
+                        }
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error to get Notify Count");
+                }
+            });
+        }
+        fetchCommentsCount();
+        setInterval(fetchCommentsCount, 60000);
+    });
 </script>
 
 <script>
@@ -225,14 +240,13 @@
         // Click event handler for the button
         $('#fetchDataButton').click(function () {
             if (!dataVisible) {
-                // If data is not visible, fetch and display
                 $.ajax({
                     url: '/Coordinate/Coordinate/GetNotification',
                     type: 'GET',
                     success: function (data) {
                         $('#partialViewContainer').html(data);
-                        $('#partialViewContainer').show(); // Show the container
-                        dataVisible = true; // Update the flag
+                        $('#partialViewContainer').show();
+                        dataVisible = true;
                     },
                     error: function (xhr, status, error) {
                         console.error(error);
@@ -240,17 +254,16 @@
                 });
             } else {
                 // If data is visible, hide it
-                $('#partialViewContainer').hide(); // Hide the container
-                dataVisible = false; // Update the flag
+                $('#partialViewContainer').hide();
+                dataVisible = false;
             }
         });
 
-        // Click event handler for clicking outside the table or container
         $(document).on('click', function (event) {
             if (!$(event.target).closest('#partialViewContainer').length &&
                 !$(event.target).closest('#fetchDataButton').length) {
-                $('#partialViewContainer').hide(); // Hide the container
-                dataVisible = false; // Update the flag
+                $('#partialViewContainer').hide();
+                dataVisible = false;
             }
         });
     });
