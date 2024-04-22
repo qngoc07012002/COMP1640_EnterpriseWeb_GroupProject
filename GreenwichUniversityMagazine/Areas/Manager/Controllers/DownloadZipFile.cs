@@ -107,7 +107,7 @@ namespace GreenwichUniversityMagazine.Areas.Manager.Controllers
                 return ms.ToArray();
             }
         }
-        public IActionResult DownloadFile(int articleId, string[] imageUrls, string bodyText)
+        public IActionResult DownloadFile(int articleId, string[] imageUrls, Article article)
         {
             var articleFolderPath = Path.Combine(_hostEnvironment.WebRootPath, "Resource", "Article", articleId.ToString());
             var zipFilePath = Path.Combine(_hostEnvironment.WebRootPath, "fileDownloaded", $"article_{articleId}.zip");
@@ -127,7 +127,6 @@ namespace GreenwichUniversityMagazine.Areas.Manager.Controllers
                         archive.CreateEntryFromFile(filePath, entryName);
                     }
                 }
-
                 foreach (var imageUrl in imageUrls)
                 {
                     var imageName = Path.GetFileName(imageUrl);
@@ -141,12 +140,20 @@ namespace GreenwichUniversityMagazine.Areas.Manager.Controllers
 
                     }
                 }
-
-                if (!string.IsNullOrEmpty(bodyText))
-                {
-                    var pdfBytes = GeneratePdfFromString(bodyText);
-                    archive.CreateEntry("article_body.pdf").Open().Write(pdfBytes, 0, pdfBytes.Length);
-                }
+                var articles = _unitOfWork.ArticleRepository.GetById(articleId);
+                article = articles;
+                    if (!string.IsNullOrEmpty(article.Body))
+                    {
+                        var pdfBytes = GeneratePdfFromString(article.Body);
+                        var entryPathInArchive = $"article_{article.ArticleId}_body.pdf";
+                        var entry = archive.CreateEntry(entryPathInArchive, CompressionLevel.Optimal);
+                        using (var entryStream = entry.Open())
+                        {
+                            entryStream.Write(pdfBytes, 0, pdfBytes.Length);
+                        }
+                    }
+                
+                
             }
 
             return PhysicalFile(zipFilePath, "application/zip", $"article_{articleId}.zip");
