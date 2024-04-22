@@ -54,7 +54,7 @@
 
 .main-container .sidebar {
     margin: 10px;
-    margin-left: 150px;
+    margin-left: 75px;
     width: 340px;
     float: left;
     height: auto;
@@ -145,7 +145,7 @@ button {
     width: 80%;
     margin: 0 auto;
     padding-left: 300px;
-    
+    margin-top:60px;
 }
 
 .content {
@@ -207,6 +207,7 @@ a {
         flex-direction: column;
         width: 100%; /* Thiết lập chiều rộng cho main-container khi ở chế độ responsive */
         padding-left: 0; /* Xóa padding trái cho main-container khi ở chế độ responsive */
+        
     }
 
         
