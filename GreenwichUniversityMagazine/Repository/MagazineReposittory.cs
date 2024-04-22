@@ -2,6 +2,7 @@
 using GreenwichUniversityMagazine.Data;
 using GreenwichUniversityMagazine.Models;
 using GreenwichUniversityMagazine.Repository.IRepository;
+
 namespace GreenwichUniversityMagazine.Repository
 {
     public class MagazineRepository : Repository<Magazines>, IMagazineRepository
@@ -11,11 +12,11 @@ namespace GreenwichUniversityMagazine.Repository
             _dbContext = dbContext;
         }
 
-        public List<Magazines> GetAllMagazine()
-        {
-            var query = _dbContext.Magazines.Where(c => c.Id != 0);
-            return query.ToList();
-        }
+        //public List<Magazines> GetAllMagazine()
+        //{
+        //    var query = _dbContext.Magazines.Where(c => c.Id != 0);
+        //    return query.ToList();
+        //}
         /* public List<Article> GetAllMagazine()
          {
              var query = _dbContext.Articles.Where(c => c.MagazinedId != 0);
@@ -38,6 +39,14 @@ namespace GreenwichUniversityMagazine.Repository
 
             return totalMagazines;
 
+        }
+
+        IQueryable<Magazines> IMagazineRepository.GetAllMagazine()
+        {
+            return _dbContext.Magazines
+                      .Include(m => m.Faculty)
+                      .Include(m => m.Term)
+                      .AsQueryable();
         }
     }
 }
