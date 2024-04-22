@@ -1,18 +1,19 @@
 ﻿@model List<Term>
-<link rel="stylesheet" href="~/css/User/Index.css" />
-<style>
-    .modal-container {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
+@{
+    ViewData["Title"] = "Term Management";
+    int itemsPerPage = 6;
+    int totalItems = Model.Count();
+    int totalPages = (int)Math.Ceiling((double)totalItems / itemsPerPage);
+    int currentPage = Context.Request.Query["page"].Count > 0 ? Convert.ToInt32(Context.Request.Query["page"]) : 1;
+    int startIndex = (currentPage - 1) * itemsPerPage;
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
-    .modal {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: center;
-    }
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" href="~/css/Admin/Term.css" />
+<style>
 </style>
 <div class="card shadow border-0 my-4">
     <div class="card-header bg-secondary bg-gradient ml-0 py-3">
@@ -22,7 +23,7 @@
             </div>
         </div>
     </div>
-    <div class="modal-container">
+   @*  <div class="modal-container">
         <div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -55,16 +56,37 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> *@
+    <form method="post" asp-action="Create">
+        <div class="select-container">
+            <div class="select">
+                <select id="year" name="Year">
+                    <option value="">Select Year</option>
+                    @for (int year = DateTime.Now.Year; year <= DateTime.Now.Year + 100; year++)
+                    {
+                        <option value="@year">@year</option>
+                    }
+                </select>
+            </div>
+            <div class="select">
+                <select id="season" name="Season">
+                    <option value="Spring">Spring</option>
+                    <option value="Summer">Summer</option>
+                    <option value="Fall">Fall</option>
+                    <option value="Winter">Winter</option>
+                </select>
+            </div>
+            <button type="submit" class="button-5">Create</button>
+        </div>
+    </form>
 
 
-    <div class="card-body p-5">
+   @*  <div class="card-body p-5">
         <div class="card-body p-4">
             <div class="table-responsive">
                 <table class="table table-bordered table-striped">
                     <thead class="thead-dark">
                         <tr>
-                            <th>ID</th>
                             <th>Name</th>
                             <th>StartDate</th>
                             <th>EndDate</th>
@@ -74,7 +96,6 @@
                         @foreach (var obj in Model)
                         {
                                 <tr>
-                                    <td>@obj.Id</td>
                                     <td>@obj.Name</td>
                                     <td>@obj.StartDate</td>
                                     <td>@obj.EndDate</td>
@@ -90,11 +111,76 @@
             </div>
         </div>
     </div>
+</div> *@
+<div class="main-container">
+    <div class="content">
+        <div class="card-container" id="cardContainer">
+            <div class="viewbag" style="border-bottom: 1px solid black; color: #01013e; font-size: 24px; font-family: 'Signika', sans-serif; margin-bottom: 20px">
+            </div>
+            @foreach (var term in Model.Skip(startIndex).Take(itemsPerPage))
+            {
+                <div class="card-1">
+                    <div class="card-text-1">
+                        <h3>@term.Name</h3>
+                        <p>@term.StartDate.ToShortDateString() - @term.EndDate.ToShortDateString()</p>
+                          <td class="w-75 btn-group" role="group">
+                                     <form method="post" asp-controller="Term" asp-action="Delete" asp-route-Id="@term.Id" onsubmit="return confirm('Are you sure you want to delete this term?');">
+                                        <button type="submit" class="btn-delete mx-1">
+                                            <i class="bi bi-trash"></i> Delete
+                                        </button>
+                                    </form>
+                          </td>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
 </div>
+<ul class="pagination home-product-pagination text-center" id="pagination">
+    @if (currentPage > 1)
+    {
+        <li class="pagination-item pagination-previous">
+            <a href="#" class="pagination-item-link" data-page="@(currentPage - 1)">Previous</a>
+        </li>
+    }
+    @for (int i = 1; i <= totalPages; i++)
+    {
+        <li class="pagination-item @(i == currentPage ? "pagination-item--active" : "")">
+            <a href="#" class="pagination-item-link" data-page="@i">@i</a>
+        </li>
+    }
+    @if (currentPage < totalPages)
+    {
+        <li class="pagination-item pagination-next">
+            <a href="#" class="pagination-item-link" data-page="@(currentPage + 1)">Next</a>
+        </li>
+    }
+</ul>
 
 @section Scripts {
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+    const pagination = document.getElementById("pagination");
+    pagination.addEventListener("click", function (event) {
+        event.preventDefault();
+        const target = event.target;
+        if (target.classList.contains("pagination-item-link")) {
+            const page = target.getAttribute("data-page");
+            let url;
+            const currentUrl = new URL(window.location.href);
+            const searchString = currentUrl.searchParams.get("searchString");
+            if (searchString) {
+                url = `${window.location.pathname}?searchString=${searchString}&page=${page}`;
+            } else {
+                url = `${window.location.pathname}?page=${page}`;
+            }
+            window.location.href = url;
+        }
+    });
+});
+    </script>
 }
 
 <partial name="_NotificationJS" />

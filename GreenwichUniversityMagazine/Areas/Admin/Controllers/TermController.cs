@@ -19,9 +19,12 @@ namespace GreenwichUniversityMagazine.Areas.Admin.Controllers
         }
         public IActionResult Index()
         {
-            List<Term> objTermList = _unitOfWork.TermRepository.GetAll().ToList();
+            List<Term> objTermList = _unitOfWork.TermRepository.GetAll()
+                                      .OrderByDescending(t => t.StartDate) // Sắp xếp theo thời gian bắt đầu tăng dần
+                                      .ToList();
             return View(objTermList);
         }
+
         public IActionResult Create()
         {
             Term term = new Term();
