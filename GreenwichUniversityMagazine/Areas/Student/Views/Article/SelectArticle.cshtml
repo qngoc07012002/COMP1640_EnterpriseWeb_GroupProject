@@ -233,9 +233,14 @@
             body: formData
         })
             .then(response => {
-                if (response.ok) {
-
+                if (response.ok) 
+                {
                     window.location.reload();
+                }
+                else if (response.status === 400)
+                {
+                    alert("Please Login!");
+                    window.location.href = "https://localhost:7112/Student/Home/Login";
                 }
             })
             .catch(error => {
