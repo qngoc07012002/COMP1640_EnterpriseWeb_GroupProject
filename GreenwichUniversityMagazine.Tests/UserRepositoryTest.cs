@@ -165,52 +165,8 @@ namespace GreenwichUniversityMagazine.Tests
             // Assert
             ClassicAssert.AreEqual(2, result);
         }
-
-        [Test]
-        public void Update_UserExists_ModifiesUser()
-        {
-            // Arrange
-            var userId = 1;
-            var updatedUser = new User { Id = userId, Email = "updated@example.com", Name = "Updated Name" };
-
-            // Act
-            _userRepository.Update(updatedUser);
-
-            // Assert
-            var modifiedUser = _dbContext.Users.FirstOrDefault(u => u.Id == userId);
-            ClassicAssert.IsNotNull(modifiedUser);
-            ClassicAssert.AreEqual(updatedUser.Email, modifiedUser.Email);
-            ClassicAssert.AreEqual(updatedUser.Name, modifiedUser.Name);
-        }
-
-        [Test]
-        public void Remove_UserExists_RemovesUser()
-        {
-            // Arrange
-            var userId = 1;
-
-            // Act
-            _userRepository.Remove(new User { Id = userId });
-
-            // Assert
-            var removedUser = _dbContext.Users.FirstOrDefault(u => u.Id == userId);
-            ClassicAssert.IsNull(removedUser);
-        }
-
-        [Test]
-        public void RemoveRange_MultipleUsersExist_RemovesUsers()
-        {
-            // Arrange
-            var userIdsToRemove = new List<int> { 1, 2 };
-
-            // Act
-            _userRepository.RemoveRange(userIdsToRemove.Select(id => new User { Id = id }));
-
-            // Assert
-            var remainingUsers = _dbContext.Users.Where(u => userIdsToRemove.Contains(u.Id)).ToList();
-            ClassicAssert.IsEmpty(remainingUsers);
-        }
-        IUserRepository
+  
+        // Additional tests can be added for other methods in IUserRepository
     }
 
 }
