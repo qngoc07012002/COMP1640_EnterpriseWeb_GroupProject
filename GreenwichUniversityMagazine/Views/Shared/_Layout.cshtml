@@ -68,7 +68,6 @@
                     <div class="logned_bar">
                         <div class="notification_container">
                             <button id="fetchDataButton" class="notification_button">
-                                <span class="notification_count"></span>
                                 <img src="~/css/Navigation/notification.png" class="notification_icon" />
                             </button>
                         </div>
@@ -213,12 +212,13 @@
                 success: function (data) {
                     if (data && data.notifies !== undefined) {
                         var notifies = data.notifies;
-                        if (notifies === 0) {
-                            $('.notification_count').remove();
-                        } else if (notifies < 5) {
-                            $('.notification_count').text(notifies);
+                     
+                        if (notifies < 5 && notifies > 0) {
+                            var notificationCountSpan = $('<span class="notification_count">' + notifies + '</span>');
+                            $('#fetchDataButton').append(notificationCountSpan);
                         } else {
-                            $('.notification_count').text('5+');
+                            var notificationCountSpan = $('<span class="notification_count">5+</span>');
+                            $('#fetchDataButton').append(notificationCountSpan);
                         }
                     }
                 },
@@ -228,7 +228,7 @@
             });
         }
         fetchCommentsCount();
-        setInterval(fetchCommentsCount, 60000);
+        setInterval(fetchCommentsCount, 5000);
     });
 </script>
 
