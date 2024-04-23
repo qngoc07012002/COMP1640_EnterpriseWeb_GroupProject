@@ -71,7 +71,7 @@ nav {
     }
 .user-logo-notification {
     width: 60px;
-    height: 60px;
+    /*height: 60px;*/
     border-radius: 50%; /* Làm cho hình tròn */
     overflow: hidden; /* Đảm bảo hình ảnh bị cắt theo hình tròn */
     /*border: 2px solid #ffffff;*/
@@ -144,7 +144,6 @@ footer {
 
 .notification_list_container {
     position: absolute;
-    width: 500px;
     top: 70px;
     right: 20px;
     padding: 10px;
@@ -428,6 +427,7 @@ main {
         align-items: center;
         width: 250px;
         height: 80px;
+        order:3;
     }
 
 
@@ -573,8 +573,9 @@ main {
 .header-toggle-button-container{
     display:none;
 }
-
-
+#toggle-container{
+    display:none;
+}
 
 .register-button {
     margin-left: 30%;
@@ -696,17 +697,21 @@ body {
     }
 }
 
-@media(max-width:800px) {
-    #header-toggle-button{
+@media(max-width:950px) {
+    #toggle-container {
+        display:block;
+    }
+        #header-toggle-button{
         display:block;
         margin-right:10px;
         background-color:transparent;
         border:none;
+        order:999;
     }
     .login-button-container {
         display: none;
     }
-    .header-main {
+    #header-main {
         position: relative;
     }
     .nav-container {
@@ -739,27 +744,55 @@ body {
     {
         background-color: #8484A2 !important;
     }
+    .logned_bar{
+        width:fit-content;
+        margin-left:auto;
+        margin-right:20px;
+    }
 
-
 }
-
-/*Responsive for header*/
-@media(max-width:800px) {
-.footer-root{
-padding:30px 10px !important;
-}
-.footer-bottom-side{
-    display:block;
-}
-.footer-left-side{
-    width:100%;
-    margin-bottom:20px;
-}
-.footer-right-side{
-    width:100%;
-    justify-content:center;
-}
-    .footer-right-side > a{
-        margin: 0 10px;
+@media(max-width:435px) {
+    .logo{
+        width:20%;
     }
 }
+
+    /*Responsive for footer*/
+    @media(max-width:800px) {
+        .footer-root {
+            padding: 30px 10px !important;
+        }
+
+        .footer-bottom-side {
+            display: block;
+        }
+
+        .footer-left-side {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .footer-right-side {
+            width: 100%;
+            justify-content: center;
+        }
+
+            .footer-right-side > a {
+                margin: 0 10px;
+            }
+
+        .logo {
+            width: 200px;
+        }
+
+        .notification_list_container {
+            width: 50%;
+        }
+    }
+
+    @media(max-width:450px) {
+        .user-logo-notification {
+            width: 30px;
+            height: 30px;
+        }
+    }
