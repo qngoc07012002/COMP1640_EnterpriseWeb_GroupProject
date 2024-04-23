@@ -114,7 +114,7 @@
     </div>
 </div>
 
-<ul class="pagination home-product-pagination text-center" id="pagination">
+@* <ul class="pagination home-product-pagination text-center" id="pagination">
     @if (currentPage > 1)
     {
         <li class="pagination-item pagination-previous">
@@ -133,10 +133,53 @@
             <a href="#" class="pagination-item-link" data-page="@(currentPage + 1)">Next</a>
         </li>
     }
+</ul> *@
+<ul class="pagination home-product-pagination text-center" id="pagination">
+    @if (currentPage > 1)
+    {
+        <li class="pagination-item pagination-previous">
+            <a href="#" class="pagination-item-link" data-page="1"></a>
+        </li>
+    }
+
+    @{
+        int startPage = Math.Max(currentPage - 2, 1);
+        int endPage = Math.Min(currentPage + 2, totalPages);
+        if (startPage > 1)
+        {
+            <li class="pagination-item">
+                <span>...</span>
+            </li>
+        }
+
+        for (int i = startPage; i <= endPage; i++)
+        {
+            <li class="pagination-item @(i == currentPage ? "pagination-item--active" : "")">
+                <a href="#" class="pagination-item-link" data-page="@i">@i</a>
+            </li>
+        }
+
+        if (endPage < totalPages)
+        {
+            <li class="pagination-item">
+                <span>...</span>
+            </li>
+        }
+    }
+
+    @if (currentPage < totalPages)
+    {
+        
+        <li class="pagination-item pagination-next">
+            <a href="#" class="pagination-item-link" data-page="@totalPages"></a>
+        </li>
+    }
 </ul>
 
 
+
 <script>
+    // giới hạn từ card 
     document.addEventListener("DOMContentLoaded", function () {
         var maxTitleWords = 15; // Số từ tối đa cho Title
         var maxSubtitleWords = 20; // Số từ tối đa cho SubTitle
@@ -179,6 +222,7 @@
                    
                 } else if (facultyId) {
                     url = `${window.location.pathname}?facultyid=${facultyId}&page=${page}`;
+
                 } else {
                     url = `${window.location.pathname}?page=${page}`;
                 }
