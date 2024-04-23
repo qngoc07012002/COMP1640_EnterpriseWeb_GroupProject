@@ -213,7 +213,7 @@
                     if (data && data.notifies !== undefined) {
                         var notifies = data.notifies;
                      
-                        if (notifies < 5 && notifies > 0) {
+                        if (notifies <= 5 && notifies > 0) {
                             var notificationCountSpan = $('<span class="notification_count">' + notifies + '</span>');
                             $('#fetchDataButton').append(notificationCountSpan);
                         } else if (notifies > 5) {
