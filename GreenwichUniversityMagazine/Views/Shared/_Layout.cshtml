@@ -216,7 +216,7 @@
                         if (notifies < 5 && notifies > 0) {
                             var notificationCountSpan = $('<span class="notification_count">' + notifies + '</span>');
                             $('#fetchDataButton').append(notificationCountSpan);
-                        } else {
+                        } else if (notifies > 5) {
                             var notificationCountSpan = $('<span class="notification_count">5+</span>');
                             $('#fetchDataButton').append(notificationCountSpan);
                         }
