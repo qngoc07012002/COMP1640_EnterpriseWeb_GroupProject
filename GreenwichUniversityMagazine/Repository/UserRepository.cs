@@ -2,6 +2,7 @@
 using GreenwichUniversityMagazine.Data;
 using GreenwichUniversityMagazine.Models;
 using GreenwichUniversityMagazine.Repository.IRepository;
+
 namespace GreenwichUniversityMagazine.Repository
 {
     public class UserRepository : Repository<User>, IUserRepository
@@ -45,13 +46,20 @@ namespace GreenwichUniversityMagazine.Repository
             _dbContext.Add(user);
             _dbContext.SaveChanges();
         }
-        public User GetById(int id)
+        public User GetById(int? id)
         {
             return _dbContext.Users.FirstOrDefault(t => t.Id == id);
         }
         public int GetNumberOfStudents()
         {
             return _dbContext.Users.Count(user => user.Role == "STUDENT");
+        }
+
+        IQueryable<User> IUserRepository.GetAllUser()
+        {
+            return _dbContext.Users
+                      .Include(m => m.Faculty)
+                      .AsQueryable();
         }
     }
 }
