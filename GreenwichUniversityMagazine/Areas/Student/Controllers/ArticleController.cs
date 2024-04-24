@@ -446,7 +446,7 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
             int.TryParse(HttpContext.Session.GetString("UserId"), out int StudentId);
             IEnumerable<Term> allTerms = _unitOfWork.TermRepository.GetAll();
             IEnumerable<Article> query = _unitOfWork.ArticleRepository.GetAll(includeProperty: "Magazines").Where(u => u.UserId == StudentId);
-            int allArticleCount = query.Count();
+            
             if (status.ToLower() == "pending")
             {
                 query = query.Where(u => u.Status == false);
@@ -455,11 +455,10 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
             {
                 query = query.Where(u => u.Status == true);
             }
+            int allArticleCount = query.Count();
             List<Article> articles = query.ToList();
-            articles.Reverse();
             int skipCount = (page - 1) * pageSize;
             articles = articles.Skip(skipCount).Take(pageSize).ToList();
-            List<object> articlesWithTerm = new List<object>();
 
             return Json(new { allArticleCount, articles });
 
