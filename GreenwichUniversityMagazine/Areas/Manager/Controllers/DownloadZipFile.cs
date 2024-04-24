@@ -143,7 +143,7 @@ namespace GreenwichUniversityMagazine.Areas.Manager.Controllers
                 
 
             }
-            return PhysicalFile(zipFilePath, "application/zip", $"article_.zip");
+            return PhysicalFile(zipFilePath, "application/zip", $"article_{article.ArticleId}.zip");
 
         }
 
