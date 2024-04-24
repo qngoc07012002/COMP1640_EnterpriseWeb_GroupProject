@@ -257,7 +257,7 @@ body {
 .input-container {
     position: relative;
     margin: 50px;
-    width: 500px;
+    width: auto;
 }
 
     .input-container input[type="text"] {
@@ -416,7 +416,8 @@ body {
 
 /*Commennt article coordinate box*/
 .comment-private {
-    width: 500px;
+    max-width: 500px;
+    width: auto;
     height: auto;
     border-radius: 8px;
     z-index: 1;
@@ -440,7 +441,9 @@ body {
 
 .comment-content {
     flex: 1; /* Chia phần còn lại của ô comment */
-    padding: 10px; /* Thêm padding cho nội dung comment */
+    padding: 10px;
+    width: 70%;
+    word-wrap: break-word;
 }
 
 .box {
@@ -454,6 +457,7 @@ body {
 .comment-value {
     /* CSS để làm mờ nội dung của @comment.Value */
     opacity: 0.5; /* Độ mờ */
+
 }
 
 /* Comment Reply */
@@ -579,3 +583,90 @@ body {
         .pagination a:last-child {
             padding: 8px 16px;
         }
+
+/* Responsive */
+
+.button-text {
+    display: inline;
+}
+
+
+/* reponsive*/
+@media (max-width: 768px) {
+    hr {
+        width: 0;
+    }
+    .text-lg-end {
+        text-align: center !important;
+    }
+    .text-md-end {
+        text-align: center !important;
+    }
+    .col-sm-12 {
+        flex: 0 0 100% !important;
+    }
+    .button-text {
+        display: none;
+    }
+
+    .container {
+        width: 100%;
+    }
+
+    .article-card {
+        height: 300px;
+        max-width: 100%;
+        display: flex;
+        position: relative;
+        overflow: hidden;
+        border-radius: 20px;
+        padding: 5px;
+        box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+    }
+
+    .article-information {
+        margin-top: 20px;
+        width: 550px;
+        padding: 10px;
+        position: absolute;
+        bottom: 40px;
+
+    }
+
+    .article-card-img {
+        margin: 5px;
+        width: 50px;
+        height: 150px;
+        min-width: 250px;
+        object-fit: contain;
+        object-position: center;
+        
+    }
+
+    .article-card-text {
+        max-width: 40%;
+        display: -webkit-box;
+        -webkit-line-clamp: 2; 
+        font-size: 15px;
+        -webkit-box-orient: vertical;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-wrap: break-word;
+    }
+
+    .card-button {
+        position: absolute;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        right: 0;
+        bottom: 0;
+        padding: 5px;
+        padding-bottom: 20px;
+        margin-right: 10px;
+        box-sizing: border-box;
+        transition: all 0.3s ease;
+    }
+    
+}

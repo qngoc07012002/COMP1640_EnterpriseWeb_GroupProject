@@ -134,12 +134,9 @@
             </div>
         }
         <div class="comment-input">
-            <form id="commentForm">
                 <!-- Các trường và nút gửi comment -->
-                <textarea name="commentInput" id="commentInput" placeholder="Enter your comment..." rows="4"></textarea>
-                <input type="hidden" name="articleId" id="articleId" value="@Model.article.ArticleId" /> <!-- Đây là một ví dụ, hãy thay đổi theo cấu trúc của mã HTML của bạn -->
-                <button type="submit" id="sendCommentButton">Send Comment</button>
-            </form>
+                <textarea name="commentInput" id="commentTextArea" placeholder="Enter your comment..." rows="4"></textarea>
+                <button class="pushable" onclick="studentComment()">Send Comment</button>
         </div>
     </div>
 </div>
@@ -210,48 +207,41 @@
         function scrollToBottom() {
             window.scrollTo(0, document.body.scrollHeight);
         }
-
-        // Xử lý sự kiện gửi comment bằng AJAX
-        $("#commentForm").submit(function (event) {
-            // Ngăn chặn hành động mặc định của form (không gửi request)
-            event.preventDefault();
-
-            // Lấy giá trị của ô comment
-            var commentInput = $("#commentInput").val();
-            // Lấy giá trị của ô articleId
-            var articleId = $("#articleId").val();
-
-            // Gửi request AJAX để thực hiện comment
-            $.ajax({
-                type: "POST",
-                url: "/student/Comment/UploadPublic",
-                data: { commentInput: commentInput, articleId: articleId },
-                success: function (response) {
-                    // Nếu comment thành công, đặt biến trạng thái thành true
-                    commentSubmitted = true;
-
-                    // Reload trang
-                    location.reload();
-
-                    // Sau khi tải lại trang, cuộn xuống dưới cùng
-                    $(window).on('load', function () {
-                        scrollToBottom();
-                    });
-                },
-                error: function (error) {
-                    // Xử lý lỗi nếu có
-                    console.error("Error submitting comment:", error);
-                }
-            });
-        });
-
-        // Kiểm tra trạng thái khi tải lại trang
-        $(window).on('load', function () {
-            if (commentSubmitted) {
-                // Nếu comment đã được gửi, cuộn xuống dưới cùng
-                scrollToBottom();
-            }
-        });
     });
+    function studentComment(event) {
+
+        var comment = document.querySelector('.comment-input textarea').value;
+        var urlParams = new URLSearchParams(window.location.search);
+        // Trích xuất articleId từ URL
+        var urlParts = window.location.href.split('/');
+        var articleId = parseInt(urlParts[urlParts.length - 1]);
+
+        // Kiểm tra xem articleId có là một số hợp lệ không
+        if (isNaN(articleId)) {
+            console.error('ERROR !!! Invalid articleId.');
+            return;
+        }
+        // Chuyển đổi đối tượng JSON sang chuỗi query string
+        var formData = `CommentInput=${encodeURIComponent(comment)}&articleId=${encodeURIComponent(articleId)}`;
+
+        // Gửi request POST tới API endpoint
+        fetch('https://localhost:7112/Student/Comment/UploadPublic', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: formData
+        })
+            .then(response => {
+                if (response.ok) {
+
+                    window.location.reload();
+                }
+            })
+            .catch(error => {
+                console.error('ERROR !!! Cannot send comment.:', error);
+            });
+        document.querySelector('.comment-input textarea').value = '';
+    }
 
 </script>

@@ -63,7 +63,6 @@
             margin-left: 5px;
         }
 
-
 .main-container .sidebar {
     margin: 10px;
     margin-left: 100px;
@@ -152,13 +151,19 @@ input {
 }
 
 .content {
-    flex-grow: 1; /* Dãn ra để chiếm phần còn lại của main-container */
-    width: 60%; /* Chiếm 60% chiều rộng của main-container */
+    width: 100%; /* Chiếm 100% chiều rộng của main-container */
     padding-left: 20px; /* Thêm padding bên trái */
     padding-right: 20px; /* Thêm padding bên phải */
     box-sizing: border-box; /* Padding không tăng kích thước của phần tử */
 }
 
+/* CSS cho các màn hình nhỏ hơn hoặc bằng 768px */
+@media (max-width: 768px) {
+    .content {
+        padding-left: 10px; /* Giảm padding bên trái trên các thiết bị nhỏ hơn */
+        padding-right: 10px; /* Giảm padding bên phải trên các thiết bị nhỏ hơn */
+    }
+}
 .sidebar {
     width: 40%; /* Chiếm 40% chiều rộng của main-container */
     margin-left: 20px; /* Khoảng cách giữa content và sidebar */
@@ -274,7 +279,7 @@ input {
 .pagination-previous,
 .pagination-next {
     padding: 8px 16px;
-    margin: 0 10px; /* Khoảng cách giữa các nút phân trang */
+    margin: 0 10px;
 }
 
 .btn-delete {
@@ -304,3 +309,47 @@ input {
     .btn-edit:hover {
         background-color: #0056b3; /* Màu xanh nước biển sáng khi di chuột qua */
     }
+
+
+
+
+.button-5 {
+    align-items: center;
+    background-clip: padding-box;
+    background-color: #222;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+    box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    display: inline-flex;
+    font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    justify-content: center;
+    line-height: 1.25;
+    margin: 0;
+    min-height: 3rem;
+    padding: calc(.875rem - 1px) calc(1.5rem - 1px);
+    position: relative;
+    text-decoration: none;
+    transition: all 250ms;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: baseline;
+    width: auto;
+    margin-left: 20px;
+}
+
+    .button-5:hover,
+    .button-5:focus {
+        background-color: #fb8332;
+        box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+    }
+
+    .button-5:hover {
+        transform: translateY(-1px);
+    }
+
