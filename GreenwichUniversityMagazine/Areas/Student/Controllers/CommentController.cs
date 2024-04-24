@@ -95,12 +95,14 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("Login","Home"); // Trả về lỗi 401 nếu người dùng không xác thực
+                        return BadRequest();
                     }
                 }
                 else
                 {
-                    return RedirectToAction("Login", "Home"); // Trả về lỗi 401 nếu người dùng không xác thực
+                    // Trả về lỗi 400 nếu có lỗi xảy ra
+                    return BadRequest();
+
                 }
             }
             catch (Exception ex)
