@@ -31,7 +31,7 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label asp-for="Magazines.FacultyId" class="col-sm-2 col-form-label p-0"></label>
+                    <label asp-for="Magazines.FacultyId" class="col-sm-2 col-form-label p-0">Faculty Name</label>
                     <div class="col-sm-10">
                         <div class="form-floating py-2">
                             <select asp-for="@Model.Magazines.FacultyId" asp-items="@Model.MyFaculties" class="form-select form-control"></select>
@@ -39,7 +39,7 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label asp-for="Magazines.TermId" class="col-sm-2 col-form-label p-0"></label>
+                    <label asp-for="Magazines.TermId" class="col-sm-2 col-form-label p-0">Term Name</label>
                     <div class="col-sm-10">
                         <div class="form-floating py-2">
                             <select asp-for="@Model.Magazines.TermId" asp-items="@Model.MyTerms" class="form-select form-control"></select>

@@ -44,7 +44,7 @@ namespace GreenwichUniversityMagazine.Areas.Manager.Controllers
                                   Value = u.Id.ToString()
                               }),
                 MyTerms = _unitOfWork.TermRepository.GetAll()
-                          .Where(u => u.StartDate > currentDateTime)
+                          .Where(u => u.StartDate >= currentDateTime || (u.StartDate <= currentDateTime && u.EndDate >= currentDateTime)) 
                           .Select(u => new SelectListItem
                           {
                               Text = $"{u.StartDate.ToString()} - {u.EndDate.ToString()} / {u.Name}",
@@ -53,6 +53,7 @@ namespace GreenwichUniversityMagazine.Areas.Manager.Controllers
             };
             return View(magazineVM);
         }
+
         [HttpPost]
         public IActionResult Create(MagazineVM magazineVM)
         {
@@ -91,6 +92,7 @@ namespace GreenwichUniversityMagazine.Areas.Manager.Controllers
 
         public IActionResult Edit(int? id)
         {
+            DateTime currentDateTime = DateTime.Now;
             MagazineVM magazineVM = new MagazineVM()
             {
                 MyMagazines = _unitOfWork.MagazineRepository.GetAll().
@@ -105,7 +107,7 @@ namespace GreenwichUniversityMagazine.Areas.Manager.Controllers
                                 Text = u.Name,
                                 Value = u.Id.ToString()
                             }),
-                MyTerms = _unitOfWork.TermRepository.GetAll()
+                MyTerms = _unitOfWork.TermRepository.GetAll().Where(u => u.StartDate >= currentDateTime || (u.StartDate <= currentDateTime && u.EndDate >= currentDateTime))
                 .Select(u => new SelectListItem
                 {
                     Text = $"{u.StartDate.ToString()} - {u.EndDate.ToString()} / {u.Name}",

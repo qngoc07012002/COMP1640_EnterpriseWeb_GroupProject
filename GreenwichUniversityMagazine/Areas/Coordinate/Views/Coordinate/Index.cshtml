@@ -175,7 +175,6 @@
             var selectedStatus = sessionStorage.getItem('selectedStatus');
             var currentPath = window.location.pathname.toLowerCase();
 
-            // Kiểm tra nếu đường dẫn là "/coordinate/index", tức là không phải trang "Article Management"
             if (!currentPath.includes('/coordinate/index')) {
                 if (selectedMagazineId) {
                     document.getElementById('magazineSelect').value = selectedMagazineId;
@@ -189,12 +188,14 @@
                     document.querySelector('input[name="status"][value="all"]').checked = true;
                 }
             } else {
-                // Xóa session khi vào trang "Article Management"
                 sessionStorage.setItem('selectedMagazineId', 'all');
 
                 sessionStorage.setItem('selectedStatus', 'all');
                 document.querySelector('input[name="status"][value="all"]').checked = true;
             }
         });
+
+
+
     </script>
 

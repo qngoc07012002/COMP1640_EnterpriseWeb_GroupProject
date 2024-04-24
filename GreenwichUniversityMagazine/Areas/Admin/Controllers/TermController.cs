@@ -36,7 +36,7 @@ namespace GreenwichUniversityMagazine.Areas.Admin.Controllers
         {
             if (string.IsNullOrEmpty(Season) || Year == 0)
             {
-                TempData["error"] = "Season or Year cannot be null";
+                TempData["error"] = "Year cannot be null";
                 return RedirectToAction("Index");
             }
             obj.Name = Season + " " + Year;

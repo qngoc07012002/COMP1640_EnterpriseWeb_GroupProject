@@ -12,7 +12,6 @@ using System.Reflection.Metadata;
 namespace GreenwichUniversityMagazine.Areas.Coordinate.Controllers
 {
     [Area("Coordinate")]
-    //[Authorize(Roles = "Coordinate")]
     public class CoordinateController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
