@@ -3,6 +3,8 @@ using GreenwichUniversityMagazine.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using GreenwichUniversityMagazine.Repository.IRepository;
+using System.Text;
+using System.Security.Cryptography;
 
 namespace GreenwichUniversityMagazine.Areas.Student.Controllers
 {
@@ -57,7 +59,7 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
 
 
                         string oldImagePath = Path.Combine(wwwRootPath, userVM.User.avtUrl.TrimStart('/'));
-                        if (System.IO.File.Exists(oldImagePath))
+                        if (System.IO.File.Exists(oldImagePath) && (userVM.User.avtUrl != "/img/avtImg/gw.jpg"))
                         {
                             System.IO.File.Delete(oldImagePath);
                         }
@@ -72,6 +74,7 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                     _unitOfWork.UserRepository.Update(userVM.User);
                     _unitOfWork.Save();
                     HttpContext.Session.SetString("avtUrl", userVM.User.avtUrl);
+                    HttpContext.Session.SetString("UserName", userVM.User.Name);
                     TempData["success"] = "Change Successfully";
                     return RedirectToAction("EditProfile", "Student", new { area = "Student" });
 
@@ -109,14 +112,14 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
             else
             {
                 int userId = int.Parse(HttpContext.Session.GetString("UserId"));
-                if (!_unitOfWork.UserRepository.CheckPassword(userId, currentPassword))
+                if (!_unitOfWork.UserRepository.CheckPassword(userId, HashPassword(currentPassword)))
                 {
                     TempData["error"] = "Invalid Password";
                 }
                 else
                 {
                     User user = _unitOfWork.UserRepository.Get(b => b.Id == userId);
-                    user.Password = newPassword;
+                    user.Password = HashPassword(newPassword);
                     _unitOfWork.UserRepository.Update(user);
                     _unitOfWork.Save();
                     TempData["success"] = "Update Password Successfully";
@@ -124,6 +127,27 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
             }
             return View();
         }
+        static string HashPassword(string password)
+        {
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                // Convert the input string to a byte array and compute the hash.
+                byte[] data = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
 
+                // Create a new StringBuilder to collect the bytes
+                // and create a string.
+                StringBuilder stringBuilder = new StringBuilder();
+
+                // Loop through each byte of the hashed data
+                // and format each one as a hexadecimal string.
+                for (int i = 0; i < data.Length; i++)
+                {
+                    stringBuilder.Append(data[i].ToString("x2"));
+                }
+
+                // Return the hexadecimal string.
+                return stringBuilder.ToString();
+            }
+        }
     }
 }
