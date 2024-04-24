@@ -1,5 +1,5 @@
 ﻿@model List<Article>
-﻿@{
+@{
     ViewData["Title"] = "Article Management";
 }
 <link rel="stylesheet" href="~/css/Student/Article.css" />
@@ -8,21 +8,21 @@
     <div class="card-header bg-secondary bg-gradient ml-0 py-3">
         <div class="row">
             <div class="col-12 text-center">
-                <h2 class="py-2">Article Managment</h2>
+                <h2 class="py-2">Article Management</h2>
             </div>
         </div>
     </div>
     <div class="card-body p-5">
         <div class="row pb-3">
-            <div class="col-6">
+            <div class="col-lg-6 col-md-6 col-sm-12">
             </div>
-            <div class="col-6 text-end">
+            <div class="col-lg-6 col-md-6 col-sm-12 text-lg-end text-md-end text-sm-center">
                 <div class="tab">
                     <button class="tablinks" onclick="loadArticlesByStatus('All', event, 1)" id="All" href="#">All</button>
                     <button class="tablinks" onclick="loadArticlesByStatus('Pending', event, 1)" id="Pending" href="#">Pending</button>
                     <button class="tablinks" onclick="loadArticlesByStatus('Success', event, 1)" id="Success" href="#">Success</button>
                     <a asp-area="Student" asp-action="Create" asp-controller="Article" class="create-button btn btn-primary">
-                        <i class="bi bi-plus-circle"></i>  Create New Article
+                        <i class="bi bi-plus-circle"></i><span class="button-text"> Create New Article</span>
                     </a>
                 </div>
             </div>
@@ -30,12 +30,9 @@
         <div class="container">
             <div class="pagination" id="pagination"></div>
             <div class="row" id="bookList">
-
-                
-            </div> 
+            </div>
             <div class="pagination" id="pagination"></div>
         </div>
-        
     </div>
 </div>
 @section Scripts

@@ -68,8 +68,6 @@ namespace GreenwichUniversityMagazine.Areas.Admin.Controllers
 
             return View();
         }
-
-
         public IActionResult Delete(int? idb)
         {
             if (idb == null || idb == 0)

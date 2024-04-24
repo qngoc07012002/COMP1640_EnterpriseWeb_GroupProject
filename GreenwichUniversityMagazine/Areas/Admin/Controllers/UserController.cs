@@ -25,7 +25,9 @@ namespace GreenwichUniversityMagazine.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            List<User> objUserList = _unitOfWork.UserRepository.GetAll().ToList();
+            IQueryable<User> UserList = _unitOfWork.UserRepository.GetAllUser().OrderByDescending(t => t.Id);
+
+            List<User> objUserList = UserList.ToList();
             return View(objUserList);
         }
         public IActionResult Create()

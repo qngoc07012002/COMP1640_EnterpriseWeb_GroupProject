@@ -10,8 +10,7 @@
     var sortedArticles = Model.ListArticle.Skip(startIndex).Take(itemsPerPage);
 }
 <link rel="stylesheet" href="~/css/Coordinate/Article.css" />
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" />
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" /
 <div class="card shadow border-0 my-4">
     <div class="card-header bg-secondary bg-gradient ml-0 py-3">
         <div class="row">
@@ -28,7 +27,7 @@
                     <div class="select-container">
                         <div class="select-wrapper">
                             <label for="magazineSelect">Magazine:</label>
-                            <select id="magazineSelect" name="id" class="select">
+                            <select id="magazineSelect" name="id" class="select-magazine">
                                 <option value="all">All</option>
                                 @foreach (var magazine in Model.AvailableMagazines)
                                 {

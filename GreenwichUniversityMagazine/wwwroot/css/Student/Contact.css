@@ -1,7 +1,4 @@
-﻿
-
-
-* {
+﻿* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -10,14 +7,10 @@
 
 
 .card-member {
-    padding-top: 20px;
-    padding-bottom: 20px;
-    padding-left: 120px;
+    padding: 30px;
     display: flex;
     flex-wrap: wrap;
-    gap: 20px; 
-    background: linear-gradient(375deg, #1cc7d0, #2ede98);
-  
+    justify-content: space-around;
 }
 
 
@@ -29,6 +22,7 @@
 .wrapper {
     height: 400px;
     width: 400px;
+    margin-bottom: 50px;
     position: relative;
     transform-style: preserve-3d;
     perspective: 1000px;
@@ -44,8 +38,8 @@
         transform: translateY(0deg);
         transform-style: preserve-3d;
         backface-visibility: hidden;
-        box-shadow: 0px 10px 15px rgba(0,0,0,0.1);
-        transition: transform 0.7s cubic-bezier(0.4,0.2,0.2,1);
+        box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
     }
 
     .wrapper:hover > .front-face {
@@ -96,7 +90,6 @@
         display: block;
         height: 40px;
         width: 40px;
-       
         text-align: center;
         margin: 0 5px;
         line-height: 38px;
@@ -111,37 +104,32 @@
             border-color: #1cc7d0;
             background: linear-gradient(375deg, transparent, transparent);
         }
-/* Thiết lập responsive cho card-member */
-/*@media (max-width: 1000px) {
-    .card-member {
-        grid-template-columns: repeat(3, 1fr);*/ /* Hiển thị 3 cột trên màn hình có kích thước nhỏ hơn 1200px */
-        /*padding-left: 50px;*/ /* Giảm padding bên trái để làm chỗ cho card */
-    /*}
+
+.contact-team {
+    margin-top: 20px;
+    text-align: center;
 }
 
-@media (max-width: 768px) {
-    .card-member {
-        grid-template-columns: repeat(2, 1fr);*/ /* Hiển thị 2 cột trên màn hình có kích thước nhỏ hơn 768px */
-        /*padding-left: 20px;*/ /* Giảm padding bên trái để làm chỗ cho card */
-    /*}
+.box-contact {
+    font-size: 16px;
+    line-height: 1.5;
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+    /* Thêm hiệu ứng box-shadow */
+    text-align: justify;
 }
 
-@media (max-width: 480px) {
-    .card-member {
-        grid-template-columns: 1fr;*/ /* Hiển thị 1 cột trên màn hình có kích thước nhỏ hơn 480px */
-        /*padding-left: 10px;*/ /* Giảm padding bên trái để làm chỗ cho card */
-        /*padding-right: 10px;*/ /* Giảm padding bên phải để làm chỗ cho card */
-    /*}
+    .box-contact h1 {
+        text-align: center;
+    }
 
-    .wrapper {
-        width: 100%;*/ /* Đảm bảo card chiếm full chiều rộng trên màn hình nhỏ */
-    /*}
-
-        .wrapper .card {
-            width: 100%;*/ /* Đảm bảo card chiếm full chiều rộng trên màn hình nhỏ */
-        /*}
-}*/
-
+    .box-contact h4 {
+        color: grey;
+    }
 
 
 
