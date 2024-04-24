@@ -57,18 +57,18 @@ function updateArticleList(articles) {
                             <p class="article-card-text text-ellipsis">${article.subTitle}</p>
                         </div>
                         <div class="card-button">
-                            <div>`;
+                            <div class="d-flex justify-content-between align-items-center">`;
             if (new Date() && new Date(article.magazines.term.endDate) >= new Date() && article.status === false) {
                 if (new Date(article.magazines.endDate) >= new Date()) {
-                    articleCard += `<a onClick="confirmDelete(${article.articleId})" class="btn btn-danger mx-2"><i class="bi bi-trash-fill"></i> <span class="button-text">Delete</span></a>`;
-                    articleCard += `<a href="/student/article/Update?id=${article.articleId}" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i><span class="button-text"> Modify</span> </a>`;
+                    articleCard += `<a onClick="confirmDelete(${article.articleId})" class="btn btn-danger mx-2"><i class="bi bi-trash-fill"></i> Delete</a>`;
+                    articleCard += `<a href="/student/article/Update?id=${article.articleId}" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i> Modify</a>`;
                 } else {
-                    articleCard += `<a href="/student/article/Update?id=${article.articleId}&status=outMagazine" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i><span class="button-text"> Modify</span>  </a>`;
+                    articleCard += `<a href="/student/article/Update?id=${article.articleId}&status=outMagazine" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i> Modify</a>`;
                 }
 
             } else {
                 if (article.status === true) {
-                    articleCard += `<a href="/student/article/SelectArticle?id=${article.articleId}" class="btn btn-primary mx-2"> <i class="bi bi-box-arrow-right"></i><span class="button-text">View</span></a>`;
+                    articleCard += `<a href="/student/article/SelectArticle?id=${article.articleId}" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i>View</a>`;
                 }
                 else {
                     articleCard += `<span class="text-danger mx-2">Expired Term</span>`;

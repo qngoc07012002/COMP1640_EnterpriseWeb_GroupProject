@@ -56,6 +56,11 @@
   <ItemGroup>
     <Content Remove="wwwroot\css\Manager\Filter\" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\js\Student\Article\Create.js" />
+    <None Include="wwwroot\js\Student\Article\index.js" />
+  </ItemGroup>
   <ItemGroup>
     <Content Update="Areas\Admin\Views\Home\Index.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
