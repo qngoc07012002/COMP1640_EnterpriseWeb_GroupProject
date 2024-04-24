@@ -27,7 +27,7 @@
             <div class="col-6"></div>
             <div class="col-6 text-end">
                 <a asp-action="Create" asp-controller="User" class="btn btn-primary">
-                    <i class="bi bi-plus-circle"></i> Create New User
+                    <button type="submit" class="button-5">Create</button>
                 </a>
             </div>
         </div>
@@ -91,7 +91,8 @@
                                     <h3>@user.Name</h3>
                                     <p><strong>Email:</strong> @user.Email</p>
                                     <p><strong>Code:</strong> @user.Code</p>
-                                    <p><strong>FacultyId:</strong> @user.Faculty</p>
+                                        <p><strong>Faculty Name:</strong> @(user.Faculty != null ? user.Faculty.Name : "N/A")</p>
+
                                     <p><strong>Role:</strong> @user.Role</p>
                                     <td class="w-75 btn-group" role="group">
                                         <div style="display: flex; align-items: center;">

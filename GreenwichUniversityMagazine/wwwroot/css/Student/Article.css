@@ -440,7 +440,9 @@ body {
 
 .comment-content {
     flex: 1; /* Chia phần còn lại của ô comment */
-    padding: 10px; /* Thêm padding cho nội dung comment */
+    padding: 10px;
+    width: 70%;
+    word-wrap: break-word;
 }
 
 .box {

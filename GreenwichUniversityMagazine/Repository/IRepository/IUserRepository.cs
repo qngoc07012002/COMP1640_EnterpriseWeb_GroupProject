@@ -9,8 +9,8 @@ namespace GreenwichUniversityMagazine.Repository.IRepository
         void Register(User user);
         bool CheckPassword(int userId, string password);
         bool CheckEmail(User user);
-        User GetById(int id);
+        User GetById(int? id);
         int GetNumberOfStudents();
-
+        IQueryable<User> GetAllUser();
     }
 }

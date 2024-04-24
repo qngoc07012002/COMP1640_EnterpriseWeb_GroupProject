@@ -54,41 +54,29 @@ namespace GreenwichUniversityMagazine.Areas.Coordinate.Controllers
                     if (currentDateTime >= term.StartDate && currentDateTime <= term.EndDate)
                     {
                         var selectedMagazineId = id.Value;
-                        var articles = _unitOfWork.ArticleRepository.GetAll()
-                                              .Where(article => article.MagazinedId == selectedMagazineId
-                                                                  &&
-                                                                (status == "all" || (status == "pending" && !article.Status) ||
-                                                                 (status == "approved" && article.Status)))
-                                              .OrderByDescending(article => article.ArticleId)
-                                              .ToList();
+                        var articles = _unitOfWork.CoordinateRepository.GetArticlesByMagazineIdAndStatus(id, status);
                         model.ListArticle = articles.OrderByDescending(article => article.ArticleId).ToList();
                         break;
                     }
                 }
             }
-            else if (id == null)
-            {
-                List<Article> allArticles = new List<Article>();
-
-                foreach (var term in termlist)
+                else if (id == null)
                 {
-                    if (currentDateTime >= term.StartDate && currentDateTime <= term.EndDate)                                                                                                                                           
+                    List<Article> allArticles = new List<Article>();
+
+                    foreach (var term in termlist)
                     {
-                        foreach (var magazine in magazineList)
+                        if (currentDateTime >= term.StartDate && currentDateTime <= term.EndDate)                                                                                                                                           
                         {
-                            var articles = _unitOfWork.ArticleRepository.GetAll()
-                                                    .Where(article => article.Magazines.TermId == term.Id && article.MagazinedId == magazine.Id
-                                                      &&
-                                                                (status == "all" || (status == "pending" && !article.Status) ||
-                                                                 (status == "approved" && article.Status)))
-                                                    .OrderByDescending(article => article.ArticleId)
-                                                    .ToList();
+                            foreach (var magazine in magazineList)
+                            {
+                            var articles = _unitOfWork.CoordinateRepository.GetArticlesByTermAndMagazine(term.Id, magazine.Id, status);
                             allArticles.AddRange(articles);
+                            }
                         }
                     }
+                    model.ListArticle = allArticles.OrderByDescending(article => article.ArticleId).ToList();
                 }
-                model.ListArticle = allArticles.OrderByDescending(article => article.ArticleId).ToList();
-            }
             return View(model);
         }
 
