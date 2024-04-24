@@ -10,6 +10,7 @@
     align-items: flex-start;
     justify-content: center;
 }
+
 /* Pagination styles */
 .pagination {
     list-style: none;
@@ -152,11 +153,18 @@ input {
 }
 
 .content {
-    flex-grow: 1; /* Dãn ra để chiếm phần còn lại của main-container */
-    width: 60%; /* Chiếm 60% chiều rộng của main-container */
+    width: 100%; /* Chiếm 100% chiều rộng của main-container */
     padding-left: 20px; /* Thêm padding bên trái */
     padding-right: 20px; /* Thêm padding bên phải */
     box-sizing: border-box; /* Padding không tăng kích thước của phần tử */
+}
+
+/* CSS cho các màn hình nhỏ hơn hoặc bằng 768px */
+@media (max-width: 768px) {
+    .content {
+        padding-left: 10px; /* Giảm padding bên trái trên các thiết bị nhỏ hơn */
+        padding-right: 10px; /* Giảm padding bên phải trên các thiết bị nhỏ hơn */
+    }
 }
 
 .sidebar {

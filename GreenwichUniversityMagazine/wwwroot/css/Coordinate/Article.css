@@ -301,6 +301,23 @@ body {
     .input-container input[type="text"]:valid ~ .underline {
         transform: scaleX(1);
     }
+/* Responsive sử dụng @media */
+@media only screen and (max-width: 600px) {
+    .input-container {
+        width: 90%; /* Điều chỉnh chiều rộng của container khi màn hình nhỏ hơn */
+        margin: 20px auto; /* Điều chỉnh margin để căn giữa khi màn hình nhỏ hơn */
+    }
+
+        .input-container input[type="text"] {
+            font-size: 16px; /* Giảm kích thước font cho thiết bị có màn hình nhỏ hơn */
+        }
+
+            .input-container input[type="text"]:focus ~ .label,
+            .input-container input[type="text"]:valid ~ .label {
+                font-size: 14px; /* Giảm kích thước font cho thiết bị có màn hình nhỏ hơn */
+            }
+}
+
 
 /* New button */
 .pushable {
@@ -402,6 +419,25 @@ body {
     overflow: hidden; /* Ẩn văn bản bị tràn ra ngoài phần tử */
     text-overflow: ellipsis;
 }
+@media only screen and (max-width:1072px) {
+    .article-card {
+        flex-direction: column; /* Đặt hướng của flex thành dọc */
+        height: auto; /* Tự động điều chỉnh chiều cao */
+    }
+
+    .article-information {
+        width: 100%; /* Đảm bảo thông tin bài viết chiếm full width */
+        margin-top: 10px; /* Giảm khoảng cách trên */
+    }
+
+    .article-card-img {
+        margin: 10px auto; /* Canh giữa hình ảnh */
+        width: 100%; /* Chiếm full width */
+        height: auto; /* Tự động tính toán chiều cao */
+        min-width: auto; /* Không cần thiết khi đã chiếm full width */
+    }
+}
+
 
 .card-button {
     position: absolute;
@@ -409,10 +445,21 @@ body {
     bottom: 0;
     padding: 10px;
     padding-bottom: 20px;
-    margin-right: 50px;
+    margin-right: 5%; /* Sử dụng phần trăm để căn chỉnh theo chiều ngang */
     box-sizing: border-box;
     transition: all 0.3s ease; /* Hiệu ứng chuyển động */
 }
+
+/* Sử dụng media queries để điều chỉnh vị trí và kích thước của nút trên các màn hình nhỏ */
+@media only screen and (max-width: 1072px) {
+    .card-button {
+        position: relative; /* Đặt lại vị trí thành relative để nút không che khuất nội dung khác */
+        margin: 0 auto; /* Canh giữa nút trên các màn hình nhỏ */
+        padding: 5px; /* Điều chỉnh padding theo nhu cầu */
+        padding-bottom: 10px; /* Điều chỉnh padding theo nhu cầu */
+    }
+}
+
 
 /*Commennt article coordinate box*/
 .comment-private {
@@ -569,6 +616,7 @@ body {
     --darkgray: #2c3e50;
 }
 
+}
 .select-magazine {
     /* Reset Select */
     appearance: none;
@@ -578,10 +626,7 @@ body {
     /* Personalize */
     flex: 1;
     padding: 0 1em;
-    color: #fff;
-    background-color: var(--darkgray);
-    background-image: none;
-    cursor: pointer;
+
 }
     /* Remove IE arrow */
     .select-magazine::-ms-expand {
@@ -595,6 +640,10 @@ body {
     height: 3em;
     border-radius: .25em;
     overflow: hidden;
+    color: #fff;
+    background-color: var(--darkgray);
+    background-image: none;
+    cursor: pointer;
 }
     /* Arrow */
     .select-magazine::after {
