@@ -63,6 +63,7 @@ namespace GreenwichUniversityMagazine.Tests
         {
             // Clean up the in-memory database after each test
             _dbContext.Database.EnsureDeleted();
+            _dbContext.Dispose();
         }
 
         [Test]
@@ -149,7 +150,91 @@ namespace GreenwichUniversityMagazine.Tests
             ClassicAssert.IsTrue(articles.All(a => a.Magazines.FacultyId == facultyId)); // Check if all articles belong to the expected faculty
         }
 
-        // Additional tests can be added for other methods in IArticleRepository
+        [Test]
+        public void GetAll_ReturnsAllArticles()
+        {
+            // Act
+            var articles = _articleRepository.GetAll().ToList();
+
+            // Assert
+            ClassicAssert.IsNotNull(articles);
+            ClassicAssert.AreEqual(1, articles.Count); // Adjust the count based on the sample data
+        }
+
+        [Test]
+        public void Add_NewArticle_AddsArticleToDatabase()
+        {
+            // Arrange
+            var newArticle = new Article
+            {
+                UserId = 1,
+                MagazinedId = 1,
+                Title = "New Test Article",
+                SubTitle = "New Test Subtitle",
+                imgUrl = "https://example.com/new_image.jpg",
+                Body = "New Sample Body",
+                SubmitDate = DateTime.Now,
+                ModifyDate = DateTime.Now,
+                Status = true
+            };
+
+            // Act
+            _articleRepository.Add(newArticle);
+            _dbContext.SaveChanges(); // Save changes to ensure the article is added to the database
+
+            // Assert
+            var addedArticle = _dbContext.Articles.FirstOrDefault(a => a.Title == newArticle.Title);
+            ClassicAssert.IsNotNull(addedArticle);
+        }
+
+        [Test]
+        public void Remove_ExistingArticle_RemovesArticleFromDatabase()
+        {
+            // Arrange
+            var articleIdToRemove = 1;
+
+            // Act
+            var articleToRemove = _dbContext.Articles.FirstOrDefault(a => a.ArticleId == articleIdToRemove);
+            _articleRepository.Remove(articleToRemove);
+            _dbContext.SaveChanges(); // Save changes to ensure the article is removed from the database
+
+            // Assert
+            var removedArticle = _dbContext.Articles.FirstOrDefault(a => a.ArticleId == articleIdToRemove);
+            ClassicAssert.IsNull(removedArticle);
+        }
+
+        [Test]
+        public void RemoveRange_MultipleArticles_RemovesArticlesFromDatabase()
+        {
+            // Act
+            var articlesToRemove = _dbContext.Articles.ToList();
+            _articleRepository.RemoveRange(articlesToRemove);
+            _dbContext.SaveChanges(); // Save changes to ensure articles are removed from the database
+
+            // Assert
+            var remainingArticlesCount = _dbContext.Articles.Count();
+            ClassicAssert.AreEqual(0, remainingArticlesCount);
+        }
+
+        [Test]
+        public void Update_ExistingArticle_UpdatesArticleInDatabase()
+        {
+            // Arrange
+            var existingArticleId = 1;
+            var updatedTitle = "Updated Test Article";
+
+            // Act
+            var existingArticle = _dbContext.Articles.FirstOrDefault(a => a.ArticleId == existingArticleId);
+            existingArticle.Title = updatedTitle;
+            _articleRepository.Update(existingArticle);
+            _dbContext.SaveChanges(); // Save changes to ensure the article is updated in the database
+
+            // Assert
+            var updatedArticle = _dbContext.Articles.FirstOrDefault(a => a.ArticleId == existingArticleId);
+            ClassicAssert.IsNotNull(updatedArticle);
+            ClassicAssert.AreEqual(updatedTitle, updatedArticle.Title);
+        }
+
     }
 
 

@@ -47,6 +47,7 @@ namespace GreenwichUniversityMagazine.Tests
         {
             // Clean up the in-memory database after each test
             _dbContext.Database.EnsureDeleted();
+            _dbContext.Dispose();
         }
 
         [Test]
@@ -165,8 +166,80 @@ namespace GreenwichUniversityMagazine.Tests
             // Assert
             ClassicAssert.AreEqual(2, result);
         }
-  
-        // Additional tests can be added for other methods in IUserRepository
+
+        [Test]
+        public void Add_NewUser_AddsUserToDatabase()
+        {
+            // Arrange
+            var newUser = new User
+            {
+                Email = "newuser@example.com",
+                Password = "password",
+                Name = "New User",
+                Code = "12345",
+                DateOfBirth = DateTime.Parse("2000-01-01"),
+                FacultyId = 1,
+                avtUrl = "avatar-url",
+                Role = "STUDENT",
+                Status = true
+            };
+
+            // Act
+            _userRepository.Add(newUser);
+            _dbContext.SaveChanges(); // Save changes to ensure user is added to the database
+
+            // Assert
+            var addedUser = _dbContext.Users.FirstOrDefault(u => u.Email == newUser.Email);
+            ClassicAssert.IsNotNull(addedUser);
+        }
+
+        [Test]
+        public void Remove_ExistingUser_RemovesUserFromDatabase()
+        {
+            // Arrange
+            var userIdToRemove = 1;
+
+            // Act
+            var userToRemove = _dbContext.Users.FirstOrDefault(u => u.Id == userIdToRemove);
+            _userRepository.Remove(userToRemove);
+            _dbContext.SaveChanges(); // Save changes to ensure user is removed from the database
+
+            // Assert
+            var removedUser = _dbContext.Users.FirstOrDefault(u => u.Id == userIdToRemove);
+            ClassicAssert.IsNull(removedUser);
+        }
+
+        [Test]
+        public void RemoveRange_MultipleUsers_RemovesUsersFromDatabase()
+        {
+            // Act
+            var usersToRemove = _dbContext.Users.ToList();
+            _userRepository.RemoveRange(usersToRemove);
+            _dbContext.SaveChanges(); // Save changes to ensure users are removed from the database
+
+            // Assert
+            var remainingUsersCount = _dbContext.Users.Count();
+            ClassicAssert.AreEqual(0, remainingUsersCount);
+        }
+
+
+        [Test]
+        public void Update_UserUpdatesSuccessfully()
+        {
+            // Arrange
+            var userToUpdate = _dbContext.Users.First();
+            var newName = "Updated Name";
+            userToUpdate.Name = newName;
+
+            // Act
+            _userRepository.Update(userToUpdate);
+
+            // Assert
+            var updatedUser = _dbContext.Users.FirstOrDefault(u => u.Id == userToUpdate.Id);
+            ClassicAssert.IsNotNull(updatedUser);
+            ClassicAssert.AreEqual(newName, updatedUser.Name);
+        }
+
     }
 
 }

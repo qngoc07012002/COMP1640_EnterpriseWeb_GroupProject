@@ -53,6 +53,7 @@ namespace GreenwichUniversityMagazine.Tests
         {
             // Clean up the in-memory database after each test
             _dbContext.Database.EnsureDeleted();
+            _dbContext.Dispose();
         }
 
         [Test]
