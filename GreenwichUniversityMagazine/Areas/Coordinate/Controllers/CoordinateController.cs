@@ -1,4 +1,5 @@
-﻿using GreenwichUniversityMagazine.Models;
+﻿using GreenwichUniversityMagazine.Authentication;
+using GreenwichUniversityMagazine.Models;
 using GreenwichUniversityMagazine.Models.ViewModel;
 using GreenwichUniversityMagazine.Models.ViewModels;
 using GreenwichUniversityMagazine.Repository.IRepository;
@@ -12,6 +13,7 @@ using System.Reflection.Metadata;
 namespace GreenwichUniversityMagazine.Areas.Coordinate.Controllers
 {
     [Area("Coordinate")]
+    [CoordinateAuthentication()]
     //[Authorize(Roles = "Coordinate")]
     public class CoordinateController : Controller
     {

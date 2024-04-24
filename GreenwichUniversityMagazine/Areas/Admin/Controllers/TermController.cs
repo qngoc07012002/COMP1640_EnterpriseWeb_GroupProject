@@ -1,4 +1,5 @@
-﻿using GreenwichUniversityMagazine.Models;
+﻿using GreenwichUniversityMagazine.Authentication;
+using GreenwichUniversityMagazine.Models;
 using GreenwichUniversityMagazine.Models.ViewModel;
 using GreenwichUniversityMagazine.Models.ViewModels;
 using GreenwichUniversityMagazine.Repository.IRepository;
@@ -10,6 +11,7 @@ using System.Linq;
 namespace GreenwichUniversityMagazine.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [AdminAuthentication()]
     public class TermController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

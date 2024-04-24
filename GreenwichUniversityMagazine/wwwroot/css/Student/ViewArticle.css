@@ -139,21 +139,8 @@ button {
 
 @media screen and (max-width: 1024px) {
     .main-container .sidebar {
-        width: 50%;
-        margin: 10px 0;
-        float: none;
-        display: block;
-        position: relative;
+        display: none;
     }
-
-        .main-container .sidebar .form-inline {
-            width: 50%;
-            margin-top: 20px;
-        }
-
-        .main-container .sidebar .sidebar-title {
-            margin-top: 10px;
-        }
 }
 
 

@@ -5,11 +5,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using GreenwichUniversityMagazine.Repository.IRepository;
 using System.Text;
 using System.Security.Cryptography;
+using GreenwichUniversityMagazine.Authentication;
 
 namespace GreenwichUniversityMagazine.Areas.Student.Controllers
 {
     [Area("student")]
-
+    [CommonAuthentication()]
     public class StudentController : Controller
     {
 

@@ -9,10 +9,12 @@ using System.IO.Compression;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System.Text.RegularExpressions;
+using GreenwichUniversityMagazine.Authentication;
 
 namespace GreenwichUniversityMagazine.Areas.Manager.Controllers
 {
     [Area("Manager")]
+    [ManagerAuthentication()]
     public class MagazineController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

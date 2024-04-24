@@ -6,10 +6,12 @@ using GreenwichUniversityMagazine.Models.ViewModels;
 using GreenwichUniversityMagazine.Serivces.IServices;
 using System.Text;
 using System.Security.Cryptography;
+using GreenwichUniversityMagazine.Authentication;
 
 namespace GreenwichUniversityMagazine.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [AdminAuthentication()]
     public class UserController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

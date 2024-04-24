@@ -1,9 +1,11 @@
-﻿using GreenwichUniversityMagazine.Serivces.IServices;
+﻿using GreenwichUniversityMagazine.Authentication;
+using GreenwichUniversityMagazine.Serivces.IServices;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GreenwichUniversityMagazine.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [AdminAuthentication()]
     public class EmailController : Controller
     {
         private readonly IEmailService _emailService;

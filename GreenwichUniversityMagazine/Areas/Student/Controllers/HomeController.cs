@@ -196,5 +196,10 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                 return stringBuilder.ToString();
             }
         }
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
     }
+
 }
