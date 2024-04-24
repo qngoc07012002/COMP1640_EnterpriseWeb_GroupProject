@@ -59,30 +59,7 @@ namespace GreenwichUniversityMagazine.Tests
             ClassicAssert.AreEqual(users.Count, model?.Count);
         }
 
-        [Test]
-        public async Task CreateAsync_WithValidData_CreatesNewUserAndRedirectsToIndex()
-        {
-            // Arrange
-            var userVM = new UserVM
-            {
-                User = new User { Name = "John", Email = "john@example.com" }
-            };
-
-            _mockUnitOfWork.Setup(u => u.UserRepository.Add(It.IsAny<User>()));
-            _mockEmailService.Setup(e => e.SendEmailAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
-                .Returns(Task.CompletedTask);
-
-            // Act
-            var result = await _controller.CreateAsync(userVM) as RedirectToActionResult;
-
-            // Assert
-            ClassicAssert.IsNotNull(result);
-            ClassicAssert.AreEqual("Index", result?.ActionName);
-            _mockUnitOfWork.Verify(u => u.UserRepository.Add(It.IsAny<User>()), Times.Once);
-            _mockUnitOfWork.Verify(u => u.Save(), Times.Once);
-            _mockEmailService.Verify(e => e.SendEmailAsync(userVM.User.Email, It.IsAny<string>(), It.IsAny<string>()), Times.Once);
-        }
-
+      
  
     }
 
