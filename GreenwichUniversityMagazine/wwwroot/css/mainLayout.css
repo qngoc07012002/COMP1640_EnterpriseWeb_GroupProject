@@ -77,6 +77,9 @@ nav {
     /*border: 2px solid #ffffff;*/
     cursor: pointer;
     background: white;
+    object-fit: cover;
+    max-width: 60px;
+    flex-shrink: 0;
 }
     .user-logo-notification > img {
         width: 100%;
@@ -144,11 +147,11 @@ footer {
 
 .notification_list_container {
     position: absolute;
-    width: 500px;
     top: 70px;
     right: 20px;
     padding: 10px;
-    width: 20%;
+    min-width:250px;
+    width: 50%;
     border-radius: 10px;
     background-color: #272790;
     z-index: 2;
@@ -428,6 +431,7 @@ main {
         align-items: center;
         width: 250px;
         height: 80px;
+        order:3;
     }
 
 
@@ -570,9 +574,12 @@ main {
     border-radius: 10px;
     font-size: 13px;
 }
-
-
-
+.header-toggle-button-container{
+    display:none;
+}
+#toggle-container{
+    display:none;
+}
 
 .register-button {
     margin-left: 30%;
@@ -643,33 +650,6 @@ body {
     text-align: left;
 }
 
-.footer-div1 {
-    grid-area: 1 / 1 / 2 / 2;
-}
-
-    .footer-div1 > img {
-        width: 80%;
-    }
-
-.footer-div2 {
-    grid-area: 1 / 2 / 2 / 3;
-}
-
-.footer-div3 {
-    grid-area: 1 / 3 / 2 / 4;
-}
-
-.footer-div4 {
-    grid-area: 1 / 4 / 2 / 5;
-}
-
-.footer-div5 {
-    grid-area: 1 / 5 / 2 / 6;
-}
-
-.footer-div6 {
-    grid-area: 1 / 6 / 2 / 7;
-}
 
 .footer-bottom-side {
     padding: 24px 0px 0px;
@@ -707,3 +687,116 @@ body {
 /*
     FOOTER CSS END
 */
+
+
+
+
+/*Responsive for header*/
+#header-toggle-button{
+    display:none;
+}
+@media (max-width: 950px) {
+    .login-button-container{
+        width:fit-content;
+    }
+}
+
+@media(max-width:950px) {
+    #toggle-container {
+        display:block;
+    }
+        #header-toggle-button{
+        display:block;
+        margin-right:10px;
+        background-color:transparent;
+        border:none;
+        order:999;
+    }
+    .login-button-container {
+        display: none;
+    }
+    #header-main {
+        position: relative;
+    }
+    .nav-container {
+        position: absolute;
+        width: 100%;
+        top: 80px;
+        background-color: #333364;
+        display: none;
+    }
+
+        .nav-container > nav {
+            display: flex;
+            flex-direction: column;
+        }
+
+            .nav-container > nav > a {
+                display: block;
+                width:100%;
+                height:50px;
+                text-align:center;
+                line-height:50px;
+            }
+    .login-button {
+        background-color: transparent !important;
+    }
+    .login-button:hover{
+        background-color:none;
+    }
+    .nav-container > nav > a:hover
+    {
+        background-color: #8484A2 !important;
+    }
+    .logned_bar{
+        width:fit-content;
+        margin-left:auto;
+        margin-right:20px;
+    }
+
+}
+@media(max-width:435px) {
+    .logo{
+        width:20%;
+    }
+}
+
+    /*Responsive for footer*/
+    @media(max-width:800px) {
+        .footer-root {
+            padding: 30px 10px !important;
+        }
+
+        .footer-bottom-side {
+            display: block;
+        }
+
+        .footer-left-side {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .footer-right-side {
+            width: 100%;
+            justify-content: center;
+        }
+
+            .footer-right-side > a {
+                margin: 0 10px;
+            }
+
+        .logo {
+            width: 200px;
+        }
+
+        .notification_list_container {
+            width: 50%;
+        }
+    }
+
+    @media(max-width:450px) {
+        .user-logo-notification {
+            width: 30px;
+            height: 30px;
+        }
+    }

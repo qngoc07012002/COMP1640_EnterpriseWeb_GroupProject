@@ -11,12 +11,15 @@
     <title>@ViewData["Title"] - GreenwichUniversityMagazine</title>
     <link rel="icon" type="image/x-icon" href="~/favicon.ico">
     <link rel="stylesheet" href="~/css/mainLayout.css" asp-append-version="true" />
-    
+
 </head>
 <body>
     <header id="header-main">
-        <a asp-area="Student" asp-controller="Home" asp-action="Index"> 
-        <img src="~/img/Layout/logo.png" alt="Greenwich University Logo" class="logo">
+        <button id="header-toggle-button">
+            <img src="~/css/Navigation/toggle.svg" />
+        </button>
+        <a asp-area="Student" asp-controller="Home" asp-action="Index">
+            <img src="~/img/Layout/logo.png" alt="Greenwich University Logo" class="logo">
         </a>
         <div class="nav-container">
             <nav>
@@ -50,28 +53,53 @@
 
             </nav>
         </div>
-        <div class="nav-container">
-        @{
-            var userId = Accessor.HttpContext.Session.GetString("UserId");
+        <div class="nav-container nav-container-z">
+            @{
+                var userId = Accessor.HttpContext.Session.GetString("UserId");
                 var userEmail = Accessor.HttpContext.Session.GetString("UserEmail");
                 var userName = Accessor.HttpContext.Session.GetString("UserName");
                 var avtUrl = Accessor.HttpContext.Session.GetString("avtUrl");
-             if (userId == null)
-            {
-                <div class="login-button-container">
+                if (userId == null)
+                {
+                    <div class="login-button-container">
                         <a asp-area="Student" asp-controller="Home" asp-action="Login" class="login-button">Sign In</a>
-                </div>
-                
-            }
-            else
-            {
-                    <div class="logned_bar">
+                    </div>
+                    <div id="toggle-container">
+                        <button id="header-toggle-button">
+                            <img src="~/css/Navigation/toggle.svg" />
+                        </button>
+                    </div>
+                    <script>
+                        const toggleButton = document.getElementById("header-toggle-button");
+                        const navContainer = document.querySelector(".nav-container");
+                        const navDivChildContainer = document.querySelector(".nav-container nav");
+                        let isVisible = false;
+                        let linkAdded = false;
+                        console.log(navContainer);
+                        toggleButton.addEventListener("click", () => {
+                            isVisible = !isVisible;
+
+                            navContainer.style.display = isVisible ? "block" : "none";
+
+                            if (!linkAdded) {
+                                const newLink = document.createElement('a');
+                                newLink.href = '/Student/Home/Login'; // Đường dẫn URL đầy đủ cho trang Login
+                                newLink.classList.add('login-button');
+                                newLink.textContent = 'Sign In';
+
+                                navDivChildContainer.appendChild(newLink);
+                                linkAdded = true;
+                            }
+                        })</script>
+                }
+                else
+                {
+                    <div class="logned_bar" id="logned_bar">
                         <div class="notification_container">
                             <button id="fetchDataButton" class="notification_button">
                                 @{
                                     if (ViewBag.CommentsCount == 0 || ViewBag.CommentsCount == null)
                                     {
-                                    
                                     }
                                     else if (ViewBag.CommentsCount < 5 && ViewBag.CommentsCount != null)
                                     {
@@ -134,13 +162,32 @@
                                 </a>
                             </div>
                         </div>
+                        <script>
+                            const toggleButton = document.getElementById("header-toggle-button");
+                            const navContainer = document.querySelector(".nav-container");
+                            const navDivChildContainer = document.querySelector(".nav-container nav");
+                            let isVisible = false;
+                            let linkAdded = false;
+
+
+                            toggleButton.addEventListener("click", () => {
+                                isVisible = !isVisible;
+
+                                navContainer.style.display = isVisible ? "block" : "none";
+                            });
+
+                            const lognedBar = document.getElementById("logned_bar");
+                            const headerMain = document.getElementById("header-main");
+
+
+                            headerMain.appendChild(lognedBar);</script>
                     </div>
-                    
-                // var userEmail = Accessor.HttpContext.Session.GetString("UserEmail");
-                //     <a>@userEmail</a>
-                // <a asp-area="Student" asp-controller="Home" asp-action="Logout">Logout</a>
+
+                    // var userEmail = Accessor.HttpContext.Session.GetString("UserEmail");
+                    //     <a>@userEmail</a>
+                    // <a asp-area="Student" asp-controller="Home" asp-action="Logout">Logout</a>
+                }
             }
-        }
         </div>
 
     </header>
@@ -152,23 +199,12 @@
 
 
     <button id="button-scroll-top" onClick="scrollToTop()">
-        <img src="~/css/Manager/Button/scrollTop.svg" class="icon-scroll-top"/>
+        <img src="~/css/Manager/Button/scrollTop.svg" class="icon-scroll-top" />
     </button>
     <footer>
         <div class="footer-root">
             <div class="footer-top-side">
-                <div class="footer-div1">
-                    <img src="~/img/Layout/logo.png" /> 
-                </div>
-                <div class="footer-div2">
-                </div>
-                <div class="footer-div3">
-                </div>
-                <div class="footer-div4"></div>
-                <div class="footer-div5">
-                </div>
-                <div class="footer-div6">
-                </div>
+                <img src="~/img/Layout/logo.png" width="150px" />
             </div>
             <div class="footer-bottom-side">
                 <div class="footer-left-side">
@@ -191,7 +227,7 @@
         </div>
     </footer>
     @await RenderSectionAsync("Scripts", required: false)
- 
+
 </body>
 </html>
 
@@ -212,9 +248,37 @@
     }
 
     function scrollToTop() {
-        document.body.scrollTop = 0; // For Safari
-        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
     }
+</script>
+<script>
+    $(document).ready(function () {
+        // Function to fetch comments count
+        function fetchCommentsCount() {
+            $.ajax({
+                url: 'https://localhost:7112/student/home/GetCommentsCount',
+                type: 'GET',
+                success: function (data) {
+                    if (data && data.notifies !== undefined) {
+                        var notifies = data.notifies;
+                        if (notifies <= 5 && notifies > 0) {
+                            var notificationCountSpan = $('<span class="notification_count">' + notifies + '</span>');
+                            $('#fetchDataButton').append(notificationCountSpan);
+                        } else if (notifies > 5) {
+                            var notificationCountSpan = $('<span class="notification_count">5+</span>');
+                            $('#fetchDataButton').append(notificationCountSpan);
+                        }
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error to get Notify Count");
+                }
+            });
+        }
+        fetchCommentsCount();
+        setInterval(fetchCommentsCount, 5000);
+    });
 </script>
 
 <script>
@@ -225,14 +289,13 @@
         // Click event handler for the button
         $('#fetchDataButton').click(function () {
             if (!dataVisible) {
-                // If data is not visible, fetch and display
                 $.ajax({
                     url: '/Coordinate/Coordinate/GetNotification',
                     type: 'GET',
                     success: function (data) {
                         $('#partialViewContainer').html(data);
-                        $('#partialViewContainer').show(); // Show the container
-                        dataVisible = true; // Update the flag
+                        $('#partialViewContainer').show();
+                        dataVisible = true;
                     },
                     error: function (xhr, status, error) {
                         console.error(error);
@@ -240,19 +303,24 @@
                 });
             } else {
                 // If data is visible, hide it
-                $('#partialViewContainer').hide(); // Hide the container
-                dataVisible = false; // Update the flag
+                $('#partialViewContainer').hide();
+                dataVisible = false;
             }
         });
 
-        // Click event handler for clicking outside the table or container
         $(document).on('click', function (event) {
             if (!$(event.target).closest('#partialViewContainer').length &&
                 !$(event.target).closest('#fetchDataButton').length) {
-                $('#partialViewContainer').hide(); // Hide the container
-                dataVisible = false; // Update the flag
+                $('#partialViewContainer').hide();
+                dataVisible = false;
             }
         });
-    });
-</script>
+    });</script>
+@* Handle Toggle Button *@
+<script>
+    const toggleButton = document.getElementById("header-toggle-button");
+    toggleButton.addEventListener("click", () => {
+        isVisible = !isVisible;
 
+        navContainer.style.display = isVisible ? "block" : "none";
+    });</script>

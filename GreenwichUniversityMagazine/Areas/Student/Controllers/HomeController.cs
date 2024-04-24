@@ -22,25 +22,6 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
             homeVM.Facultys = _unitOfWork.FacultyRepository.GetAll().ToList();
             homeVM.Magazines = _unitOfWork.MagazineRepository.GetAll().Where(t => t.StartDate <= currentDateTime).ToList();
             homeVM.Articles = _unitOfWork.ArticleRepository.GetAll().Where(a => a.Status == true).OrderByDescending(a => a.ArticleId).ToList();
-            //Get information
-            var UserIdGet = HttpContext.Session.GetString("UserId");
-            int.TryParse(UserIdGet, out int userIdCurrent);
-            if (userIdCurrent != 0)
-            {
-                List<User> users = _unitOfWork.UserRepository.GetAll().ToList();
-
-                User user = _unitOfWork.UserRepository.GetById(userIdCurrent);
-                int commentsCount;
-                if (user.Role.ToLower() == "student")
-                {
-                    commentsCount = _unitOfWork.CommentRepository.GetAll().Where(u => u.IsNotification == true && u.Article.UserId == userIdCurrent && u.UserId != userIdCurrent).ToList().Count();
-                }
-                else
-                {
-                    commentsCount = _unitOfWork.CommentRepository.GetAll().Where(u => u.IsNotification == true && u.UserId != userIdCurrent && u.User.Role.ToLower() != "coordinate" && u.Type.ToLower() == "private" && u.Article.User.FacultyId == user.FacultyId).ToList().Count();
-                }
-                ViewBag.CommentsCount = commentsCount;
-            }
             return View(homeVM);
         }
 
@@ -163,6 +144,32 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
             return View();
         }
 
-
+        [HttpGet]
+        public IActionResult GetCommentsCount()
+        {
+            //Get information
+            var UserIdGet = HttpContext.Session.GetString("UserId");
+            int.TryParse(UserIdGet, out int userIdCurrent);
+            if (userIdCurrent != 0)
+            {
+                HomeVM homeVM = new HomeVM();
+                List<User> users = _unitOfWork.UserRepository.GetAll().ToList();
+                homeVM.Articles = _unitOfWork.ArticleRepository.GetAll().Where(a => a.Status == true).OrderByDescending(a => a.ArticleId).ToList();
+                homeVM.Facultys = _unitOfWork.FacultyRepository.GetAll().ToList();
+                User user = _unitOfWork.UserRepository.GetById(userIdCurrent);
+                int commentsCount;
+                if (user.Role.ToLower() == "student")
+                {
+                    commentsCount = _unitOfWork.CommentRepository.GetAll().Where(u => u.IsNotification == true && u.Article.UserId == userIdCurrent && u.UserId != userIdCurrent).ToList().Count();
+                }
+                else
+                {
+                    commentsCount = _unitOfWork.CommentRepository.GetAll().Where(u => u.IsNotification == true && u.UserId != userIdCurrent && u.User.Role.ToLower() != "coordinate" && u.Type.ToLower() == "private" && u.Article.User.FacultyId == user.FacultyId).ToList().Count();
+                }
+                return Json(new { notifies = commentsCount });
+            }
+            else
+                return Json(new { notifies = 0 });
+        }
     }
 }
