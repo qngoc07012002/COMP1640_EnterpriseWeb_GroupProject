@@ -137,6 +137,26 @@ button {
         transition: background 0.3s;
     }
 
+@media screen and (max-width: 1024px) {
+    .main-container .sidebar {
+        width: 50%;
+        margin: 10px 0;
+        float: none;
+        display: block;
+        position: relative;
+    }
+
+        .main-container .sidebar .form-inline {
+            width: 50%;
+            margin-top: 20px;
+        }
+
+        .main-container .sidebar .sidebar-title {
+            margin-top: 10px;
+        }
+}
+
+
 .select:hover {
     background: #323741;
 }
@@ -201,18 +221,20 @@ a {
     padding: 10px;
 }
 
+
 /* Responsive */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1000px) {
     .main-container {
         flex-direction: column;
-        width: 100%; /* Thiết lập chiều rộng cho main-container khi ở chế độ responsive */
-        padding-left: 0; /* Xóa padding trái cho main-container khi ở chế độ responsive */
-        
+
+        align-items: center;
+        width: 100%;
+        padding-left: 0;
+
     }
 
-        
     .card-container {
-        padding-top: 10px; /* Thêm padding trên cho card-container khi ở chế độ responsive */
+        padding-top: 10px;
     }
 
     .card-1 {
@@ -224,20 +246,15 @@ a {
     .card-image-1,
     .card-text-1 {
         width: 100%;
-        border-top-left-radius: 0; /* Loại bỏ border-radius cho phần trên trái của card khi ở chế độ responsive */
-        border-top-right-radius: 0; /* Loại bỏ border-radius cho phần trên phải của card khi ở chế độ responsive */
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
     }
 
     .viewbag {
-        padding-left: 10px; /* Thay đổi padding khi ở chế độ responsive */
+        padding-left: 10px;
     }
 }
 
-@media screen and (max-width: 600px) {
-    .card-text-1 {
-        width: 100%;  Thiết lập chiều rộng cho card-text-1 là 100% khi ở chế độ responsive 
-    }
-}
 
 .home-product-pagination {
     list-style: none;
@@ -277,6 +294,37 @@ a {
     padding: 8px 16px;
     margin: 0 10px; /* Khoảng cách giữa các nút phân trang */
 }
+.pagination-item span {
+    padding: 5px 10px;
+    background-color: #f0f0f0; /* Màu nền */
+    border: 1px solid #ccc; /* Viền */
+    color: #333; /* Màu chữ */
+    text-decoration: none; /* Loại bỏ gạch chân */
+}
+
+    .pagination-item span:hover {
+        background-color: #ccc; /* Màu nền khi hover */
+    }
+
+    .pagination-item span::after {
+        content: ""; /* Không có nội dung */
+    }
+
+@media screen and (max-width: 768px) {
+    .home-product-pagination {
+        flex-wrap: wrap; /* Cho phép các phần tử xuống dòng khi không đủ không gian */
+    }
+
+    .pagination-item {
+        margin: 5px 2px; /* Giảm khoảng cách giữa các phần tử */
+    }
+
+    .pagination-previous,
+    .pagination-next {
+        margin: 0 2px; /* Giảm khoảng cách giữa các nút phân trang */
+    }
+}
+
 
 
 
