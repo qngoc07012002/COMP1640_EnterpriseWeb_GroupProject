@@ -51,10 +51,10 @@ function updateArticleList(articles) {
         articles.forEach(article => {
             let articleCard = `<div class="article-card">`;
             articleCard += `<img class="article-card-img" src="${article.imgUrl}" alt="Top Image">
-                        <div class="article-information">
-                            <label class="article-card-text">Magazine:${article.magazines.title}</label>
-                            <h2 class="article-card-text">${article.title}</h2>
-                            <p class="article-card-text text-ellipsis">${article.subTitle}</p>
+                                <div class="article-information">
+                            <label class="article-card-text">Magazine:${article.magazines.title} </label>
+                            <h2 class="article-card-text">${article.title} </h2>
+                            <p class="article-card-text text-ellipsis">${article.subTitle} </p>
                         </div>
                         <div class="card-button">
                             <div class="d-flex justify-content-between align-items-center">`;
