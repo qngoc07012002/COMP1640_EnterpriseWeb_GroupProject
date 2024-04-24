@@ -78,7 +78,7 @@ Greenwich University, located in the UK, is renowned for its quality education a
                
                 <div class="row row-cols-1 row-cols-md-2 g-4">
                     <div class="col">
-                        <a asp-area="student" asp-controller="View" asp-action="Index" asp-route-facultyId="2" style="text-decoration: none;">
+                        <a asp-area="student" asp-controller="View" asp-action="Index" asp-route-facultyid="2" style="text-decoration: none;">
                             <div class="card card-faculty" style="height: 250px">
                                 <img src="~/img/Home/it1.jpg" class="card-img-top" alt="..." style="height: 180px">
                                 <div class="card-body">
@@ -89,7 +89,7 @@ Greenwich University, located in the UK, is renowned for its quality education a
                     </div>
 
                     <div class="col">
-                        <a asp-area="student" asp-controller="View" asp-action="Index" asp-route-facultyId="3" style="text-decoration: none;">
+                        <a asp-area="student" asp-controller="View" asp-action="Index" asp-route-facultyid="3" style="text-decoration: none;">
                             <div class="card card-faculty" style="height: 250px">
                                 <img src="~/img/Home/design.webp" class="card-img-top" alt="..." style="height: 180px">
                                 <div class="card-body">
@@ -99,7 +99,7 @@ Greenwich University, located in the UK, is renowned for its quality education a
                         </a>
                     </div>
                     <div class="col">
-                        <a asp-area="student" asp-controller="View" asp-action="Index" asp-route-facultyId="4" style="text-decoration: none;">
+                        <a asp-area="student" asp-controller="View" asp-action="Index" asp-route-facultyid="4" style="text-decoration: none;">
                             <div class="card card-faculty" style="height: 250px">
                                 <img src="~/img/Home/marketing.jpg" class="card-img-top" alt="..." style="height: 180px">
                                 <div class="card-body">
@@ -109,7 +109,7 @@ Greenwich University, located in the UK, is renowned for its quality education a
                         </a>
                     </div>
                     <div class="col">
-                        <a asp-area="student" asp-controller="View" asp-action="Index" asp-route-facultyId="5" style="text-decoration: none;">
+                        <a asp-area="student" asp-controller="View" asp-action="Index" asp-route-facultyid="5" style="text-decoration: none;">
                             <div class="card card-faculty" style="height: 250px">
                                 <img src="~/img/Home/b.webp" class="card-img-top" alt="..." style="height: 180px">
                                 <div class="card-body">
@@ -284,7 +284,7 @@ Greenwich University, located in the UK, is renowned for its quality education a
 
     function redirectToFaculty() {
         var selectedFacultyId = document.getElementById("facultyselect").value;
-            var baseUrl = "/student/view/index";
+        var baseUrl = "/student/view/index";
         if (selectedFacultyId) {
             window.location.href = baseUrl + "?facultyid=" + selectedFacultyId;
         } else {
