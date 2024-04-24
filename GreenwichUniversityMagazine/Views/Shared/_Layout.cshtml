@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Http
 @inject IHttpContextAccessor Accessor
+
 @* <partial name="_Notification" /> *@
 
 <!DOCTYPE html>
@@ -69,35 +70,46 @@
                         </button>
                     </div>
                     <script>
-const toggleButton = document.getElementById("header-toggle-button");
-                    const navContainer = document.querySelector(".nav-container");
-                    const navDivChildContainer = document.querySelector(".nav-container nav");
-                    let isVisible = false;
-                    let linkAdded = false;
-                    console.log(navContainer);
-                    toggleButton.addEventListener("click", () =>
-                    {
-                        isVisible = !isVisible;
+                        const toggleButton = document.getElementById("header-toggle-button");
+                        const navContainer = document.querySelector(".nav-container");
+                        const navDivChildContainer = document.querySelector(".nav-container nav");
+                        let isVisible = false;
+                        let linkAdded = false;
+                        console.log(navContainer);
+                        toggleButton.addEventListener("click", () => {
+                            isVisible = !isVisible;
 
-                        navContainer.style.display = isVisible ? "block" : "none";
+                            navContainer.style.display = isVisible ? "block" : "none";
 
-                        if (!linkAdded)
-                        {
-                            const newLink = document.createElement('a');
-                            newLink.href = '/Student/Home/Login'; // Đường dẫn URL đầy đủ cho trang Login
-                            newLink.classList.add('login-button');
-                            newLink.textContent = 'Sign In';
+                            if (!linkAdded) {
+                                const newLink = document.createElement('a');
+                                newLink.href = '/Student/Home/Login'; // Đường dẫn URL đầy đủ cho trang Login
+                                newLink.classList.add('login-button');
+                                newLink.textContent = 'Sign In';
 
-                            navDivChildContainer.appendChild(newLink);
-                            linkAdded = true;
-                        }
-                    }) </ script >
+                                navDivChildContainer.appendChild(newLink);
+                                linkAdded = true;
+                            }
+                        })</script>
                 }
                 else
                 {
-                    <div class="logned_bar">
+                    <div class="logned_bar" id="logned_bar">
                         <div class="notification_container">
                             <button id="fetchDataButton" class="notification_button">
+                                @{
+                                    if (ViewBag.CommentsCount == 0 || ViewBag.CommentsCount == null)
+                                    {
+                                    }
+                                    else if (ViewBag.CommentsCount < 5 && ViewBag.CommentsCount != null)
+                                    {
+                                        <span class="notification_count">@ViewBag.CommentsCount</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="notification_count">5+</span>
+                                    }
+                                }
                                 <img src="~/css/Navigation/notification.png" class="notification_icon" />
                             </button>
                         </div>
@@ -150,83 +162,73 @@ const toggleButton = document.getElementById("header-toggle-button");
                                 </a>
                             </div>
                         </div>
-                        <script>const toggleButton = document.getElementById("header-toggle-button");
-                               const navContainer = document.querySelector(".nav-container");
-                               const navDivChildContainer = document.querySelector(".nav-container nav");
-                               let isVisible = false;
-                               let linkAdded = false;
+                        <script>
+                            const toggleButton = document.getElementById("header-toggle-button");
+                            const navContainer = document.querySelector(".nav-container");
+                            const navDivChildContainer = document.querySelector(".nav-container nav");
+                            let isVisible = false;
+                            let linkAdded = false;
 
 
-                               toggleButton.addEventListener("click", () => {
-                                   isVisible = !isVisible;
+                            toggleButton.addEventListener("click", () => {
+                                isVisible = !isVisible;
 
-                                   navContainer.style.display = isVisible ? "block" : "none";
-                               });
+                                navContainer.style.display = isVisible ? "block" : "none";
+                            });
 
-                               const lognedBar = document.getElementById("logned_bar");
-                               const headerMain = document.getElementById("header-main");
+                            const lognedBar = document.getElementById("logned_bar");
+                            const headerMain = document.getElementById("header-main");
 
 
-                               headerMain.appendChild(lognedBar);</script>
-                </div>
+                            headerMain.appendChild(lognedBar);</script>
+                    </div>
 
-                // var userEmail = Accessor.HttpContext.Session.GetString("UserEmail");
-                //     <a>@userEmail</a>
-                // <a asp-area="Student" asp-controller="Home" asp-action="Logout">Logout</a>
+                    // var userEmail = Accessor.HttpContext.Session.GetString("UserEmail");
+                    //     <a>@userEmail</a>
+                    // <a asp-area="Student" asp-controller="Home" asp-action="Logout">Logout</a>
+                }
             }
-            }
-            </div>
-
-        </header>
-        <div class="container">
-            <main role="main">
-                @RenderBody()
-            </main>
         </div>
 
+    </header>
+    <div class="container">
+        <main role="main">
+            @RenderBody()
+        </main>
+    </div>
 
-        <button id="button-scroll-top" onClick="scrollToTop()">
-            <img src="~/css/Manager/Button/scrollTop.svg" class="icon-scroll-top" />
-        </button>
-        <footer>
-            <div class="footer-root">
-                <div class="footer-top-side">
-                    <div class="footer-div1">
-                        <img src="~/img/Layout/logo.png" width="150px" />
-                    </div>
-                    <div class="footer-div2">
-                    </div>
-                    <div class="footer-div3">
-                    </div>
-                    <div class="footer-div4"></div>
-                    <div class="footer-div5">
-                    </div>
-                    <div class="footer-div6">
-                    </div>
+
+    <button id="button-scroll-top" onClick="scrollToTop()">
+        <img src="~/css/Manager/Button/scrollTop.svg" class="icon-scroll-top" />
+    </button>
+    <footer>
+        <div class="footer-root">
+            <div class="footer-top-side">
+                <img src="~/img/Layout/logo.png" width="150px" />
+            </div>
+            <div class="footer-bottom-side">
+                <div class="footer-left-side">
+                    <h4>
+                        Copyright &copy; 2024 Greenwich University | All rights reserved
+                    </h4>
+                    <h4>658 Ngo Quyen, An Hai Bac, Son Tra, Da Nang</h4>
+                    <h4>Phone Number: 02367302266</h4>
                 </div>
-                <div class="footer-bottom-side">
-                    <div class="footer-left-side">
-                        <h4>
-                            Copyright &copy; 2024 Greenwich University | All rights reserved
-                        </h4>
-                        <h4>658 Ngo Quyen, An Hai Bac, Son Tra, Da Nang</h4>
-                        <h4>Phone Number: 02367302266</h4>
-                    </div>
-                    <div class="footer-right-side">
-                        <a href="google.com">
-                            <img src="~/img/Layout/Footer/icons/fb.svg" />
-                        </a>
-                        <a href="/"><img src="~/img/Layout/Footer/icons/github.svg" alt="icon" /></a>
-                        <a href="/"><img src="~/img/Layout/Footer/icons/riot.svg" alt="icon" /></a>
-                        <a href="/"><img src="~/img/Layout/Footer/icons/val.svg" alt="icon" /></a>
-                        <a href="/"><img src="~/img/Layout/Footer/icons/csgo.svg" alt="icon" /></a>
-                    </div>
+                <div class="footer-right-side">
+                    <a href="google.com">
+                        <img src="~/img/Layout/Footer/icons/fb.svg" />
+                    </a>
+                    <a href="/"><img src="~/img/Layout/Footer/icons/github.svg" alt="icon" /></a>
+                    <a href="/"><img src="~/img/Layout/Footer/icons/riot.svg" alt="icon" /></a>
+                    <a href="/"><img src="~/img/Layout/Footer/icons/val.svg" alt="icon" /></a>
+                    <a href="/"><img src="~/img/Layout/Footer/icons/csgo.svg" alt="icon" /></a>
                 </div>
             </div>
-        </footer>
-        @await RenderSectionAsync("Scripts", required: false)
+        </div>
+    </footer>
+    @await RenderSectionAsync("Scripts", required: false)
 
-    </body>
+</body>
 </html>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -234,21 +236,24 @@ const toggleButton = document.getElementById("header-toggle-button");
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 @* Scroll To Top Button *@
-<script>window.onscroll = function () {scrollFunction()};
+<script>
+    window.onscroll = function () { scrollFunction() };
 
     function scrollFunction() {
-if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-        document.getElementById("button-scroll-top").style.display = "block";
-} else {
-        document.getElementById("button-scroll-top").style.display = "none";
-}
-}
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("button-scroll-top").style.display = "block";
+        } else {
+            document.getElementById("button-scroll-top").style.display = "none";
+        }
+    }
 
     function scrollToTop() {
         document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 0;
-}</script>
-<script>$(document).ready(function () {
+        document.documentElement.scrollTop = 0;
+    }
+</script>
+<script>
+    $(document).ready(function () {
         // Function to fetch comments count
         function fetchCommentsCount() {
             $.ajax({
@@ -272,50 +277,51 @@ if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
                 }
             });
         }
-fetchCommentsCount();
-    setInterval(fetchCommentsCount, 5000);
-});</script>
+        fetchCommentsCount();
+        setInterval(fetchCommentsCount, 5000);
+    });
+</script>
 
-<script>$(document).ready(function () {
-// Variable to track if data is visible
-var dataVisible = false;
+<script>
+    $(document).ready(function () {
+        // Variable to track if data is visible
+        var dataVisible = false;
 
-    // Click event handler for the button
-    $('#fetchDataButton').click(function () {
-if (!dataVisible) {
-        $.ajax({
-            url: '/Coordinate/Coordinate/GetNotification',
-            type: 'GET',
-            success: function (data) {
-                $('#partialViewContainer').html(data);
-                $('#partialViewContainer').show();
-                dataVisible = true;
-            },
-            error: function (xhr, status, error) {
-                console.error(error);
+        // Click event handler for the button
+        $('#fetchDataButton').click(function () {
+            if (!dataVisible) {
+                $.ajax({
+                    url: '/Coordinate/Coordinate/GetNotification',
+                    type: 'GET',
+                    success: function (data) {
+                        $('#partialViewContainer').html(data);
+                        $('#partialViewContainer').show();
+                        dataVisible = true;
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            } else {
+                // If data is visible, hide it
+                $('#partialViewContainer').hide();
+                dataVisible = false;
             }
         });
-} else {
-        // If data is visible, hide it
-        $('#partialViewContainer').hide();
-    dataVisible = false;
-}
-});
 
-    $(document).on('click', function (event) {
-if (!$(event.target).closest('#partialViewContainer').length &&
-    !$(event.target).closest('#fetchDataButton').length) {
-        $('#partialViewContainer').hide();
-    dataVisible = false;
-}
-});
-});</script>
+        $(document).on('click', function (event) {
+            if (!$(event.target).closest('#partialViewContainer').length &&
+                !$(event.target).closest('#fetchDataButton').length) {
+                $('#partialViewContainer').hide();
+                dataVisible = false;
+            }
+        });
+    });</script>
 @* Handle Toggle Button *@
-<script>const toggleButton = document.getElementById("header-toggle-button");
-
-toggleButton.addEventListener("click", () => {
+<script>
+    const toggleButton = document.getElementById("header-toggle-button");
+    toggleButton.addEventListener("click", () => {
         isVisible = !isVisible;
 
-    navContainer.style.display = isVisible ? "block" : "none";
-});</script>
-
+        navContainer.style.display = isVisible ? "block" : "none";
+    });</script>
