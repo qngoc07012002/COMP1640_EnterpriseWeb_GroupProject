@@ -17,7 +17,7 @@ function coordinateComment(event) {
     var formData = `CommentInput=${encodeURIComponent(comment)}&articleId=${encodeURIComponent(articleId)}`;
 
     // Gửi request POST tới API endpoint
-    fetch('https://gwmagazine.xyz:7112/Coordinate/Comment/UploadPrivate', {
+    fetch('https://localhost:7082/Coordinate/Comment/UploadPrivate', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
