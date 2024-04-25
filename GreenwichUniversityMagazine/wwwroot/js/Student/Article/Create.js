@@ -161,7 +161,7 @@ function submitComment(event) {
     var formData = `CommentInput=${encodeURIComponent(comment)}&articleId=${encodeURIComponent(articleId)}`;
 
     // Gửi request POST tới API endpoint
-    fetch('https://gwmagazine.xyz/Student/Comment/UploadPrivate', {
+    fetch('https://localhost:7082/Student/Comment/UploadPrivate', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'

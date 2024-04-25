@@ -266,7 +266,7 @@
         // Function to fetch comments count
         function fetchCommentsCount() {
             $.ajax({
-                url: 'https://gwmagazine.xyz/student/home/GetCommentsCount',
+                url: 'https://localhost:7082/student/home/GetCommentsCount',
                 type: 'GET',
                 success: function (data) {
                     if (data && data.notifies !== undefined) {

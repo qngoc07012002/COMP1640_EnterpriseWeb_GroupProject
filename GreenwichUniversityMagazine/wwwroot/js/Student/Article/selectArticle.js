@@ -1,6 +1,4 @@
-﻿(document).ready(function () {
-
-
+﻿
     // Kiểm tra nếu có tham số 'commented' trong URL, tức là đã comment
     var urlParams = new URLSearchParams(window.location.search);
     if (urlParams.has('commented')) {
@@ -64,7 +62,7 @@
     function scrollToBottom() {
         window.scrollTo(0, document.body.scrollHeight);
     }
-});
+
 function studentComment(event) {
 
     var comment = document.querySelector('.comment-input textarea').value;
@@ -82,7 +80,7 @@ function studentComment(event) {
     var formData = `CommentInput=${encodeURIComponent(comment)}&articleId=${encodeURIComponent(articleId)}`;
 
     // Gửi request POST tới API endpoint
-    fetch('https://localhost:7112/Student/Comment/UploadPublic', {
+    fetch('https://localhost:7082/Student/Comment/UploadPublic', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
@@ -95,7 +93,7 @@ function studentComment(event) {
             }
             else if (response.status === 400) {
                 alert("Please Login!");
-                window.location.href = "https://localhost:7112/Student/Home/Login";
+                window.location.href = "https://localhost:7082/Student/Home/Login";
             }
         })
         .catch(error => {
