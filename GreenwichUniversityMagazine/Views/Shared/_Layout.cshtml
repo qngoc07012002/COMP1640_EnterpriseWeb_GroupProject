@@ -292,7 +292,7 @@
         $('#fetchDataButton').click(function () {
             if (!dataVisible) {
                 $.ajax({
-                    url: '/Coordinate/Coordinate/GetNotification',
+                    url: '/Student/Home/GetNotification',
                     type: 'GET',
                     success: function (data) {
                         $('#partialViewContainer').html(data);

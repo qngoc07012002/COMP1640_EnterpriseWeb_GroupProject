@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using GreenwichUniversityMagazine.Models.ViewModel;
 using System.Text;
 using System.Security.Cryptography;
+using Microsoft.AspNetCore.Authorization;
 namespace GreenwichUniversityMagazine.Areas.Student.Controllers
 {
     [Area("student")]
@@ -196,6 +197,36 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                 return stringBuilder.ToString();
             }
         }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult GetNotification()
+        {
+            //get current UserID
+            //get all notification from DB
+            //  List<Notification> notifications = _unitOfWork.NotificationRepository.GetAll().ToList();
+            var notifications = new List<Comment>();
+            List<User> users = _unitOfWork.UserRepository.GetAll().ToList();
+            List<Article> article = _unitOfWork.ArticleRepository.GetAll().ToList();
+            var UserIdGet = HttpContext.Session.GetString("UserId");
+            int.TryParse(UserIdGet, out int userIdCurrent);
+
+            User user = _unitOfWork.UserRepository.GetById(userIdCurrent);
+            Faculty faculty = _unitOfWork.FacultyRepository.Get(u => u.Id == user.FacultyId);
+            List<Comment> comments;
+            if (user.Role.ToLower() == "student")
+            {
+                comments = _unitOfWork.CommentRepository.GetAll().Where(u => u.IsNotification == true && u.Article.UserId == userIdCurrent && u.UserId != userIdCurrent).ToList();
+            }
+            else
+            {
+                comments = _unitOfWork.CommentRepository.GetAll().Where(u => u.IsNotification == true && u.UserId != userIdCurrent && u.User.Role.ToLower() != "coordinate" && u.Type.ToLower() == "private" && u.Article.User.FacultyId == user.FacultyId).ToList();
+            }
+            // Return partial view with the data
+            comments.Reverse();
+            return PartialView("_Notification", comments);
+        }
+
         public IActionResult AccessDenied()
         {
             return View();
