@@ -53,7 +53,7 @@
 
             </nav>
         </div>
-        <div class="nav-container nav-container-z">
+        <div class="nav-container nav-container-z" id="hidden-container">
             @{
                 var userId = Accessor.HttpContext.Session.GetString("UserId");
                 var userEmail = Accessor.HttpContext.Session.GetString("UserEmail");
@@ -180,7 +180,14 @@
                             const headerMain = document.getElementById("header-main");
 
 
-                            headerMain.appendChild(lognedBar);</script>
+                            headerMain.appendChild(lognedBar);
+
+                            const hiddenContainer = document.getElementById('hidden-container');
+
+                            if (hiddenContainer) {
+                                hiddenContainer.remove();
+                            }
+                        </script>
                     </div>
 
                     // var userEmail = Accessor.HttpContext.Session.GetString("UserEmail");
