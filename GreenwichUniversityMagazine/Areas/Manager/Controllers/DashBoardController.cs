@@ -23,7 +23,7 @@ namespace GreenwichUniversityMagazine.Areas.Manager.Controllers
         {
             return View("~/Areas/Manager/Views/DashBoard/Index.cshtml");
         }
-        public async Task<IActionResult> Overview(int rangeSort = 1)
+        public async Task<IActionResult> Overview(int rangeSort = 2)
         {
             int numberOfTerms = _unitOfWork.TermRepository.GetAll().Count();
 
