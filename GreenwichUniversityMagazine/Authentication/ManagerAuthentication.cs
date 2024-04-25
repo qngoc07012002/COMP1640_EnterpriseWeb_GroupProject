@@ -15,7 +15,7 @@ namespace GreenwichUniversityMagazine.Authentication
                 {
                     area = "Student",
                     controller = "Home",
-                    action = "Index",
+                    action = "AccessDenied",
                 }));
             }
         }

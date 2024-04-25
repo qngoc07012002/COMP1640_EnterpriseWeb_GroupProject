@@ -70,7 +70,7 @@
                         <p>No resources found for this article.</p>
                     }
                     @Html.Raw(articleVM.article.Body)
-                    <a href="@Url.Action("DownloadFile", "DownloadZipFile", new { articleId = @articleVM.article.ArticleId, imageUrls = articleVM.article.imgUrl, bodyText=@articleVM.article.Body })" class="btn btn-primary">Download Files</a>
+                    <a href="@Url.Action("DownloadFile", "DownloadZipFile", new { articleId = @articleVM.article.ArticleId, imageUrls = articleVM.article.imgUrl, article =@articleVM.article })" class="btn btn-primary">Download Files</a>
                 </article>
             }
         }

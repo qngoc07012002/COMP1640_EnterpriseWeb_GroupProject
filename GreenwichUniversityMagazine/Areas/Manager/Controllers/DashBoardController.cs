@@ -5,11 +5,13 @@ using GreenwichUniversityMagazine.Models;
 using GreenwichUniversityMagazine.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
 using GreenwichUniversityMagazine.Models.ViewModel;
+using GreenwichUniversityMagazine.Authentication;
 
 
 namespace GreenwichUniversityMagazine.Areas.Manager.Controllers
 {
     [Area("Manager")]
+    [ManagerAuthentication()]
     public class DashBoardController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

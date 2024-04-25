@@ -10,10 +10,12 @@ using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System.Text.RegularExpressions;
 using GreenwichUniversityMagazine.Repository;
+using GreenwichUniversityMagazine.Authentication;
 
 namespace GreenwichUniversityMagazine.Areas.Manager.Controllers
 {
     [Area("Manager")]
+    [ManagerAuthentication()]
     public class DownloadZipFile : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

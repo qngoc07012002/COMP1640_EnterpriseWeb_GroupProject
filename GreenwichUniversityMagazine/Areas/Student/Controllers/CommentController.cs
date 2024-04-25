@@ -8,6 +8,7 @@ using System;
 namespace GreenwichUniversityMagazine.Areas.Student.Controllers
 {
     [Area("Student")]
+
     public class CommentController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -95,12 +96,14 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("Login","Home"); // Trả về lỗi 401 nếu người dùng không xác thực
+                        return RedirectToAction("Login", "Home");
                     }
                 }
                 else
                 {
-                    return RedirectToAction("Login", "Home"); // Trả về lỗi 401 nếu người dùng không xác thực
+                    // Trả về lỗi 400 nếu có lỗi xảy ra
+                    return RedirectToAction("Login", "Home");
+
                 }
             }
             catch (Exception ex)

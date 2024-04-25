@@ -1,4 +1,5 @@
-﻿using GreenwichUniversityMagazine.Models;
+﻿using GreenwichUniversityMagazine.Authentication;
+using GreenwichUniversityMagazine.Models;
 using GreenwichUniversityMagazine.Repository.IRepository;
 using GreenwichUniversityMagazine.Serivces.IServices;
 using Microsoft.AspNetCore.Mvc;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace GreenwichUniversityMagazine.Areas.Coordinate.Controllers
 {
     [Area("Coordinate")]
+    [CoordinateAuthentication()]
     public class CommentController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

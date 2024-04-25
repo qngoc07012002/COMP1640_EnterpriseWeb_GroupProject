@@ -10,10 +10,12 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using System.Globalization;
 using System.Xml.Linq;
 using GreenwichUniversityMagazine.Serivces.IServices;
+using GreenwichUniversityMagazine.Authentication;
 
 namespace GreenwichUniversityMagazine.Areas.Student.Controllers
 {
     [Area("Student")]
+  
     public class ArticleController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -27,11 +29,12 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
             _webhost = webhost;
             _emailService = emailService;
         }
-
+        [StudentAuthentication()]
         public IActionResult Index()
         {
             return View();
         }
+        [StudentAuthentication()]
         public IActionResult Create()
         {
             var UserIdGet = HttpContext.Session.GetString("UserId");
@@ -53,7 +56,7 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
             };
             return View(articleVM);
         }
-
+        [StudentAuthentication()]
         public IActionResult Update(int id, string? status)
         {
             var UserIdGet = HttpContext.Session.GetString("UserId");
@@ -142,6 +145,7 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
         }
 
         #region API CALLs
+        [StudentAuthentication()]
         [HttpPost]
         public IActionResult Create(ArticleVM articleVM, IFormFile? HeadImg, List<IFormFile> files)
         {
@@ -241,7 +245,7 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
 
         }
 
-
+        [StudentAuthentication()]
         [HttpPost]
         public IActionResult Update(ArticleVM articleVM, IFormFile? HeadImg, List<IFormFile> files, string? filesDelete, string? body2)
         {
@@ -411,7 +415,7 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                 return RedirectToAction("Update");
             }
         }
-
+        [StudentAuthentication()]
         [HttpDelete]
         public IActionResult Delete(int id)
         {
@@ -438,7 +442,7 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
             _unitOfWork.Save();
             return Json(new { success = true, message = "Delete Successful" });
         }
-
+        [StudentAuthentication()]
         [HttpGet]
         public IActionResult GetByStatus(string status, int page = 1, int pageSize = 6)
         {
@@ -446,7 +450,7 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
             int.TryParse(HttpContext.Session.GetString("UserId"), out int StudentId);
             IEnumerable<Term> allTerms = _unitOfWork.TermRepository.GetAll();
             IEnumerable<Article> query = _unitOfWork.ArticleRepository.GetAll(includeProperty: "Magazines").Where(u => u.UserId == StudentId);
-            int allArticleCount = query.Count();
+            
             if (status.ToLower() == "pending")
             {
                 query = query.Where(u => u.Status == false);
@@ -455,11 +459,10 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
             {
                 query = query.Where(u => u.Status == true);
             }
+            int allArticleCount = query.Count();
             List<Article> articles = query.ToList();
-            articles.Reverse();
             int skipCount = (page - 1) * pageSize;
             articles = articles.Skip(skipCount).Take(pageSize).ToList();
-            List<object> articlesWithTerm = new List<object>();
 
             return Json(new { allArticleCount, articles });
 

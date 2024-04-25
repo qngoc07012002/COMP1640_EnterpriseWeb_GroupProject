@@ -5,10 +5,13 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using GreenwichUniversityMagazine.Models.ViewModels;
 using GreenwichUniversityMagazine.Serivces.IServices;
 using System.Text;
+using System.Security.Cryptography;
+using GreenwichUniversityMagazine.Authentication;
 
 namespace GreenwichUniversityMagazine.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [AdminAuthentication()]
     public class UserController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -48,20 +51,33 @@ namespace GreenwichUniversityMagazine.Areas.Admin.Controllers
         {
             //if (ModelState.IsValid)
             {
+                if (_unitOfWork.UserRepository.CheckEmail(userVM.User) == false)
+                {
+                    TempData["error"] = "Email Already Used!";
+                    return View(userVM);
+                } else
+                {
+                    TempData["success"] = "User created successfully";
+                    Random random = new Random();
+                    string password = GenerateRandomPassword(15);
+                    var subject = "Your Login Information";
+                    var message = $"<p><strong>Hello,</strong></p>" +
+                                  $"<p>Here are your login details:</p>" +
+                                  $"<p><strong>Email:</strong> {userVM.User.Email}</p>" +
+                                  $"<p><strong>Password:</strong> {password}</p>" +
+                                  $"<p><strong>Please keep this information secure.</strong></p>" +
+                                  $"<p>Thank you!</p>";
+                    await _emailService.SendEmailAsync(userVM.User.Email, subject, message);
 
-                TempData["success"] = "User created successfully";
-                Random random = new Random();
-                string password = GenerateRandomPassword(15);
-                string code = random.Next(100000, 999999).ToString();
-                var subject = "Login Information";
-                var message = $"Your email is: {code}" +
-                    $"Your password is: {password}";
-                await _emailService.SendEmailAsync(userVM.User.Email, subject, message);
-                userVM.User.Password = password;
-                _unitOfWork.UserRepository.Add(userVM.User);
-                _unitOfWork.Save();
-                
-                return RedirectToAction("Index");
+                    userVM.User.Password = HashPassword(password);
+                    userVM.User.avtUrl = "/img/avtImg/gw.jpg";
+                    userVM.User.Status = true;
+                    _unitOfWork.UserRepository.Add(userVM.User);
+                    _unitOfWork.Save();
+
+                    return RedirectToAction("Index");
+                }
+               
                
             }
             //else
@@ -113,7 +129,7 @@ namespace GreenwichUniversityMagazine.Areas.Admin.Controllers
                     string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
                     string userPath = Path.Combine(wwwRootPath, "img", "avtImg");
 
-                    if (!string.IsNullOrEmpty(userVM.User.avtUrl))
+                    if (!string.IsNullOrEmpty(userVM.User.avtUrl) && (userVM.User.avtUrl != "/img/avtImg/gw.jpg"))
                     {
                         var oldImagePath = Path.Combine(wwwRootPath, userVM.User.avtUrl.TrimStart('/'));
                         if (System.IO.File.Exists(oldImagePath))
@@ -218,6 +234,29 @@ namespace GreenwichUniversityMagazine.Areas.Admin.Controllers
             }
 
             return password.ToString();
+        }
+
+        static string HashPassword(string password)
+        {
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                // Convert the input string to a byte array and compute the hash.
+                byte[] data = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+
+                // Create a new StringBuilder to collect the bytes
+                // and create a string.
+                StringBuilder stringBuilder = new StringBuilder();
+
+                // Loop through each byte of the hashed data
+                // and format each one as a hexadecimal string.
+                for (int i = 0; i < data.Length; i++)
+                {
+                    stringBuilder.Append(data[i].ToString("x2"));
+                }
+
+                // Return the hexadecimal string.
+                return stringBuilder.ToString();
+            }
         }
     }
 }

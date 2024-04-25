@@ -1,4 +1,5 @@
-﻿using GreenwichUniversityMagazine.Models;
+﻿using GreenwichUniversityMagazine.Authentication;
+using GreenwichUniversityMagazine.Models;
 using GreenwichUniversityMagazine.Repository;
 using GreenwichUniversityMagazine.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace GreenwichUniversityMagazine.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [AdminAuthentication()]
     public class FacultyController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

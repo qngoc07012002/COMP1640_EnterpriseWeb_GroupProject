@@ -90,8 +90,14 @@
                                 <div class="card-text-1">
                                     <h3>@user.Name</h3>
                                     <p><strong>Email:</strong> @user.Email</p>
-                                    <p><strong>Code:</strong> @user.Code</p>
-                                        <p><strong>Faculty Name:</strong> @(user.Faculty != null ? user.Faculty.Name : "N/A")</p>
+                                    @{
+                                        if(user.Role == "STUDENT")
+                                        {
+                                            <p><strong>Code:</strong> @user.Code</p>
+                                            <p><strong>Faculty Name:</strong> @(user.Faculty != null ? user.Faculty.Name : "N/A")</p>
+
+                                        }
+                                    }
 
                                     <p><strong>Role:</strong> @user.Role</p>
                                     <td class="w-75 btn-group" role="group">

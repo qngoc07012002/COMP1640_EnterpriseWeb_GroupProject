@@ -253,7 +253,7 @@ form > #searchInput {
     margin-left:10px;
 }
 
-.avatar-coordinate-img {
+.avatar-user-img {
     width: 100%; /* Đảm bảo hình ảnh lấp đầy vùng chứa */
     height: 100%;
     object-fit: cover; /* Đảm bảo hình ảnh không bị méo khi thu nhỏ */
@@ -303,3 +303,196 @@ form > #searchInput {
 .comment-value{
 
 }
+
+
+/*Reponsive*/
+@media (max-width: 1024px) {
+    .container-main {
+        margin-top: 60px;
+        display: grid;
+        grid-template-columns: auto;
+    }
+
+    .sidebar {
+        display: none;
+    }
+
+    .main-content {
+        width: 100%; /* thay đổi kích thước cho thiết bị có độ rộng tối đa là 768px */
+        margin-left: 0; /* loại bỏ margin-left */
+    }
+
+        .main-content .article {
+            width: 100%; /* thay đổi kích thước cho thiết bị có độ rộng tối đa là 768px */
+        }
+
+    .comment-private {
+        width: 100%;
+    }
+
+    .comment-private {
+        display: block;
+        grid-template-columns: 60px 700px;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        margin-bottom: 20px;
+        width: 600px;
+        height: auto;
+        border-radius: 8px;
+        z-index: 1;
+    }
+
+    .avatar-user {
+        display: none;
+    }
+
+    .avatar-user-img {
+        width: 100%; /* Đảm bảo hình ảnh lấp đầy vùng chứa */
+    }
+
+
+    .comment-content {
+        flex: 1; /* Chia phần còn lại của ô comment */
+        padding: 10px; /* Thêm padding cho nội dung comment */
+        display: block;
+    }
+
+    .card__content {
+        overflow-wrap: break-word;
+    }
+
+    .comment-container {
+        grid-column: 1/4;
+        display: grid;
+        align-items: flex-end;
+        justify-content: center;
+    }
+}
+    /* Cho các màn hình nhỏ hơn 768px (tablets thông thường) */
+    @media (max-width: 768px) {
+        .container-main {
+            margin-top: 60px;
+            display: grid;
+            grid-template-columns: auto;
+        }
+
+        .sidebar {
+            display: none;
+        }
+
+        .main-content {
+            width: 100%; /* thay đổi kích thước cho thiết bị có độ rộng tối đa là 768px */
+            margin-left: 0; /* loại bỏ margin-left */
+        }
+
+            .main-content .article {
+                width: 100%; /* thay đổi kích thước cho thiết bị có độ rộng tối đa là 768px */
+            }
+
+        .comment-private {
+            width: 100%;
+        }
+
+        .comment-private {
+            display: block;
+            grid-template-columns: 60px 700px;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+            margin-bottom: 20px;
+            width: 600px;
+            height: auto;
+            border-radius: 8px;
+            z-index: 1;
+        }
+
+        .avatar-user {
+            display: none;
+        }
+
+        .avatar-user-img {
+            width: 100%; /* Đảm bảo hình ảnh lấp đầy vùng chứa */
+        }
+
+
+        .comment-content {
+            flex: 1; /* Chia phần còn lại của ô comment */
+            padding: 10px; /* Thêm padding cho nội dung comment */
+            display: block;
+        }
+
+        .card__content {
+            overflow-wrap: break-word;
+        }
+
+        .comment-container {
+            grid-column: 1/4;
+            display: grid;
+            align-items: flex-end;
+            justify-content: center;
+        }
+    }
+
+    /* Cho các màn hình nhỏ hơn 576px (smartphones thông thường) */
+    @media (max-width: 576px) {
+        .container-main {
+            display: block;
+        }
+
+        .sidebar {
+            display: none;
+        }
+
+        .comment-container {
+            width: 100%;
+        }
+
+        .main-content {
+            width: 100%;
+        }
+
+            .main-content .article {
+                width: 100%;
+            }
+
+        h1 {
+        }
+
+        .comment-private {
+            width: 100%;
+        }
+
+        .comment-private {
+            display: block;
+            grid-template-columns: 60px 700px;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+            margin-bottom: 20px;
+            width: 400px;
+            height: auto;
+            border-radius: 8px;
+            z-index: 1;
+        }
+
+        .avatar-user {
+            display: none;
+        }
+
+        .avatar-user-img {
+            width: 100%; /* Đảm bảo hình ảnh lấp đầy vùng chứa */
+        }
+
+
+        .comment-content {
+            flex: 1; /* Chia phần còn lại của ô comment */
+            padding: 10px; /* Thêm padding cho nội dung comment */
+            display: block;
+        }
+
+        .card__content {
+            overflow-wrap: break-word;
+        }
+
+        .comment-container {
+            grid-column: 1/4;
+            display: grid;
+            align-items: flex-end;
+            justify-content: center;
+        }
+    }

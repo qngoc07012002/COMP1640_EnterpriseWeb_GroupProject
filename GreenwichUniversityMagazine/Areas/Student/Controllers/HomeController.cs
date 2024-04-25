@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using GreenwichUniversityMagazine.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using GreenwichUniversityMagazine.Models.ViewModel;
+using System.Text;
+using System.Security.Cryptography;
 namespace GreenwichUniversityMagazine.Areas.Student.Controllers
 {
     [Area("student")]
@@ -48,10 +50,10 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
         [HttpPost]
         public IActionResult Login(string email, string password)
         {
-            User user = _unitOfWork.UserRepository.Login(email, password);
-            if (user != null && user.Password == password)
+            User user = _unitOfWork.UserRepository.Login(email, HashPassword(password));
+            if (user != null && user.Password == HashPassword(password))
             {
-                if (user.Password == password)
+                if (user.Password == HashPassword(password))
                 {
                     HttpContext.Session.SetString("UserEmail", user.Email);
                     HttpContext.Session.SetString("UserId", user.Id.ToString());
@@ -62,14 +64,14 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
                         HttpContext.Session.SetString("avtUrl", user.avtUrl);
                     }
 
-                    /*TempData["success"] = "Login successful";*/ // Lưu thông báo đăng nhập thành công vào TempData
+                    //TempData["success"] = "Login successful"; // Lưu thông báo đăng nhập thành công vào TempData
                 }
                 return RedirectToAction("Index", "Home", new { area = "student" });
             }
             else
             {
                 TempData["error"] = "Invalid email or password"; // Lưu thông báo lỗi vào TempData
-                ViewBag.Error = TempData["error"];
+            
                 return View("Login");
             }
         }
@@ -171,5 +173,33 @@ namespace GreenwichUniversityMagazine.Areas.Student.Controllers
             else
                 return Json(new { notifies = 0 });
         }
+
+        static string HashPassword(string password)
+        {
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                // Convert the input string to a byte array and compute the hash.
+                byte[] data = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+
+                // Create a new StringBuilder to collect the bytes
+                // and create a string.
+                StringBuilder stringBuilder = new StringBuilder();
+
+                // Loop through each byte of the hashed data
+                // and format each one as a hexadecimal string.
+                for (int i = 0; i < data.Length; i++)
+                {
+                    stringBuilder.Append(data[i].ToString("x2"));
+                }
+
+                // Return the hexadecimal string.
+                return stringBuilder.ToString();
+            }
+        }
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
     }
+
 }

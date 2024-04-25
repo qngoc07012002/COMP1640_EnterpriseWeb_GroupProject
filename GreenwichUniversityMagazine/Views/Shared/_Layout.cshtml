@@ -25,6 +25,7 @@
         <div class="nav-container">
             <nav>
                 <a asp-area="Student" asp-controller="Home" asp-action="Index">Home</a>
+                <a asp-area="Student" asp-controller="View" asp-action="Index">Article</a>
                 @{
                     var userRole = Accessor.HttpContext.Session.GetString("UserRole");
                     if (userRole == "STUDENT")
@@ -38,6 +39,7 @@
                     else if (userRole == "MANAGER")
                     {
                         <a asp-area="Manager" asp-controller="Dashboard" asp-action="Overview">Dashboard</a>
+                        <a asp-area="Manager" asp-controller="DownloadZipFile" asp-action="ArticlesByMagazineAndTerm">Download File</a>
 
                     }
                     else if (userRole == "ADMIN")
@@ -46,7 +48,7 @@
                         <a asp-area="Admin" asp-controller="Term" asp-action="Index">Term Management</a>
 
                     }
-                    <a href="#">Events</a>
+
                     <a asp-area="Student" asp-controller="Home" asp-action="About">About</a>
                     <a asp-area="Student" asp-controller="Home" asp-action="Contact">Contact</a>
 
@@ -120,7 +122,7 @@
                                 <div class="user-logo">
                                     @if (avtUrl == null)
                                     {
-                                        <img src="~/css/Navigation/gw.png" alt="User image">
+                                        <img src="~/css/Navigation/gw.jpg" alt="User image">
                                     }
                                     else
                                     {
@@ -134,7 +136,7 @@
                                     <div class="user-image">
                                         @if (avtUrl == null)
                                         {
-                                            <img src="~/css/Navigation/gw.png" alt="User image" class="user-logo-details">
+                                            <img src="~/css/Navigation/gw.jpg" alt="User image" class="user-logo-details">
                                         }
                                         else
                                         {
@@ -258,7 +260,7 @@
         // Function to fetch comments count
         function fetchCommentsCount() {
             $.ajax({
-                url: 'https://localhost:7112/student/home/GetCommentsCount',
+                url: 'https://gwmagazine.xyz/student/home/GetCommentsCount',
                 type: 'GET',
                 success: function (data) {
                     if (data && data.notifies !== undefined) {

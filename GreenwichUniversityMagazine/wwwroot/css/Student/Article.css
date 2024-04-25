@@ -620,14 +620,14 @@ body {
         position: relative;
         overflow: hidden;
         border-radius: 20px;
-        padding: 5px;
+        padding: 5px 5px;
         box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
     }
 
     .article-information {
         margin-top: 20px;
-        width: 550px;
-        padding: 10px;
+        width: 100%;
+        padding: 10px 10px;
         position: absolute;
         bottom: 40px;
 
@@ -635,8 +635,9 @@ body {
 
     .article-card-img {
         margin: 5px;
-        width: 50px;
+        width: 100%;
         height: 150px;
+        align-content: center;
         min-width: 250px;
         object-fit: contain;
         object-position: center;
@@ -644,11 +645,9 @@ body {
     }
 
     .article-card-text {
-        max-width: 40%;
-        display: -webkit-box;
-        -webkit-line-clamp: 2; 
+        max-width: 100%;
+        margin-right: 10px;
         font-size: 15px;
-        -webkit-box-orient: vertical;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
