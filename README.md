@@ -1,4 +1,4 @@
-
+This is a website project to manage articles for Greenwich students, students can post their articles through coordinate. Applying Agile / Scrum model to develop, the team consists of 8 people.
 ![211670a7-14c0-4de4-8520-afe120da212c](https://github.com/qngoc07012002/COMP1640_EnterpriseWeb_GroupProject/assets/116235732/bdc76c57-35bc-462e-9996-14bd2cab8fda)
 
 
